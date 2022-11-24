@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:orange/app_localization.dart';
+import 'package:orange/controller/profile_controller.dart';
+import 'package:orange/helper/app.dart';
+import 'package:orange/widgets/primary_bottun.dart';
+import 'package:orange/widgets/text_field.dart';
+
+class ChangePassword extends StatelessWidget {
+
+  ProfileController profileController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: App.primary_mid,
+      appBar: AppBar(
+        title: Text(App_Localization.of(context).translate("change_password"),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+              color: Colors.white
+          ),
+        ),
+        leading: App.backBtn(context),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              gradient: App.linearGradient,
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
+              boxShadow: [
+                App.darkBottomShadow,
+              ]
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Obx(() => profileController.changePasswordLoading.value?
+        Container(
+          width: Get.width,
+          height: Get.height * 0.7,
+          child: Center(
+            child: App.loading(context),
+          ),
+        )
+            :Column(
+          children: [
+            profileController.fake.value?Center():Center(),
+            SizedBox(height: Get.height*0.3,),
+            MyTextField(
+                width: Get.width*0.9,
+                height: 50,
+                controller: profileController.oldPassword,
+                validate: (profileController.oldPassword.text.isEmpty && profileController.validate.value).obs,
+                label: "old_password",
+                onChanged: (value){
+                  profileController.fake.value = !profileController.fake.value;
+                }
+            ),
+            SizedBox(height: 15,),
+            MyTextField(
+                width: Get.width*0.9,
+                height: 50,
+                controller: profileController.newPassword,
+                validate: ((profileController.newPassword.text.isEmpty||profileController.newPassword.text.length < 6) && profileController.validate.value).obs,
+                label: "new_password",
+                onChanged: (value){
+                  profileController.fake.value = !profileController.fake.value;
+                }
+            ),
+            SizedBox(height: 15,),
+            MyTextField(
+                width: Get.width*0.9,
+                height: 50,
+                controller: profileController.confirmPassword,
+                validate: ((profileController.confirmPassword.text.isEmpty||profileController.confirmPassword.text.length < 6) && profileController.validate.value).obs,
+                label: "confirm_password",
+                onChanged: (value){
+                  profileController.fake.value = !profileController.fake.value;
+                }
+            ),
+            SizedBox(height: 15,),
+            PrimaryBottun(width: Get.width*0.5, height: 40, onPressed: (){
+              profileController.changePassword(context);
+            }, color: Colors.white, text: "submit",linearGradient: App.linearGradient,)
+          ],
+        )),
+      ),
+    );
+  }
+}
+ 
