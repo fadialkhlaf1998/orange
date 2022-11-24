@@ -33,6 +33,7 @@ class AddAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: App.primary_mid,
+
       appBar: AppBar(
         title: Text(App_Localization.of(context).translate("address"),
           style: TextStyle(
