@@ -63,7 +63,7 @@ class LineItem {
   int orderId;
   int optionId;
   int count;
-  int priceOnePiece;
+  double priceOnePiece;
   int returned;
   String hard;
   String ram;
@@ -104,7 +104,7 @@ class LineItem {
     orderId: json["order_id"],
     optionId: json["option_id"],
     count: json["count"],
-    priceOnePiece: json["price_one_piece"],
+    priceOnePiece: double.parse(json["price_one_piece"].toString()),
     returned: json["returned"],
     hard: json["hard"]==null?"":json["hard"],
     ram: json["ram"]==null?"":json["ram"],
