@@ -120,9 +120,16 @@ class OrderDetails extends StatelessWidget {
                                     children: [
                                       Text(App_Localization.of(context).translate("total")+":",style: TextStyle(fontWeight: FontWeight.bold),),
                                       SizedBox(width: 5,),
-                                      Text(orderDetailsController.order!.lineItems[index].price.toString()+" "+App_Localization.of(context).translate("aed")),
+                                      Text((orderDetailsController.order!.lineItems[index].priceOnePiece * orderDetailsController.order!.lineItems[index].count).toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed")),
                                     ],
                                   ),
+                                  Row(
+                                    children: [
+                                      orderDetailsController.order!.lineItems[index].returned>0?
+                                      Text( orderDetailsController.order!.lineItems[index].returned.toString() +" "+ App_Localization.of(context).translate("items")+" "+App_Localization.of(context).translate("returned"),style: TextStyle(color: App.red,fontWeight: FontWeight.bold),)
+                                          :Center()
+                                    ],
+                                  )
                                 ],
                               )
                           ),

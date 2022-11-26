@@ -9,6 +9,7 @@ import 'package:orange/controller/wishlist_controller.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:orange/helper/global.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -21,6 +22,9 @@ class ProductDetails extends StatelessWidget {
   ProductDetails(String slug){
     productDetailsController.getData(slug);
   }
+
+
+  GlobalKey _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -135,10 +139,15 @@ class ProductDetails extends StatelessWidget {
                             child: Text(App_Localization.of(context).translate("description"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           AnimatedContainer(
+                            key: _key,
                             duration: Duration(milliseconds: 700),
-                            height: productDetailsController.veiwMore.value?null:Get.width*0.6,
+                            height:
+                            productDetailsController.veiwMore.value
+                                ?null
+                                :Get.width* 0.5 ,
                             child: Html(data: productDetailsController.product!.description,),
                           ),
+                          //todo check height of description _key.currentContext!.size.height
                           SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -231,6 +240,7 @@ class ProductDetails extends StatelessWidget {
                       width: Get.width*0.4,
                       height: 50,
                       onPressed: ()async{
+                        // print(_key.currentContext!.size!.height);
                         productDetailsController.cartLoading.value = true;
                         await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
                         productDetailsController.cartLoading.value = false;

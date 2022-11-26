@@ -9,6 +9,7 @@ import 'package:orange/view/address.dart';
 import 'package:orange/view/change_password.dart';
 import 'package:orange/view/main.dart';
 import 'package:orange/view/orders.dart';
+import 'package:orange/view/returns.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:orange/widgets/profile_bottun.dart';
 
@@ -66,6 +67,11 @@ class Profile extends StatelessWidget {
                   ProfileBtn(onPressed: (){
                     Get.to(()=>Orders());
                   }, icon: Icon(Icons.shop_2_outlined,color: Colors.black,), text: "orders"),
+                  SizedBox(height: 20,),
+
+                  ProfileBtn(onPressed: (){
+                    Get.to(()=>Returns());
+                  }, icon: Icon(Icons.assignment_returned_outlined,color: Colors.black,), text: "returns"),
                   SizedBox(height: 20,),
 
                   ProfileBtn(onPressed: (){

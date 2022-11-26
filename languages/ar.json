@@ -117,5 +117,13 @@
   "cancel_order": "إلغاء الطلب",
   "view_order": "عرض الطلب",
   "price_one_piece": "سعر القطعة الواحدة",
-  "order_canceled": "تم إلغاء الطلب بنجاح"
+  "order_canceled": "تم إلغاء الطلب بنجاح",
+  "returns": "الأسترجاع",
+  "order": "الطلبات",
+  "return": "إرجاع",
+  "your_order": "أنت طلبت",
+  "items": "عناصر",
+  "how_many_items_you_want_to_return": "كم عدد المنتجات التي تريد أرجاعها",
+  "success_return": "لقد أستلمنا طلبك سنوافيك بالتفاصيل بأقصى سرة ممكنة",
+  "returned": "مسترجع"
 }

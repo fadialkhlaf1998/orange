@@ -117,5 +117,13 @@
   "cancel_order": "Cancel Order",
   "view_order": "View Order",
   "price_one_piece": "Price One Piece",
-  "order_canceled": "Order Has Been Canceled Successfully"
+  "order_canceled": "Order Has Been Canceled Successfully",
+  "returns": "Returns",
+  "order": "Order",
+  "return": "Return",
+  "your_order": "Your Ordered",
+  "items": "Items",
+  "how_many_items_you_want_to_return": "How Many Items You Want To Return",
+  "success_return": "We Received Your Request We Will Confirm You As Soon As Possible",
+  "returned": "Returned"
 }

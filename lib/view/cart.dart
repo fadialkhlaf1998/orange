@@ -106,7 +106,7 @@ class Cart extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
 
-                                  Text(cartController.cartModel!.cart[index].title +" "+cartController.cartModel!.cart[index].hard +" "+ cartController.cartModel!.cart[index].ram +" "+ cartController.cartModel!.cart[index].color),
+                                  Text(cartController.cartModel!.cart[index].title +" "+cartController.cartModel!.cart[index].hard +" "+ cartController.cartModel!.cart[index].ram +" "+ cartController.cartModel!.cart[index].color +" "+ cartController.cartModel!.cart[index].additionatlOption),
                                   App.price(context,
                                       cartController.cartModel!.cart[index].oldPrice!=null?
                                       cartController.cartModel!.cart[index].oldPrice!+cartController.cartModel!.cart[index].addetionalPrice

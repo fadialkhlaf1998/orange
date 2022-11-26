@@ -11,6 +11,7 @@ import 'package:orange/model/address.dart';
 import 'package:orange/model/cart.dart';
 import 'package:orange/model/customer.dart';
 import 'package:orange/model/filter_result.dart';
+import 'package:orange/model/line_items.dart';
 import 'package:orange/model/order.dart';
 import 'package:orange/model/product.dart';
 import 'package:orange/model/result.dart';
@@ -884,6 +885,7 @@ class Api{
     }else{
       return false;
     }
+    print('Customer'+ customer_id.toString());
     var headers = {
       'Authorization': 'Barear '+token,
       'Content-Type': 'application/json'
@@ -963,6 +965,66 @@ class Api{
     };
     var request = http.Request('DELETE', Uri.parse(url+'/api/orders/cancel-order/$orderId'));
 
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print(response.reasonPhrase);
+      return false;
+    }
+
+  }
+
+  static Future<List<LineItem>> getReturns()async{
+    int customer_id = -1;
+    if(Global.customer != null){
+      customer_id = Global.customer!.id;
+    }else{
+      return <LineItem>[];
+    }
+    var headers = {
+      'Authorization': 'Barear '+token,
+    };
+    var request = http.Request('GET', Uri.parse(url+'/api/line-items/return/${Global.locale}/$customer_id'));
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      String data = (await response.stream.bytesToString());
+      return LineItemsDecoder.fromJson(data).lineItems;
+    }
+    else {
+      print(response.reasonPhrase);
+      return <LineItem>[];
+    }
+
+  }
+
+  static Future<bool> returnProduct(int order_id,int line_item_id,int return_count)async{
+    int customer_id = -1;
+    if(Global.customer != null){
+      customer_id = Global.customer!.id;
+    }else{
+      return false;
+    }
+    var headers = {
+      'Authorization': 'Barear '+token,
+      'Content-Type': 'application/json',
+    };
+    var request = http.Request('PUT', Uri.parse(url+'/api/orders/return'));
+    request.body = json.encode({
+      "order_id": order_id,
+      "customer_id": customer_id,
+      "return_count": return_count,
+      "line_items_id": line_item_id
+    });
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
