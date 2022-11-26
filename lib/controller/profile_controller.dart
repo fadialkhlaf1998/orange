@@ -47,15 +47,19 @@ class ProfileController extends GetxController{
   }
 
   deletePhoto(BuildContext context)async{
-    loading.value = true;
-    showPhotoPicker.value = false;
-    var succ = await Api.deletePhoto();
-    if(succ){
-      await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
-    }else{
-      App.errMsg(context, "profile", "wrong");
+    try{
+      loading.value = true;
+      showPhotoPicker.value = false;
+      var succ = await Api.deletePhoto();
+      if(succ){
+        await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
+      }else{
+        App.errMsg(context, "profile", "wrong");
+      }
+      loading.value = false;
+    }catch(e){
+      loading.value = false;
     }
-    loading.value = false;
   }
 
   deleteAccount(BuildContext context)async{
@@ -70,14 +74,18 @@ class ProfileController extends GetxController{
   }
 
   uploadImage(XFile image,BuildContext context)async{
-    loading.value = true;
-    var succ = await Api.selectImage(image);
-    if(succ){
-      await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
-    }else{
-      App.errMsg(context, "profile", "wrong");
+    try{
+      loading.value = true;
+      var succ = await Api.selectImage(image);
+      if(succ){
+        await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
+      }else{
+        App.errMsg(context, "profile", "wrong");
+      }
+      loading.value = false;
+    }catch(e){
+      loading.value = false;
     }
-    loading.value = false;
   }
 
   changePassword(BuildContext context)async{

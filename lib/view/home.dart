@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       // backgroundColor: App.primary_mid,
       appBar: AppBar(
+        centerTitle: true,
         title: Text(App_Localization.of(context).translate("home"),
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -36,6 +37,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         leading: App.backBtn(context),
+
         actions: [
           IconButton(onPressed: (){
             showSearch(context: context, delegate: SearchTextField());

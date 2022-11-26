@@ -628,7 +628,7 @@ class ProductDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Colors.grey.withOpacity(0.3),
                     blurRadius: 2,
                     spreadRadius: 2,
                   ),
@@ -647,7 +647,14 @@ class ProductDetails extends StatelessWidget {
                         child: productDetailsController.product!.rateReview[index].image == null
                             || productDetailsController.product!.rateReview[index].image!.isEmpty
                             ?Icon(Icons.person,size: 30,):
-                        Image.asset(Api.media_url+productDetailsController.product!.rateReview[index].image!)
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!))
+                          ),
+                        )
                     ),
                   ),
                   Padding(
