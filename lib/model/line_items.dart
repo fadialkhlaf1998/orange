@@ -69,7 +69,7 @@ class LineItem {
   String ram;
   String additionatlOption;
   int stock;
-  int addetionalPrice;
+  double addetionalPrice;
   String images;
   int colorId;
   int productId;
@@ -84,8 +84,8 @@ class LineItem {
   String metaTitle;
   String metaDescription;
   int publish;
-  int oldPrice;
-  int price;
+  double? oldPrice;
+  double price;
   int availbilty;
   String tag;
   int languageParent;
@@ -106,13 +106,13 @@ class LineItem {
     count: json["count"],
     priceOnePiece: json["price_one_piece"],
     returned: json["returned"],
-    hard: json["hard"],
-    ram: json["ram"],
-    additionatlOption: json["additionatl_option"],
+    hard: json["hard"]==null?"":json["hard"],
+    ram: json["ram"]==null?"":json["ram"],
+    additionatlOption: json["additionatl_option"]==null?"":json["additionatl_option"],
     stock: json["stock"],
-    addetionalPrice: json["addetional_price"],
+    addetionalPrice: json["addetional_price"]==null ?0.0:double.parse(json["addetional_price"].toString()),
     images: json["images"],
-    colorId: json["color_id"],
+    colorId: json["color_id"]==null?-1:json["color_id"],
     productId: json["product_id"],
     title: json["title"],
     image: json["image"],
@@ -125,13 +125,13 @@ class LineItem {
     metaTitle: json["meta_title"],
     metaDescription: json["meta_description"],
     publish: json["publish"],
-    oldPrice: json["old_price"],
-    price: json["price"],
+    oldPrice:json["old_price"] == null? null: double.parse(json["old_price"].toString()),
+    price:double.parse(json["price"].toString()),
     availbilty: json["availbilty"],
     tag: json["tag"],
     languageParent: json["language_parent"],
     def: json["def"],
-    color: json["color"],
+    color: json["color"]==null?"":json["color"],
     categoryId: json["category_id"],
     lineItemsId: json["line_items_id"],
     colorImage: json["color_image"]==null?"":json["color_image"]
