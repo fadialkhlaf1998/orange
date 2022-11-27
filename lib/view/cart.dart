@@ -98,9 +98,10 @@ class Cart extends StatelessWidget {
                                 )
                               ),
                             ),
+                            SizedBox(width: 10,),
                             Container(
                               height: 150,
-                              width: Get.width*0.9 - 160,
+                              width: Get.width*0.9 - 170,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

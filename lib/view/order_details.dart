@@ -103,6 +103,7 @@ class OrderDetails extends StatelessWidget {
                             Expanded(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
                                       orderDetailsController.order!.lineItems[index].title +
