@@ -191,66 +191,71 @@ class ProductDetails extends StatelessWidget {
           ),
           productDetailsController.loading.value?Center():
           Positioned(bottom:0,
-            child: Container(
-              width: Get.width,
-              height: 60,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: Get.width*0.4,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 2,
-                        )
-                      ]
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        GestureDetector(
-                            onTap: (){
-                              if(productDetailsController.cartCounter.value > 1){
-                                productDetailsController.cartCounter.value -- ;
-                              }
-                            },
-                            child: Icon(Icons.exposure_minus_1,color: Colors.black,)),
-                        Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 25),),
-                        GestureDetector(
-                            onTap: (){
-                              if(productDetailsController.product!.option!.stock >  productDetailsController.cartCounter.value){
-                                productDetailsController.cartCounter.value ++ ;
-                              }
-                            },
-                            child: Icon(Icons.exposure_plus_1,color: Colors.black)),
-                      ],
-                    ),
+            child: Column(
+              children: [
+                Container(
+                  width: Get.width,
+                  height: 60,
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        width: Get.width*0.4,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                            )
+                          ]
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                                onTap: (){
+                                  if(productDetailsController.cartCounter.value > 1){
+                                    productDetailsController.cartCounter.value -- ;
+                                  }
+                                },
+                                child: Icon(Icons.exposure_minus_1,color: Colors.black,)),
+                            Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 25),),
+                            GestureDetector(
+                                onTap: (){
+                                  if(productDetailsController.product!.option!.stock >  productDetailsController.cartCounter.value){
+                                    productDetailsController.cartCounter.value ++ ;
+                                  }
+                                },
+                                child: Icon(Icons.exposure_plus_1,color: Colors.black)),
+                          ],
+                        ),
+                      ),
+                      productDetailsController.cartLoading.value?
+                      _cartBtnLoading()
+                          :PrimaryBottun(
+                          width: Get.width*0.4,
+                          height: 50,
+                          onPressed: ()async{
+                            // print(_key.currentContext!.size!.height);
+                            productDetailsController.cartLoading.value = true;
+                            await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
+                            productDetailsController.cartLoading.value = false;
+                          },
+                          color: App.primary,
+                          text: "add_to_cart",
+                          linearGradient: App.linearGradient,
+                      )
+                    ],
                   ),
-                  productDetailsController.cartLoading.value?
-                  _cartBtnLoading()
-                      :PrimaryBottun(
-                      width: Get.width*0.4,
-                      height: 50,
-                      onPressed: ()async{
-                        // print(_key.currentContext!.size!.height);
-                        productDetailsController.cartLoading.value = true;
-                        await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
-                        productDetailsController.cartLoading.value = false;
-                      },
-                      color: App.primary,
-                      text: "add_to_cart",
-                      linearGradient: App.linearGradient,
-                  )
-                ],
-              ),
+                ),
+                SizedBox(height: Get.bottomBarHeight,)
+              ],
             ),
           )
         ],
