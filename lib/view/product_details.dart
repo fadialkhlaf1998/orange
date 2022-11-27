@@ -259,6 +259,7 @@ class ProductDetails extends StatelessWidget {
                 Platform.isAndroid?Center():Container(
                   width: Get.width,
                   height: 20,
+                  color: Colors.white,
                 )
               ],
             ),

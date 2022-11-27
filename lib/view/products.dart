@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
@@ -394,58 +396,67 @@ class Products extends StatelessWidget {
           ),
           Positioned(
             bottom: 0,
-            child: Container(
-            color: Colors.white,
-            height: 45,
-            width: Get.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
               children: [
-                GestureDetector(
-                    onTap: (){
-                      productsController.clear();
-                    },
-                    child: Container(
-                      width: Get.width*0.4,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: App.red,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.delete,color: Colors.white,),
-                          SizedBox(width: 10,),
-                          Text(App_Localization.of(context).translate("clear"),style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),)
-                        ],
-                      ),
+                Container(
+                color: Colors.white,
+                height: 45,
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                        onTap: (){
+                          productsController.clear();
+                        },
+                        child: Container(
+                          width: Get.width*0.4,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: App.red,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.delete,color: Colors.white,),
+                              SizedBox(width: 10,),
+                              Text(App_Localization.of(context).translate("clear"),style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),)
+                            ],
+                          ),
+                        )
+                    ),
+                    GestureDetector(
+                        onTap: (){
+                          productsController.apply();
+                        },
+                        child: Container(
+                          width: Get.width*0.4,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: App.green,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.check_circle_outline,color: Colors.white,),
+                              SizedBox(width: 10,),
+                              Text(App_Localization.of(context).translate("apply"),style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),)
+                            ],
+                          ),
+                        )
                     )
+                  ],
                 ),
-                GestureDetector(
-                    onTap: (){
-                      productsController.apply();
-                    },
-                    child: Container(
-                      width: Get.width*0.4,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: App.green,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check_circle_outline,color: Colors.white,),
-                          SizedBox(width: 10,),
-                          Text(App_Localization.of(context).translate("apply"),style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),)
-                        ],
-                      ),
-                    )
+          ),
+                Platform.isAndroid?Center():Container(
+                  width: Get.width,
+                  height: 20,
+                  color: Colors.white,
                 )
               ],
-            ),
-          ),)
+            ),)
         ],
       ),
     ));
