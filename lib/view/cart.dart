@@ -122,6 +122,7 @@ class Cart extends StatelessWidget {
                                       : Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
+                                      cartController.cartModel!.cart[index].count>0?
                                       Container(
                                         width: 100,
                                         height: 30,
@@ -153,6 +154,25 @@ class Cart extends StatelessWidget {
                                                 child: Icon(Icons.exposure_plus_1,color: Colors.black)),
                                           ],
                                         ),
+                                      )
+                                      :Container(
+                                        width: 100,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(25),
+                                            color: Colors.white,
+                                            border: Border.all(color: App.red),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.3),
+                                                spreadRadius: 2,
+                                                blurRadius: 2,
+                                              )
+                                            ]
+                                        ),
+                                        child:Center(
+                                          child: Text(App_Localization.of(context).translate("out_of_stock"),style: TextStyle(color: App.red,fontSize: 12),),
+                                        )
                                       ),
                                       IconButton(onPressed: (){
                                         cartController.deleteFromCart(context, index);

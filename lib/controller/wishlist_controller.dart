@@ -39,7 +39,7 @@ class WishlistController extends GetxController{
     }else{
       product.wishlist.value = 1;
       homeController.wishlistEvent(product.languageParent, 1);
-      Api.addToWishlist(product.id);
+      Api.addToWishlist(product.languageParent);
     }
   }
 
@@ -49,7 +49,7 @@ class WishlistController extends GetxController{
     }else{
       product.wishlist.value = 0;
       homeController.wishlistEvent(product.languageParent, 0);
-      Api.deleteFromWishlist(product.id);
+      Api.deleteFromWishlist(product.languageParent);
     }
   }
 

@@ -144,7 +144,7 @@ class ProductDetailsController extends GetxController{
     }
     if(review.text.isNotEmpty){
       reviewLoading.value = true;
-      var succ = await Api.addReview(review.text, product!.id);
+      var succ = await Api.addReview(review.text, product!.languageParent);
       if(succ){
         Product? requestProduct = await Api.productDetails(product!.ProductSlug);
         if(requestProduct != null){

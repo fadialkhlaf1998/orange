@@ -616,8 +616,8 @@ class ProductDetails extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Post",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
-                      Text("Review",style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+                      Text(App_Localization.of(context).translate("post"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+                      Text(App_Localization.of(context).translate("review"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
                     ],
                 ),
               ),
