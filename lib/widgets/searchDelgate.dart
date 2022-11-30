@@ -71,7 +71,7 @@ class SearchTextField extends SearchDelegate<String> {
       width: Get.width,
       color: App.primary,
       child: Center(
-        child: Text(App_Localization.of(context).translate("no_results_found!"),
+        child: Text(App_Localization.of(context).translate("no_results_found"),
             style: const TextStyle(
                 // color: App.lightWhite,
                 // fontSize: App.small,
@@ -146,7 +146,7 @@ class SearchTextField extends SearchDelegate<String> {
       width: Get.width,
       color: App.primary,
       child: Center(
-        child: Text(App_Localization.of(context).translate("no_results_found!"),
+        child: Text(App_Localization.of(context).translate("no_results_found"),
             style: const TextStyle(
               // color: App.lightWhite,
               // fontSize: App.small,

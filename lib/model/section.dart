@@ -30,7 +30,7 @@ class Section {
     required this.title,
     required this.locale,
     required this.languageParent,
-    required this.position,
+    // required this.position,
     required this.type,
     required this.backgroundImage,
     required this.products,
@@ -41,7 +41,7 @@ class Section {
   String title;
   String locale;
   int languageParent;
-  int? position;
+  // int? position;
   int type;
   String backgroundImage;
   List<Product> products;
@@ -99,7 +99,7 @@ class Section {
     title: json["title"],
     locale: json["locale"],
     languageParent: json["language_parent"],
-    position: json["position"],
+    // position: json["position"],
     type: json["type"],
     backgroundImage: json["background_image"],
     products: List<Product>.from(json["products"].map((x) => Product.fromMap(x))),
@@ -111,7 +111,7 @@ class Section {
     "title": title,
     "locale": locale,
     "language_parent": languageParent,
-    "position": position,
+    // "position": position,
     "type": type,
     "background_image": backgroundImage,
     "products": List<dynamic>.from(products.map((x) => x.toMap())),
