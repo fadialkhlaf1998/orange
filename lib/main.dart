@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             primaryColor: App.primary,
             primarySwatch: generateMaterialColor(App.primary),
-            fontFamily: "NunitoSans",
+            fontFamily: "Poppins",
           iconTheme: IconThemeData(
             color: Colors.white,
           ),

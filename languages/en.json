@@ -125,5 +125,7 @@
   "items": "Items",
   "how_many_items_you_want_to_return": "How Many Items You Want To Return",
   "success_return": "We Received Your Request We Will Confirm You As Soon As Possible",
-  "returned": "Returned"
+  "returned": "Returned",
+  "have_account": "have Account",
+  "donot_have_account": "Don't have Account"
 }

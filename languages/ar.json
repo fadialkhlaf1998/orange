@@ -80,7 +80,7 @@
   "confirm_password": "تأكيد كلمة المرور",
   "submit": "إرسال",
   "old_password_is_wrong": "كلمة المرور القديمة خاطئة الرجاء المحاولة مرة أخرى",
-  "confirm_password_not_same_new_password": "أكيد كلمة المرور ليست نفس كلمة المرور الجديدة",
+  "confirm_password_not_same_new_password": "تأكيد كلمة المرور ليست نفس كلمة المرور الجديدة",
   "password_must_be_more_than_6": "يجب أن تكون كلمة المرور أكثر من 6 أحرف",
   "password_changed_successfully": "تم تغيير كلمة المرور بنجاح",
   "hello": "أهلاً",

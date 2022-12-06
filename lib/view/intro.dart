@@ -15,7 +15,20 @@ class Intro extends StatelessWidget {
         height: Get.height,
         width: Get.width,
         child: Center(
-          child: App.loading(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 150,
+                height: 150,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage("assets/images/logo.png")),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text("ORANGE",style: TextStyle(letterSpacing: 1.5,color: App.primary,fontWeight: FontWeight.bold,fontSize: 30),)
+            ],
+          ),
         ),
       ),
     );

@@ -62,7 +62,7 @@ class HomeController extends GetxController{
     }
     if(startUpDecoder != null){
       loading.value = false;
-      navigate(startUpDecoder,loginResult);
+     navigate(startUpDecoder,loginResult);
     }else{
       initApp();
     }

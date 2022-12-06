@@ -12,11 +12,13 @@ import 'package:intl/intl.dart';
 class App{
   // static Color primary = Color(0xfff37335);
   // static Color primary = Colors.orange;
-  static Color primary = Color(0xffff7900);
+  static Color primary = Color(0xffFE7902);
   static Color primary_mid = Color(0xfffda018);
   static Color primary_light = Color(0xfffbc830);
+  static Color background = Color(0xffF6F6F7);
   // static Color primary_light = Colors.orange.withOpacity(0.5);
-  static Color grey = Color(0xff49556b);
+  static Color grey = Color(0xffededef);
+  static Color dark_grey = Color(0xffACBAC3);
   static Color white_1 = Color(0xffE9E28c);
   static Color white_2 = Color(0xfff0f0f0);
   static Color dark_blue = Color(0xff0f3047);

@@ -11,6 +11,9 @@ class MyTextField extends StatefulWidget {
   final String label;
   final void Function(String) onChanged;
   final TextInputType keyboardType;
+  final bool isPassword;
+
+  final RxBool hidden = true.obs;
 
 
   MyTextField({
@@ -20,7 +23,8 @@ class MyTextField extends StatefulWidget {
     required this.validate,
     required this.label,
     required this.onChanged,
-    this.keyboardType = TextInputType.text
+    this.keyboardType = TextInputType.text,
+    this.isPassword = false
   });
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -32,31 +36,53 @@ class _MyTextFieldState extends State<MyTextField> {
     return Container(
       width: widget.width,
       height: widget.height,
-      child: TextField(
+      decoration: BoxDecoration(
+        color: App.grey,
+        borderRadius: BorderRadius.circular(widget.height/2)
+      ),
+      child: Obx(() => TextField(
         controller: widget.controller,
         keyboardType: widget.keyboardType,
         onChanged: widget.onChanged,
+        obscureText: widget.isPassword?widget.hidden.value:false,
+        style: TextStyle(color: App.dark_grey),
         decoration: InputDecoration(
-            enabledBorder: widget.validate.value
-                ?OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red)
-            )
-                :OutlineInputBorder(
-                borderSide: BorderSide(color: App.grey)
-            ),
 
-            focusedBorder:  widget.validate.value
-                ?OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red)
-            )
-                :OutlineInputBorder(
-                borderSide: BorderSide(color: App.grey)
-            ),
+          suffix: widget.isPassword?GestureDetector(
+            onTap: (){
+              widget.hidden(!widget.hidden.value);
+              print(widget.hidden.value);
+            },
+            child: Icon(widget.hidden.value?Icons.visibility_off_outlined:Icons.visibility_outlined,color: App.dark_grey,),
+          ):null,
 
-            label: Text(App_Localization.of(context).translate(widget.label),style: TextStyle(color: App.grey),),
-            labelStyle: TextStyle(color: App.grey)
+          enabledBorder: widget.validate.value
+              ?OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(widget.height/2)
+          )
+              :OutlineInputBorder(
+              borderSide: BorderSide(color: App.grey),
+              borderRadius: BorderRadius.circular(widget.height/2)
+          ),
+
+          focusedBorder:  widget.validate.value
+              ?OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red),
+              borderRadius: BorderRadius.circular(widget.height/2)
+          )
+              :OutlineInputBorder(
+              borderSide: BorderSide(color: App.primary),
+              borderRadius: BorderRadius.circular(widget.height/2)
+          ),
+
+          label: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0),
+            child: Text(App_Localization.of(context).translate(widget.label),style: TextStyle(color: App.dark_grey),),
+          ),
+          labelStyle: TextStyle(color: App.grey),
         ),
-      ),
+      )),
     );
   }
 }

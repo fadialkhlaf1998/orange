@@ -5,6 +5,7 @@ import 'package:orange/helper/app.dart';
 class PrimaryBottun extends StatefulWidget {
   final double width;
   final double height;
+  final double radiuce;
   final VoidCallback onPressed;
   final Color color;
   final String text;
@@ -16,7 +17,8 @@ class PrimaryBottun extends StatefulWidget {
     required this.onPressed,
     required this.color,
     required this.text,
-    this.linearGradient
+    this.linearGradient,
+    this.radiuce = 10
   });
 
   @override
@@ -33,7 +35,7 @@ class _MyBottunState extends State<PrimaryBottun> {
         height: widget.height,
         decoration: BoxDecoration(
           color: widget.color,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(widget.radiuce),
           gradient: widget.linearGradient,
         ),
         child: Center(
