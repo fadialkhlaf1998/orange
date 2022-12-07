@@ -28,6 +28,7 @@ class ProductDetailsController extends GetxController{
 
   Future<void> getData(String slug)async{
     loading.value = true;
+    await Api.hasInternet();
     product = await Api.productDetails(slug);
     if(product == null){
       Get.back();

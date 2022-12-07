@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:orange/controller/wishlist_controller.dart';
 import 'package:orange/helper/api.dart';
@@ -28,29 +29,23 @@ class ProductCard extends StatelessWidget {
               height: Get.width*0.6,
               // width: Get.width*0.45,
               decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(15)
+                  color: App.grey,
+                  borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
                 children: [
                   Container(
-                    height: Get.width*0.45,
-                    width: Get.width*0.45,
+                    height: Get.width*0.45-16,
+                    width: Get.width*0.45-16,
+                    margin: EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white,
                         image: DecorationImage(
                           image: NetworkImage(Api.media_url+product.image),
                           fit: BoxFit.fill,
                         ),
-                        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(15),bottomLeft: Radius.circular(15)),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color(0x33000000),
-                            offset: Offset(0, 5),
-                            blurRadius: 3,
-                            spreadRadius: 0,
-                          )
-                        ]
+                        borderRadius: BorderRadius.circular(15),
+
                     ),
                   ),
                   Container(
@@ -72,13 +67,37 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () {
-                  wishlistController.wishlistFunction(context, product);
-                },
-                child: Obx(() => Icon(product.wishlist.value>0?Icons.favorite:Icons.favorite_border,color: App.primary)),
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: EdgeInsets.all(8),
+                width: Get.width * 0.45-16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 35,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: Color(0xff022B3A),
+                        borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(product.rate.toStringAsFixed(1),style: TextStyle(fontSize: 10,color: Colors.white,fontWeight: FontWeight.bold),),
+                          SvgPicture.asset("assets/icons/fill/stare_gold.svg",width: 10,height: 10,)
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        wishlistController.wishlistFunction(context, product);
+                      },
+                      child: Obx(() => Icon(product.wishlist.value>0?Icons.favorite:Icons.favorite_border,color: App.primary)),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

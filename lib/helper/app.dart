@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:lottie/lottie.dart';
 import 'package:orange/model/product.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +17,7 @@ class App{
   // static Color primary = Colors.orange;
   static Color primary = Color(0xffFE7902);
   static Color primary_mid = Color(0xfffda018);
-  static Color primary_light = Color(0xfffbc830);
+  static Color primary_light = Color(0xffEEA427);
   static Color background = Color(0xffF6F6F7);
   // static Color primary_light = Colors.orange.withOpacity(0.5);
   static Color grey = Color(0xffededef);
@@ -51,16 +54,22 @@ class App{
       return Row(
         mainAxisAlignment: space?MainAxisAlignment.spaceBetween:MainAxisAlignment.start,
         children: [
-          Text(newPrice.toString()+" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 14,color: App.primary),),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(newPrice.toString(),style: TextStyle(fontSize: 16,color: App.primary,fontWeight: FontWeight.bold),),
+              Text(" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.primary,fontWeight: FontWeight.bold),),
+            ],
+          ),
           space?Center():SizedBox(width: 20,),
           Text(old.toString(),style: TextStyle(fontSize: 12,color: Colors.grey,decoration: TextDecoration.lineThrough,decorationThickness: 2),),
         ],
       );
     }else{
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+      return  Row(
         children: [
-          Text(newPrice.toString()+" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 14,color: App.primary),),
+          Text(newPrice.toString(),style: TextStyle(fontSize: 14,color: App.primary,fontWeight: FontWeight.bold),),
+          Text(" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.primary,fontWeight: FontWeight.bold),),
         ],
       );
     }
@@ -148,7 +157,13 @@ class App{
       child: Container(
         width: 150,
         child: Center(
-          child: Lottie.asset("assets/loading.json"),
+          // child: Lottie.asset("assets/loading.json"),
+          // child: LinearProgressIndicator(),
+          child:
+          Platform.isAndroid
+          ?CircularProgressIndicator()
+          :CupertinoActivityIndicator(color: App.primary,radius: 15,),
+
         ),
       ),
     );
@@ -177,5 +192,19 @@ class App{
     return Navigator.of(context).canPop()?BackButton(
         color: Colors.white
     ):null;
+  }
+
+  static myHeader(BuildContext context,{required double height , required Widget child}){
+    return AppBar(
+      centerTitle: true,
+      // leading: App.backBtn(context),
+      automaticallyImplyLeading: false,
+      toolbarHeight: height,
+      title: child,
+
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+
+    );
   }
 }

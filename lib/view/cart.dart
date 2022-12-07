@@ -1,8 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/cart_controller.dart';
+import 'package:orange/controller/home_controller.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/helper/global.dart';
@@ -18,32 +20,20 @@ class Cart extends StatelessWidget {
   // }
 
   CartController cartController = Get.find();
+  HomeController homeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         // backgroundColor: App.primary_mid,
-        appBar: AppBar(
-          leading: App.backBtn(context),
-        title: Text(App_Localization.of(context).translate("cart"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              gradient: App.linearGradient,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-              boxShadow: [
-                App.darkBottomShadow,
-              ]
-          ),
-        ),
-      ),
+        appBar:App.myHeader(context, height: 60, child: Center(
+            child:  Container(
+                width: Get.width*0.9,
+                child: Center(
+                  child: Text(App_Localization.of(context).translate("cart"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+                )
+            )
+        ),),
       body: Obx(() => Global.customer == null && !cartController.loading.value?
       Container(
         width: Get.width,
@@ -61,8 +51,31 @@ class Cart extends StatelessWidget {
           :Container(
             child: Stack(
         children: [
-
-            ListView.builder(
+            cartController.cartModel!.cart.isEmpty?
+              Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 40,),
+                Icon(Icons.remove_shopping_cart_outlined,color: App.primary,size: 50,),
+                SizedBox(height: 20,),
+                Text(App_Localization.of(context).translate("your_cart_is_empty"),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(App_Localization.of(context).translate("what_you_are_waiting_for"),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                    SizedBox(width: 5,),
+                    GestureDetector(
+                      onTap: (){
+                        homeController.pageController.jumpToTab(0);
+                        homeController.selectedPage(0);
+                      },
+                      child: Text(App_Localization.of(context).translate("continue_shopping"),style: TextStyle(fontWeight: FontWeight.bold,color: App.primary),),
+                    )
+                  ],
+                )
+              ],
+            )
+            :ListView.builder(
               padding: EdgeInsets.only(top: 20,bottom: 220),
                 itemCount: cartController.cartModel!.cart.length,
                 itemBuilder: (context,index){
@@ -194,7 +207,7 @@ class Cart extends StatelessWidget {
                 bottom: EdgeInsets.fromWindowPadding(WidgetsBinding.instance.window.viewInsets,WidgetsBinding.instance.window.devicePixelRatio).bottom,
                 child: Container(
               width: Get.width,
-              height: 225,
+              height: 255,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -257,7 +270,8 @@ class Cart extends StatelessWidget {
                       if(cartController.cartModel!.cart.isNotEmpty){
                         Get.to(()=>Checkout());
                       }
-                    }, color: Colors.white, text: "checkout",linearGradient: App.linearGradient,)
+                    }, color: Colors.white, text: "checkout",linearGradient: App.linearGradient,),
+                    SizedBox(height: 30,)
                   ],
                 ),
               )

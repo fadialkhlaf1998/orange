@@ -22,8 +22,12 @@ import 'package:orange/view/main.dart';
 import 'package:orange/view/product_details.dart';
 import 'package:orange/view/products.dart';
 import 'package:orange/view/verification_code.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeController extends GetxController{
+
+  PersistentTabController pageController = PersistentTabController(initialIndex: 0);
+  RxInt selectedPage = 0.obs;
 
   List<Category> categories = <Category>[];
   List<Brand> brands = <Brand>[];

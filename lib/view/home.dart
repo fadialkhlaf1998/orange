@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/home_controller.dart';
@@ -28,34 +29,58 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: App.primary_mid,
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(App_Localization.of(context).translate("home"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white
-          ),
-        ),
-        leading: App.backBtn(context),
+      appBar: App.myHeader(context, height: 60, child: Center(
+          child:  Container(
+            width: Get.width*0.9,
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: (){
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      child: Image.asset("assets/images/logo.png",),
+                    )
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                      showSearch(context: context, delegate: SearchTextField());
+                    },
+                    child: Container(
+                      height: 40,
 
-        actions: [
-          IconButton(onPressed: (){
-            showSearch(context: context, delegate: SearchTextField());
-          }, icon: Icon(Icons.search,color: Colors.white,))
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            gradient: App.linearGradient,
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-            boxShadow: [
-              App.darkBottomShadow,
-            ]
-          ),
-        ),
-      ),
+                      decoration: BoxDecoration(
+                          color: App.grey,
+                          borderRadius: BorderRadius.circular(25)
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          SvgPicture.asset("assets/icons/stroke/search.svg",width: 25,height: 25,),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                GestureDetector(
+                    onTap: (){
+                      homeController.pageController.jumpToTab(3);
+                      homeController.selectedPage.value = 3;
+                    },
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
+                    )
+                )
+              ],
+            ),
+          )
+      ),),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Obx(() => Container(
@@ -70,7 +95,7 @@ class _HomeState extends State<Home> {
               :Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 30,),
+              SizedBox(height: 10,),
               _slider(context),
               SizedBox(height: 20,),
               _category(context),
@@ -97,23 +122,25 @@ class _HomeState extends State<Home> {
 
   _slider(BuildContext context){
     return Container(
-      width: Get.width*0.9,
-      height: Get.width*0.45,
+      width: Get.width,
+      height: Get.width*0.5,
+      // color: Colors.red,
       child: Stack(
         children: [
           CarouselSlider(
             options: CarouselOptions(
-              height: Get.width*0.45,
-              aspectRatio: 2/1,
+              height: Get.width*0.5,
+              // aspectRatio: 2/1,
               viewportFraction: 1,
               initialPage: 0,
               enableInfiniteScroll: true,
               reverse: false,
               autoPlay: true,
-              autoPlayInterval: Duration(seconds: 5),
+              // autoPlayInterval: Duration(seconds: 5),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: false,
+              enlargeCenterPage: true,
+              enlargeStrategy: CenterPageEnlargeStrategy.height,
 
               onPageChanged: (index,controller){
                 homeController.activeSlider.value = index;
@@ -128,11 +155,12 @@ class _HomeState extends State<Home> {
                       homeController.mainBannerPress(elm,context);
                     },
                     child: Container(
-                      width: Get.width*0.9,
-                      height: Get.width*0.45,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      width: Get.width,
+                      height: Get.width*0.5,
+                      margin: EdgeInsets.symmetric(horizontal: 0.0),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                        // color: Colors.red,
+                          borderRadius: BorderRadius.circular(0),
                           image: DecorationImage(
                               image: NetworkImage(Api.media_url+elm.image),
                               fit: BoxFit.fill
@@ -147,7 +175,7 @@ class _HomeState extends State<Home> {
          Positioned(
              bottom: 0,
              child:  Container(
-           width: Get.width*0.9,
+           width: Get.width,
            height: 30,
            child: Row(
              mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +221,7 @@ class _HomeState extends State<Home> {
             child: Text(App_Localization.of(context).translate("shop_by_category"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
           ),
           Container(
-            height: Get.height*0.15,
+            height: Get.height*0.1,
             child: ListView.builder(
                 itemCount: homeController.categories.length,
                 scrollDirection: Axis.horizontal,
@@ -208,13 +236,18 @@ class _HomeState extends State<Home> {
                         Get.to(()=>Products(title: homeController.categories[index].title,categories: [homeController.categories[index].categorySlug],));
                       },
                       child: Container(
-                        height: Get.height*0.15,
-                        width:Get.height*0.1,
+                        height: Get.height*0.8,
+                        padding: EdgeInsets.all(5),
+                        width:Get.height*0.2+10,
+                        decoration: BoxDecoration(
+                          color: App.grey,
+                          borderRadius: BorderRadius.circular(15)
+                        ),
                         // color: Colors.red,
-                        child: Column(
+                        child: Row(
                           children: [
                             Container(
-                              height: Get.height*0.1,
+                              height: Get.height*0.08,
                               width:Get.height*0.1,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -224,17 +257,21 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Container(
-                              height: Get.height*0.05,
+                              height: Get.height*0.08,
                               width:Get.height*0.1,
-                              child: Center(
-                                child: Text(homeController.categories[index].title,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(homeController.categories[index].title,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 2,
                                   ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                ),
+                                ],
                               ),
                             )
                           ],
@@ -280,8 +317,9 @@ class _HomeState extends State<Home> {
 
                         decoration: BoxDecoration(
                             // shape: BoxShape.circle,
-                          borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey.withOpacity(0.5)),
+                          borderRadius: BorderRadius.circular(15),
+                            color: App.grey,
+                            // border: Border.all(color: Colors.grey.withOpacity(0.5)),
                             image: DecorationImage(
                                 image: NetworkImage(Api.media_url+homeController.brands[index].image),
                               fit: BoxFit.contain

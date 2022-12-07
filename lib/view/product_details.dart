@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/cart_controller.dart';
+import 'package:orange/controller/home_controller.dart';
 import 'package:orange/controller/product_details_controller.dart';
 import 'package:orange/controller/wishlist_controller.dart';
 import 'package:orange/helper/api.dart';
@@ -13,12 +15,14 @@ import 'package:orange/helper/app.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:orange/helper/global.dart';
 import 'package:orange/widgets/primary_bottun.dart';
+import 'package:orange/widgets/searchDelgate.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetails extends StatelessWidget {
 
   ProductDetailsController productDetailsController = Get.put(ProductDetailsController());
   WishlistController wishlistController = Get.find();
+  HomeController homeController = Get.find();
   CartController cartController = Get.find();
 
   ProductDetails(String slug){
@@ -31,28 +35,62 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      // backgroundColor: App.primary_mid,
-      appBar: AppBar(
-        title: Text(productDetailsController.title.value,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        leading: App.backBtn(context),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              gradient: App.linearGradient,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-              boxShadow: [
-                App.darkBottomShadow,
-              ]
-          ),
-        ),
-      ),
+      backgroundColor: App.background,
+      appBar: App.myHeader(context, height: 60, child: Center(
+          child:  Container(
+            width: Get.width*0.9,
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      child: Icon(Icons.arrow_back_ios,color: App.primary,),
+                    )
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                      showSearch(context: context, delegate: SearchTextField());
+                    },
+                    child: Container(
+                      height: 40,
+
+                      decoration: BoxDecoration(
+                          color: App.grey,
+                          borderRadius: BorderRadius.circular(25)
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10,),
+                          SvgPicture.asset("assets/icons/stroke/search.svg",width: 25,height: 25,),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                GestureDetector(
+                    onTap: (){
+                      Get.back();
+                      Get.back();
+                      homeController.pageController.jumpToTab(3);
+                      homeController.selectedPage.value = 3;
+                    },
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
+                    )
+                )
+              ],
+            ),
+          )
+      ),),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -65,6 +103,7 @@ class ProductDetails extends StatelessWidget {
             )
             : Container(
               width: Get.width,
+              color: App.background,
               child: Column(
                 children: [
                   _slider(context,
@@ -72,15 +111,29 @@ class ProductDetails extends StatelessWidget {
                           && productDetailsController.product!.option!.images.length > 0
                           ?productDetailsController.product!.option!.images:productDetailsController.product!.images
                   ),
-                  SizedBox(height: 20,),
+
                   Container(
                     width: Get.width,
+                    decoration: BoxDecoration(
+                      color: App.background,
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff000000).withOpacity(0.1),
+                          blurRadius: 8,
+                          spreadRadius: 0,
+
+                          offset: Offset(0,-10)
+                        )
+                      ]
+                    ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(productDetailsController.product!.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                          SizedBox(height: 20,),
+                          Text(productDetailsController.product!.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                           SizedBox(height: 10,),
                           Row(
                             children: [
@@ -141,13 +194,16 @@ class ProductDetails extends StatelessWidget {
                             child: Text(App_Localization.of(context).translate("description"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                           ),
                           AnimatedContainer(
+                            color: App.background,
                             key: _key,
                             duration: Duration(milliseconds: 700),
                             height:
                             productDetailsController.veiwMore.value
                                 ?null
                                 :Get.width* 0.5 ,
-                            child: Html(data: productDetailsController.product!.description,),
+                            child: Html(data: productDetailsController.product!.description,style: {
+                              "*":Style(color: Color(0xff7C9299))
+                            }),
                           ),
                           //todo check height of description _key.currentContext!.size.height
                           SizedBox(height: 10,),
@@ -164,7 +220,7 @@ class ProductDetails extends StatelessWidget {
                                   height: 40,
                                   decoration: BoxDecoration(
                                       border: Border.all(color: App.primary),
-                                      borderRadius: BorderRadius.circular(10)
+                                      borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(
                                     child: Text(
@@ -181,11 +237,102 @@ class ProductDetails extends StatelessWidget {
                           _rateReview(context),
 
 
-                          SizedBox(height: 100,)
+
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  productDetailsController.product!.rateReview.isEmpty
+                  ?SizedBox(height: 70,)
+                  :Container(
+                    width: Get.width,
+                    color: App.grey,
+                    padding: EdgeInsets.only(top: 20,bottom: 70),
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: productDetailsController.product!.rateReview.length,
+                        itemBuilder: (context,index){
+                          return Center(
+                            child: Container(
+                                width: Get.width*0.8,
+                                // height: 60,
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Obx(() => productDetailsController.reviewLoading.value
+                                    ?App.shimmerLoading()
+                                    :Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: productDetailsController.product!.rateReview[index].review.isEmpty
+                                  ?CrossAxisAlignment.center
+                                  :CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 5),
+                                      child: CircleAvatar(
+                                          backgroundColor: App.primary,
+                                          radius: 25,
+                                          child: productDetailsController.product!.rateReview[index].image == null
+                                              || productDetailsController.product!.rateReview[index].image!.isEmpty
+                                              ?Icon(Icons.person,size: 30,):
+                                          Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!))
+                                            ),
+                                          )
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 5,top: 5,bottom: 5),
+                                      child: Container(
+                                        width: Get.width*0.8-70,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(productDetailsController.product!.rateReview[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                                                RatingBar.builder(
+                                                  initialRating: productDetailsController.product!.rateReview[index].rate,
+                                                  minRating: 1,
+                                                  direction: Axis.horizontal,
+                                                  allowHalfRating: true,
+                                                  itemCount: 5,
+                                                  itemSize: 15,
+                                                  ignoreGestures: true,
+                                                  itemPadding: EdgeInsets.zero,
+                                                  itemBuilder: (context, _) => Icon(
+                                                    Icons.star,
+                                                    color: Colors.amber,
+                                                  ),
+                                                  onRatingUpdate: (rating) {
+                                                    print(rating);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            productDetailsController.product!.rateReview[index].review.isEmpty
+                                                ?Center()
+                                                :Text(productDetailsController.product!.rateReview[index].review,style: TextStyle(fontSize: 13,overflow: TextOverflow.ellipsis),maxLines: 20,),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),)
+                            ),
+                          );
+                        }),
+                  ),
+
 
                 ],
               ),
@@ -198,51 +345,80 @@ class ProductDetails extends StatelessWidget {
                 Container(
                   width: Get.width,
                   height: 60,
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Color(0xff022B3A),
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(25))
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
                         width: Get.width*0.4,
-                        height: 50,
+                        height: 45,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 2,
-                              blurRadius: 2,
-                            )
-                          ]
+                          color: Color(0xff33535f),
+
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(
-                                onTap: (){
-                                  if(productDetailsController.cartCounter.value > 1){
-                                    productDetailsController.cartCounter.value -- ;
-                                  }
-                                },
-                                child: Icon(Icons.exposure_minus_1,color: Colors.black,)),
-                            Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 25),),
-                            GestureDetector(
-                                onTap: (){
-                                  if(productDetailsController.product!.option!.stock >  productDetailsController.cartCounter.value){
-                                    productDetailsController.cartCounter.value ++ ;
-                                  }
-                                },
-                                child: Icon(Icons.exposure_plus_1,color: Colors.black)),
+
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: GestureDetector(
+                                  onTap: (){
+                                    if(productDetailsController.cartCounter.value > 1){
+                                      productDetailsController.cartCounter.value -- ;
+                                    }
+                                  },
+                                  child:CircleAvatar(
+                                    radius: 18,
+                                    backgroundColor: App.primary,
+                                    child: SvgPicture.asset("assets/icons/minus.svg"),
+                                  )),
+                            ),
+                            Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: GestureDetector(
+                                  onTap: (){
+                                    if(productDetailsController.product!.option!.stock >  productDetailsController.cartCounter.value){
+                                      productDetailsController.cartCounter.value ++ ;
+                                    }
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 18,
+                                    backgroundColor: App.primary,
+                                    child: SvgPicture.asset("assets/icons/plus.svg"),
+                                  ),
+                              ),
+                            )
                           ],
                         ),
                       ),
                       productDetailsController.cartLoading.value?
                       _cartBtnLoading()
-                          :PrimaryBottun(
+                          :productDetailsController.product!.option !=null
+                      &&productDetailsController.product!.option!.stock ==0?
+                      PrimaryBottun(
+                        width: Get.width*0.4,
+                        height: 45,
+                        onPressed: ()async{
+                          // print(_key.currentContext!.size!.height);
+                          // productDetailsController.cartLoading.value = true;
+                          // await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
+                          // productDetailsController.cartLoading.value = false;
+                        },
+                        color: Colors.red,
+                        text: "out_of_stock",
+                        radiuce: 15,
+                        // linearGradient: App.linearGradient,
+                      )
+                      :PrimaryBottun(
                           width: Get.width*0.4,
-                          height: 50,
+                          height: 45,
                           onPressed: ()async{
                             // print(_key.currentContext!.size!.height);
                             productDetailsController.cartLoading.value = true;
@@ -251,7 +427,8 @@ class ProductDetails extends StatelessWidget {
                           },
                           color: App.primary,
                           text: "add_to_cart",
-                          linearGradient: App.linearGradient,
+                        radiuce: 15,
+                          // linearGradient: App.linearGradient,
                       )
                     ],
                   ),
@@ -274,13 +451,6 @@ class ProductDetails extends StatelessWidget {
       width: Get.width,
       height: Get.width*0.7,
 
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          App.darkBottomShadow
-        ],
-        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))
-      ),
       child: Stack(
         children: [
           CarouselSlider(
@@ -306,8 +476,8 @@ class ProductDetails extends StatelessWidget {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                    width: Get.width*0.9,
-                    height: Get.width*0.45,
+                    width: Get.width*0.6,
+                    height: Get.width*0.6,
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -334,28 +504,35 @@ class ProductDetails extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context,index){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 10),
-                            child: Obx(() => Center(
-                              child: AnimatedContainer(
-                                duration: Duration(milliseconds: 400),
-                                height: 5,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                    color: productDetailsController.activeSlider.value==index?App.primary:Colors.grey,
-                                    borderRadius: BorderRadius.circular(2.5)
-                                  // shape: BoxShape.circle,
+                          return Obx(() => Center(
+                            child: AnimatedContainer(
+                              margin: EdgeInsets.symmetric(horizontal: 2),
+                              duration: Duration(milliseconds: 400),
+                              height: 15,
+                              width: 15,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: productDetailsController.activeSlider.value==index?App.primary:Colors.transparent,),
+                              ),
+                              child: Center(
+                                child: Container(
+                                  width: 8,
+                                    height: 8,
+                                   decoration: BoxDecoration(
+                                     shape: BoxShape.circle,
+                                     color: productDetailsController.activeSlider.value==index?App.primary:Colors.grey,
+                                   ),
                                 ),
                               ),
-                            )),
-                          );
+                            ),
+                          ));
                         })
                   ],
                 ),
               )),
           Positioned(
-            top: 10,
-            right: 10,
+            top: 30,
+            right: Get.width*0.05,
             child: GestureDetector(
               onTap: () {
                 wishlistController.wishlistFunction(context, productDetailsController.product!);
@@ -417,7 +594,7 @@ class ProductDetails extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("rams"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+          child: Text(App_Localization.of(context).translate("rams"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),),
         ),
         Container(
           width: Get.width - 20,
@@ -439,13 +616,13 @@ class ProductDetails extends StatelessWidget {
                         height: 30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: productDetailsController.product!.rams[index].selected.value ?App.primary:Colors.grey),
+                          color: productDetailsController.product!.rams[index].selected.value ?App.primary:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.rams[index].selected.value ?App.primary:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.rams[index].ram,),
+                            child: Text(productDetailsController.product!.rams[index].ram,style: TextStyle(color: productDetailsController.product!.rams[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -485,13 +662,13 @@ class ProductDetails extends StatelessWidget {
                         height: 30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: productDetailsController.product!.hards[index].selected.value ?App.primary:Colors.grey),
+                            color: productDetailsController.product!.hards[index].selected.value ?App.primary:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.hards[index].selected.value ?App.primary:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.hards[index].hard,),
+                            child: Text(productDetailsController.product!.hards[index].hard,style: TextStyle(color: productDetailsController.product!.hards[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -531,13 +708,13 @@ class ProductDetails extends StatelessWidget {
                         height: 30,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(color: productDetailsController.product!.additionatlOptions[index].selected.value ?App.primary:Colors.grey),
+                          color: productDetailsController.product!.additionatlOptions[index].selected.value ?App.primary:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.additionatlOptions[index].selected.value ?App.primary:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.additionatlOptions[index].additionatlOption,),
+                            child: Text(productDetailsController.product!.additionatlOptions[index].additionatlOption,style: TextStyle(color: productDetailsController.product!.additionatlOptions[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -575,6 +752,7 @@ class ProductDetails extends StatelessWidget {
               ),
               onRatingUpdate: (rating) async{
                 print(rating);
+                await Api.hasInternet();
                 var succ = await Api.addRate(rating, productDetailsController.product!.languageParent);
                 if(succ){
                   productDetailsController.product!.myRate = rating;
@@ -596,6 +774,7 @@ class ProductDetails extends StatelessWidget {
               width: Get.width - 20 - 100,
               child: TextField(
                 controller: productDetailsController.review,
+                style: TextStyle(fontSize: 12,height: 1),
                 decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10)
@@ -606,111 +785,36 @@ class ProductDetails extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: (){
-                productDetailsController.addReview(context);
-              },
-              child: Container(
-                height: 55,
-                width: 100,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(App_Localization.of(context).translate("post"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
-                      Text(App_Localization.of(context).translate("review"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
-                    ],
+            Container(
+              height: 55,
+              width: 100,
+              child: Center(
+                child: GestureDetector(
+                  onTap: (){
+                    productDetailsController.addReview(context);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      color: App.primary,
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(App_Localization.of(context).translate("post"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
+                          Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
+                        ],
+                    ),
+                  ),
                 ),
               ),
             )
           ],
         ),
         SizedBox(height: 10,),
-        ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: productDetailsController.product!.rateReview.length,
-            itemBuilder: (context,index){
-          return Center(
-            child: Container(
-              width: Get.width*0.8,
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    blurRadius: 2,
-                    spreadRadius: 2,
-                  ),
-                ]
-              ),
-              child: Obx(() => productDetailsController.reviewLoading.value
-                  ?App.shimmerLoading()
-                  :Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: CircleAvatar(
-                        backgroundColor: App.primary,
-                        radius: 25,
-                        child: productDetailsController.product!.rateReview[index].image == null
-                            || productDetailsController.product!.rateReview[index].image!.isEmpty
-                            ?Icon(Icons.person,size: 30,):
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!))
-                          ),
-                        )
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 5,top: 5,bottom: 5),
-                    child: Container(
-                      width: Get.width*0.8-70,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(productDetailsController.product!.rateReview[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-                              RatingBar.builder(
-                                initialRating: productDetailsController.product!.rateReview[index].rate,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemSize: 15,
-                                ignoreGestures: true,
-                                itemPadding: EdgeInsets.zero,
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  print(rating);
-                                },
-                              ),
-                            ],
-                          ),
-                          productDetailsController.product!.rateReview[index].review.isEmpty
-                              ?Center()
-                              :Text(productDetailsController.product!.rateReview[index].review,style: TextStyle(fontSize: 13,overflow: TextOverflow.ellipsis),maxLines: 2,),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),)
-            ),
-          );
-        })
+
       ],
     );
   }
@@ -718,12 +822,13 @@ class ProductDetails extends StatelessWidget {
   _cartBtnLoading(){
     return Container(
       width: Get.width*0.4,
-      height: 50,
+      height: 45,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        gradient: App.linearGradient,
+        borderRadius: BorderRadius.circular(15),
+        // gradient: App.linearGradient,
+        color: App.primary
       ),
-      child: App.shimmerLoading(radius: 10)
+      child: App.shimmerLoading(radius: 15)
     );
   }
 }

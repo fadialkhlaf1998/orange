@@ -56,6 +56,7 @@ class CartController extends GetxController{
       }else{
         // loading.value = true;
         loadingIndex(getCartIndex(option_id),true);
+        await Api.hasInternet();
         bool succ = await Api.addToCart(option_id, count);
         if(succ){
           if(count>0){

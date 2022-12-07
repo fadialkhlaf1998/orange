@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/profile_controller.dart';
@@ -21,27 +22,15 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: App.primary_mid,
-      appBar: AppBar(
-        title: Text(App_Localization.of(context).translate("profile"),
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        leading: App.backBtn(context),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              gradient: App.linearGradient,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-              boxShadow: [
-                App.darkBottomShadow,
-              ]
-          ),
-        ),
-      ),
+      appBar: App.myHeader(context, height: 60, child: Center(
+          child:  Container(
+            width: Get.width*0.9,
+            child: Center(
+              child: Text(App_Localization.of(context).translate("profile"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+            )
+          )
+      ),),
+
       body: Obx(() => Stack(
         children: [
           SingleChildScrollView(

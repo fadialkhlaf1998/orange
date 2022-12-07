@@ -27,7 +27,7 @@ class LoginController extends GetxController{
       Result loginResult = await Api.login(email.text, password.text);
       if(loginResult.code==1){
         homeController.refreshData();
-        Get.off(()=>Main());
+        Get.offAll(()=>Main());
         App.succMsg(context ,"login", loginResult.message);
       }else if(loginResult.code==-10){
         Get.off(()=>VerificationCode());

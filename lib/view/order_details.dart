@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/order_details_controller.dart';
@@ -20,27 +21,57 @@ class OrderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: App.primary_mid,
-      appBar: AppBar(
-        title: Text(App_Localization.of(context).translate("orders"),
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        leading: App.backBtn(context),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              gradient: App.linearGradient,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-              boxShadow: [
-                App.darkBottomShadow,
-              ]
-          ),
-        ),
-      ),
+      appBar: App.myHeader(context, height: 60, child: Center(
+          child:  Container(
+            width: Get.width*0.9,
+            child: Row(
+              children: [
+                GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      width: 35,
+                      height: 35,
+                      child: Icon(Icons.arrow_back_ios,color: App.primary),
+                    )
+                ),
+                SizedBox(width: 20,),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: (){
+                    },
+                    child: Container(
+                      height: 40,
+
+                      decoration: BoxDecoration(
+                        // color: App.grey,
+                          borderRadius: BorderRadius.circular(25)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(App_Localization.of(context).translate("orders"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),)
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20,),
+                GestureDetector(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                      width: 25,
+                      height: 25,
+                      child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",color: Colors.transparent,),
+                    )
+                )
+              ],
+            ),
+          )
+      ),),
       body: Obx(() => SingleChildScrollView(
         child: orderDetailsController.loading.value?
             Container(height: Get.height*0.5, child: App.loading(context),)

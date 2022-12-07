@@ -80,7 +80,9 @@ flutter:
   assets:
     - assets/
     - assets/icons/
-    - assets//images/
+    - assets/icons/stroke/
+    - assets/icons/fill/
+    - assets/images/
     - languages/
 
   # An image asset can refer to one or more resolution-specific "variants", see

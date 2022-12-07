@@ -127,5 +127,9 @@
   "success_return": "We Received Your Request We Will Confirm You As Soon As Possible",
   "returned": "Returned",
   "have_account": "have Account",
-  "donot_have_account": "Don't have Account"
+  "donot_have_account": "Don't have Account",
+  "your_wishlist_is_empty": "Your Wishlist is Empty",
+  "your_cart_is_empty": "Your Cart is Empty",
+  "what_you_are_waiting_for": "What Are You Waiting For",
+  "continue_shopping": "Continue Shopping"
 }
