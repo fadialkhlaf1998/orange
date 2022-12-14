@@ -21,7 +21,7 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -34,8 +34,9 @@ class Profile extends StatelessWidget {
       body: Obx(() => Stack(
         children: [
           SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 0),
               child: Global.customer == null
                   ?Container(
                 width: Get.width,
@@ -45,73 +46,93 @@ class Profile extends StatelessWidget {
                 ),
               )
                   :
-              Column(
-                children: [
-                 // Spacer(),
-                  SizedBox(height: 30,),
-                  _profileDetails(context),
+              Container(
+                height: Get.height,
+                child: Column(
+                  children: [
+                   // Spacer(),
+                    SizedBox(height: 10,),
+                    _profileDetails(context),
+                    SizedBox(height: 20,),
 
-                  SizedBox(height: Get.height*0.15,),
+                   Expanded(
+                       child:Container(
+                         padding: EdgeInsets.symmetric(horizontal: 10),
+                         decoration: BoxDecoration(
+                           color: Color(0xffE7E8EA),
+                           borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+                         ),
+                         child: SingleChildScrollView(
+                           child: Column(
+                     children: [
+                        SizedBox(height: 30,),
+                           ProfileBtn(onPressed: (){
+                             Get.to(()=>Orders());
+                           }, icon: SvgPicture.asset("assets/icons/Bag_order.svg",color: App.dark_grey,), text: "orders"),
+                           SizedBox(height: 20,),
 
-                  ProfileBtn(onPressed: (){
-                    Get.to(()=>Orders());
-                  }, icon: Icon(Icons.shop_2_outlined,color: Colors.black,), text: "orders"),
-                  SizedBox(height: 20,),
+                           ProfileBtn(onPressed: (){
+                             Get.to(()=>Returns());
+                           }, icon: SvgPicture.asset("assets/icons/Bag_return.svg",), text: "returns"),
+                           SizedBox(height: 20,),
 
-                  ProfileBtn(onPressed: (){
-                    Get.to(()=>Returns());
-                  }, icon: Icon(Icons.assignment_returned_outlined,color: Colors.black,), text: "returns"),
-                  SizedBox(height: 20,),
+                           ProfileBtn(onPressed: (){
+                             Get.to(()=>Address());
+                           }, icon:  SvgPicture.asset("assets/icons/address.svg",), text: "address"),
+                           SizedBox(height: 20,),
 
-                  ProfileBtn(onPressed: (){
-                    Get.to(()=>Address());
-                  }, icon: Icon(Icons.location_on_outlined,color: Colors.black,), text: "address"),
-                  SizedBox(height: 20,),
+                           GestureDetector(
+                             onTap: (){
+                               profileController.changeLanguage(context);
+                             },
+                             child: Stack(
+                               children: [
+                                 ProfileBtn(onPressed: (){
+                                   profileController.changeLanguage(context);
+                                 }, icon: SvgPicture.asset("assets/icons/language.svg",), text: "change_language"),
+                                 Global.locale=="en"?Positioned(
+                                     right: 30,
+                                     child: Container(
+                                       height: 30,
+                                       child: Center(
+                                         child: Text("العربية",style: TextStyle(fontSize: 16),),
+                                       ),
+                                     )):Center(),
+                                 Global.locale=="ar"?Positioned(
+                                     left: 30,
+                                     child: Container(
+                                       height: 30,
+                                       child: Center(
+                                         child: Text("English",style: TextStyle(fontSize: 16),),
+                                       ),
+                                     )):Center(),
+                               ],
+                             ),
+                           ),
 
-                  GestureDetector(
-                    onTap: (){
-                      profileController.changeLanguage(context);
-                    },
-                    child: Stack(
-                      children: [
-                        ProfileBtn(onPressed: (){
-                          profileController.changeLanguage(context);
-                        }, icon: Icon(Icons.language,color: Colors.black), text: "change_language"),
-                        Global.locale=="en"?Positioned(
-                          right: 30,
-                            child: Container(
-                              height: 30,
-                          child: Center(
-                            child: Text("العربية",style: TextStyle(fontSize: 16),),
-                          ),
-                        )):Center(),
-                        Global.locale=="ar"?Positioned(
-                            left: 30,
-                            child: Container(
-                              height: 30,
-                              child: Center(
-                                child: Text("English",style: TextStyle(fontSize: 16),),
-                              ),
-                            )):Center(),
-                      ],
-                    ),
-                  ),
+                           SizedBox(height: 20,),
+                           ProfileBtn(onPressed: (){
+                             Get.to(()=>ChangePassword());
+                           }, icon: SvgPicture.asset("assets/icons/change_password.svg",), text: "change_password"),
+                           SizedBox(height: 20,),
+                           ProfileBtn(onPressed: (){
+                             // profileController.deleteAccount(context);
+                             _confirmDialog(context,"delete_account");
+                           }, icon: SvgPicture.asset("assets/icons/delete.svg",), text: "delete_account"),
+                           SizedBox(height: 20,),
+                           ProfileBtn(onPressed: (){
+                             // profileController.logout();
+                             _confirmDialog(context,"logout");
+                           }, icon: SvgPicture.asset("assets/icons/logout.svg",), text: "logout"),
+                           SizedBox(height: 40,),
+                     ],
+                   ),
+                         ),
+                       ),
+                   )
+                  ],
 
-                  SizedBox(height: 20,),
-                  ProfileBtn(onPressed: (){
-                    Get.to(()=>ChangePassword());
-                  }, icon: Icon(Icons.password,color: Colors.black), text: "change_password"),
-                  SizedBox(height: 20,),
-                  ProfileBtn(onPressed: (){
-                    profileController.deleteAccount(context);
-                  }, icon: Icon(Icons.delete,color: Colors.black), text: "delete_account"),
-                  SizedBox(height: 20,),
-                  ProfileBtn(onPressed: (){
-                    profileController.logout();
-                  }, icon: Icon(Icons.logout,color: Colors.black), text: "logout"),
-                  SizedBox(height: 20,),
-                ],
-
+                ),
               ),
             ),
           ),
@@ -194,18 +215,77 @@ class Profile extends StatelessWidget {
       )),
     );
   }
+
+  _confirmDialog(BuildContext context,String title) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(App_Localization.of(context).translate("confirm_dialog")),
+        content: Text(
+          App_Localization.of(context).translate("are_u_want_to")+
+          " "+ App_Localization.of(context).translate(title)+" ?",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+        ),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Get.back();
+                },
+                child: Container(
+                  width: 100,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: App.dark_grey
+                  ),
+                  child: Center(
+                    child: Text(App_Localization.of(context).translate("cancel"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  if(title == "logout"){
+                    profileController.logout();
+                  }else{
+                    profileController.deleteAccount(context);
+                  }
+                },
+                child: Container(
+                  width: 100,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: App.primary
+                  ),
+                  child: Center(
+                    child: Text(App_Localization.of(context).translate("submit"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   _profileDetails(BuildContext context){
     return Container(
       width: Get.width,
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Stack(
             children: [
               Container(
-                width: Get.width * 0.15 ,
-                height: Get.width * 0.15,
+                width: Get.width * 0.2 ,
+                height: Get.width * 0.2,
                 decoration: BoxDecoration(
-                  color: App.primary,
+                  color: Color(0xffE7E8EA),
                   shape: BoxShape.circle,
                   image: Global.customer!.image.isEmpty?null
                       :DecorationImage(
@@ -214,7 +294,7 @@ class Profile extends StatelessWidget {
                   )
                 ),
                 child: Global.customer!.image.isEmpty
-                ?Icon(Icons.person,size: Get.width * 0.1,color: Colors.white,)
+                ?Icon(Icons.person,size: Get.width * 0.15,color: Colors.white,)
                     :Center(),
               ),
               Positioned(
@@ -225,10 +305,10 @@ class Profile extends StatelessWidget {
                       profileController.showPhotoPicker.value = true;
                     },
                     child: Container(
-                        padding: EdgeInsets.all(2),
+                        padding: EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
+                          color: App.primary,
+                          shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
@@ -237,7 +317,7 @@ class Profile extends StatelessWidget {
                             )
                           ]
                         ),
-                        child: Icon(Icons.edit,color: App.primary,size: 15,)),
+                        child: Icon(Icons.edit_outlined,color: Colors.white,size: 15,)),
                 ),
               ),
             ],
@@ -248,15 +328,16 @@ class Profile extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(App_Localization.of(context).translate("hello")+", ",style: TextStyle(fontWeight: FontWeight.bold , ),),
-                    Text(Global.customer!.name,),
+                    Text(App_Localization.of(context).translate("hello")+", ",style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 18 ,color: App.dark_blue),),
+                    Text(Global.customer!.name,style: TextStyle(fontSize: 18,color: App.dark_blue),),
                   ],
                 ),
-                Text(Global.customer!.email,),
+                Text(Global.customer!.email,style: TextStyle(color: App.dark_blue),),
               ],
             ),
           )

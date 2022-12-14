@@ -20,7 +20,7 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -83,8 +83,16 @@ class OrderDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 30,),
-                Text("#"+orderDetailsController.order!.id.toString(),style: TextStyle(fontWeight: FontWeight.bold),),
-                Text(App.getDate(orderDetailsController.order!.placedAt),style: TextStyle(fontWeight: FontWeight.bold),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    getState(context, orderDetailsController.order!.state),
+                    Text(App.getDate(orderDetailsController.order!.placedAt),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                  ],
+                ),
+                SizedBox(height: 15,),
+                Text("#"+orderDetailsController.order!.id.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
+
 
                 SizedBox(height: 15,),
                 Row(
@@ -92,18 +100,18 @@ class OrderDetails extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(App_Localization.of(context).translate("payment_method")+":",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Text(App_Localization.of(context).translate("payment_method")+":",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
                         SizedBox(width: 5,),
                         getPaid(context, orderDetailsController.order!.isPaid),
                       ],
                     ),
-                    getState(context, orderDetailsController.order!.state),
+
                   ],
                 ),
 
                 SizedBox(height: 15,),
-                Text(App_Localization.of(context).translate("shipping_info"),style: TextStyle(fontWeight: FontWeight.bold)),
-                Text(orderDetailsController.order!.addressInfo,),
+                Text(App_Localization.of(context).translate("shipping_info"),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue)),
+                Text(orderDetailsController.order!.addressInfo,style: TextStyle(color: App.dark_blue,fontSize: 11),),
 
                 SizedBox(height: 15,),
                 ListView.builder(
@@ -112,63 +120,72 @@ class OrderDetails extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context,index){
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Container(
-                        width: Get.width,
-                        height: 100,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(15),
+                            color: Color(0xffE7E8EA)
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(image: NetworkImage(Api.media_url+orderDetailsController.order!.lineItems[index].image)),
-                              ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Container(
+                            width: Get.width,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Color(0xffE7E8EA)
                             ),
-                            SizedBox(width: 10,),
-                            Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      orderDetailsController.order!.lineItems[index].title +
-                                          (orderDetailsController.order!.lineItems[index].hard == "" ?"":" "+orderDetailsController.order!.lineItems[index].hard)+
-                                          (orderDetailsController.order!.lineItems[index].ram == "" ?"":" "+orderDetailsController.order!.lineItems[index].ram)+
-                                          (orderDetailsController.order!.lineItems[index].color == "" ?"":" "+orderDetailsController.order!.lineItems[index].color)+
-                                          (orderDetailsController.order!.lineItems[index].additionatlOption == "" ?"":" "+orderDetailsController.order!.lineItems[index].additionatlOption)+
-                                          (" X "+orderDetailsController.order!.lineItems[index].count.toString()),
-                                      style: TextStyle(fontWeight: FontWeight.normal,color: App.grey),),
-                                    Row(
+                            child: Row(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(image: NetworkImage(Api.media_url+orderDetailsController.order!.lineItems[index].image)),
+                                  ),
+                                ),
+                                SizedBox(width: 10,),
+                                Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(App_Localization.of(context).translate("price_one_piece")+":",style: TextStyle(fontWeight: FontWeight.bold),),
-                                        SizedBox(width: 5,),
-                                        Text(orderDetailsController.order!.lineItems[index].priceOnePiece.toString()+" "+App_Localization.of(context).translate("aed")),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(App_Localization.of(context).translate("total")+":",style: TextStyle(fontWeight: FontWeight.bold),),
-                                        SizedBox(width: 5,),
-                                        Text((orderDetailsController.order!.lineItems[index].priceOnePiece * orderDetailsController.order!.lineItems[index].count).toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed")),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        orderDetailsController.order!.lineItems[index].returned>0?
-                                        Text( orderDetailsController.order!.lineItems[index].returned.toString() +" "+ App_Localization.of(context).translate("items")+" "+App_Localization.of(context).translate("returned"),style: TextStyle(color: App.red,fontWeight: FontWeight.bold),)
-                                            :Center()
+                                        Text(
+                                          orderDetailsController.order!.lineItems[index].title +
+                                              (orderDetailsController.order!.lineItems[index].hard == "" ?"":" "+orderDetailsController.order!.lineItems[index].hard)+
+                                              (orderDetailsController.order!.lineItems[index].ram == "" ?"":" "+orderDetailsController.order!.lineItems[index].ram)+
+                                              (orderDetailsController.order!.lineItems[index].color == "" ?"":" "+orderDetailsController.order!.lineItems[index].color)+
+                                              (orderDetailsController.order!.lineItems[index].additionatlOption == "" ?"":" "+orderDetailsController.order!.lineItems[index].additionatlOption)+
+                                              (" X "+orderDetailsController.order!.lineItems[index].count.toString()),
+                                          style: TextStyle(fontWeight: FontWeight.normal,color: App.dark_blue),),
+                                        Row(
+                                          children: [
+                                            Text(App_Localization.of(context).translate("price_one_piece")+":",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
+                                            SizedBox(width: 5,),
+                                            Text(orderDetailsController.order!.lineItems[index].priceOnePiece.toString()+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: App.dark_blue),),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(App_Localization.of(context).translate("total")+":",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
+                                            SizedBox(width: 5,),
+                                            Text((orderDetailsController.order!.lineItems[index].priceOnePiece * orderDetailsController.order!.lineItems[index].count).toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: App.dark_blue),),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            orderDetailsController.order!.lineItems[index].returned>0?
+                                            Text( orderDetailsController.order!.lineItems[index].returned.toString() +" "+ App_Localization.of(context).translate("items")+" "+App_Localization.of(context).translate("returned"),style: TextStyle(color: App.red,fontWeight: FontWeight.bold),)
+                                                :Center()
+                                          ],
+                                        )
                                       ],
                                     )
-                                  ],
-                                )
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     );
@@ -182,7 +199,22 @@ class OrderDetails extends StatelessWidget {
                       itemDetails(context,"shipping",orderDetailsController.order!.shipping),
                       orderDetailsController.order!.discount>0?itemDetails(context,"discount",orderDetailsController.order!.discount):Center(),
                       itemDetails(context,"vat",orderDetailsController.order!.vat),
-                      itemDetails(context,"total",orderDetailsController.order!.total),
+                      Divider(height: 10,color: App.dark_blue.withOpacity(0.2),thickness:1),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(App_Localization.of(context).translate("total"),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(orderDetailsController.order!.total.toStringAsFixed(2),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold,fontSize: 18)),
+                              SizedBox(width: 3,),
+                              Text(App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 12,color: App.dark_blue,fontWeight: FontWeight.bold)),
+                            ],
+                          )
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -197,14 +229,18 @@ class OrderDetails extends StatelessWidget {
 
   itemDetails(BuildContext context,String title,double amount){
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(App_Localization.of(context).translate(title)),
-        SizedBox(width: 15,),
-        Expanded(
-            child: MySeparator()
-        ),
-        SizedBox(width: 15,),
-        Text(amount.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"))
+        Text(App_Localization.of(context).translate(title),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(amount.toStringAsFixed(2),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+            SizedBox(width: 3,),
+            Text(App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.dark_blue,fontWeight: FontWeight.bold)),
+          ],
+        )
       ],
     );
   }
@@ -212,11 +248,38 @@ class OrderDetails extends StatelessWidget {
 
   getState(BuildContext context , int state){
     if(state == 1){
-      return Text(App_Localization.of(context).translate("delivered"),style: TextStyle(color: App.green,fontWeight: FontWeight.bold),);
+      return Container(
+          decoration: BoxDecoration(
+              color: App.green,
+              borderRadius: BorderRadius.circular(25)
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+            child: Text(App_Localization.of(context).translate("delivered"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          )
+      );
     }else if(state == 0){
-      return Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),);
+      return Container(
+        decoration: BoxDecoration(
+          color: App.primary,
+          borderRadius: BorderRadius.circular(25)
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+          child: Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+        )
+      );
     }else{
-      return Text(App_Localization.of(context).translate("canceled"),style: TextStyle(color: App.red,fontWeight: FontWeight.bold),);
+      return Container(
+          decoration: BoxDecoration(
+              color: App.red,
+              borderRadius: BorderRadius.circular(25)
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+            child: Text(App_Localization.of(context).translate("canceled"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          )
+      );
     }
   }
 

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.5" height="24.879" viewBox="0 0 23.5 24.879">
+  <g id="Bag" transform="translate(-0.052 -0.028)">
+    <path id="Path_33955" d="M16.069,17.857H5.917c-3.729,0-6.59-1.347-5.778-6.769l.946-7.348C1.586,1.035,3.312,0,4.826,0H17.205c1.536,0,3.162,1.113,3.741,3.741l.946,7.348C22.582,15.9,19.8,17.857,16.069,17.857Z" transform="translate(0.801 6.3)" fill="none" stroke="#acbac3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_33956" d="M10.531,5.255A5.255,5.255,0,0,0,5.277,0h0A5.255,5.255,0,0,0,0,5.255H0" transform="translate(6.506 0.778)" fill="none" stroke="#acbac3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <g id="Group_12629" data-name="Group 12629" transform="translate(16.801 9.51) rotate(90)">
+      <path id="Path_36198" data-name="Path 36198" d="M1,4.75H11M7.25,1,11,4.75,7.25,8.5" transform="translate(0 0)" fill="none" stroke="#acbac3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" fill-rule="evenodd"/>
+    </g>
+  </g>
+</svg>

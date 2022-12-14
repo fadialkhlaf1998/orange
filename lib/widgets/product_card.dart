@@ -57,7 +57,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(product.title,maxLines: 2,
-                          style: const TextStyle(fontSize: 14,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis,),
+                          style: const TextStyle(fontSize: 13,height: 1,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis,),
                         ),
                         App.price(context,product.oldPrice,product.price),
                       ],

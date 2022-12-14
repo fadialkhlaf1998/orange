@@ -16,7 +16,7 @@ class Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -94,18 +94,11 @@ class Address extends StatelessWidget {
               child: Center(
                 child: Container(
                   padding: EdgeInsets.all(10),
-                  height: 200,
+                  height: 210,
                   width: Get.width*0.9,
                   decoration: BoxDecoration(
-                      color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        blurRadius: 4,
-                        spreadRadius: 2
-                      ),
-                    ]
+                      color: App.grey,
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Stack(
                     children: [
@@ -114,7 +107,25 @@ class Address extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           // item(context,"",addressController.address[index].nickName),
-                          Text(addressController.address[index].nickName,style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 16),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(addressController.address[index].nickName,style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold,fontSize: 18),),
+                              addressController.address[index].isDefault == 1?Container(
+                                width: 70,
+                                height: 30,
+                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                decoration: BoxDecoration(
+                                  // gradient: App.linearGradient,
+                                    color: App.primary,
+                                    borderRadius: BorderRadius.circular(15)
+                                ),
+                                child: Center(
+                                  child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                ),
+                              ):Center()
+                            ],
+                          ),
                           item(context,"phone",addressController.address[index].dailCode+addressController.address[index].phone),
                           item(context,"stret_name",addressController.address[index].stretName),
                           item(context,"building",addressController.address[index].building),
@@ -125,13 +136,13 @@ class Address extends StatelessWidget {
                               item(context,"flat",addressController.address[index].flat.toString()),
                             ],
                           ),
-                          Text(addressController.address[index].addetionalDescription,overflow: TextOverflow.ellipsis,),
+                          Text(addressController.address[index].addetionalDescription,overflow: TextOverflow.ellipsis,style: TextStyle(color: App.dark_blue),),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               addressController.address[index].isDefault == 1?Center(): Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                padding: const EdgeInsets.symmetric(horizontal: 0),
                                 child: GestureDetector(
                                   onTap: (){
                                     addressController.setDefault(index);
@@ -144,38 +155,53 @@ class Address extends StatelessWidget {
                                       // gradient: App.linearGradient
                                     ),
                                     child: Center(
-                                      child: Text(App_Localization.of(context).translate("set_default"),style: TextStyle(color: Colors.white),),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(App_Localization.of(context).translate("set_default"),style: TextStyle(color: Colors.white),),
+                                      )
                                     ),
                                   ),
                                 ),
                               ),
-                              IconButton(onPressed: (){
-                                Get.to(()=>AddAddress(address: addressController.address[index],));
-                              }, icon: Icon(Icons.edit,color: App.primary,)),
-                              IconButton(onPressed: (){
-                                addressController.deleteAddress(index);
-                              }, icon: Icon(Icons.delete,color: App.red,)),
+                              SizedBox(width: 15,),
+                              GestureDetector(
+                                onTap: (){
+                                  Get.to(()=>AddAddress(address: addressController.address[index],));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: App.dark_grey)
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(3),
+                                    child: Icon(Icons.edit_outlined,color: App.dark_grey,),
+                                  )
+                                ),
+                              ),
+                              SizedBox(width: 15,),
+                              GestureDetector(
+                                onTap: (){
+                                  addressController.deleteAddress(index);
+                                },
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: App.dark_grey)
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(3),
+                                      child: Icon(Icons.delete_outline,color: App.dark_grey,),
+                                    )
+                                ),
+                              ),
+
 
                             ],
                           )
                         ],
                       ),
-                      addressController.address[index].isDefault == 1?Positioned(
-                        top: 0,
-                        left: Global.locale == "ar"?0:null,
-                        right: Global.locale == "en"?0:null,
-                        child: Container(
-                        width: 70,
-                        height: 27,
-                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                        decoration: BoxDecoration(
-                            gradient: App.linearGradient,
-                            borderRadius: BorderRadius.circular(5)
-                        ),
-                        child: Center(
-                          child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                        ),
-                      )):Center(),
+
                     ],
                   ),
                 ),
@@ -190,12 +216,12 @@ class Address extends StatelessWidget {
       children: [
         Column(
           children: [
-            key==""?Center():Text(App_Localization.of(context).translate(key)+": ",style: TextStyle(fontWeight: FontWeight.bold),),
+            key==""?Center():Text(App_Localization.of(context).translate(key)+": ",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
           ],
         ),
         Column(
           children: [
-            value==""?Center():Text(value,overflow: TextOverflow.ellipsis,),
+            value==""?Center():Text(value,overflow: TextOverflow.ellipsis,style: TextStyle(color: App.dark_blue),),
           ],
         )
       ],

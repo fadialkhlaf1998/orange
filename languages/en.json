@@ -131,5 +131,9 @@
   "your_wishlist_is_empty": "Your Wishlist is Empty",
   "your_cart_is_empty": "Your Cart is Empty",
   "what_you_are_waiting_for": "What Are You Waiting For",
-  "continue_shopping": "Continue Shopping"
+  "continue_shopping": "Continue Shopping",
+  "remove": "Remove",
+  "confirm_dialog": "Confirm Dialog",
+  "are_u_want_to": "Are Your Want To",
+  "cancel": "Cancel"
 }
