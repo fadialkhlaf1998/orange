@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -45,36 +46,48 @@ class Products extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
-      appBar:  AppBar(
-        title: Text(title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-              color: Colors.white
-          ),
-        ),
-        leading: App.backBtn(context),
-        actions: [
-          IconButton(onPressed: (){
-            filterSortBottomSheet(context);
-          }, icon: Icon(Icons.filter_list_alt,color: Colors.white)),
-          IconButton(onPressed: (){
-            showSearch(context: context, delegate: SearchTextField());
-          }, icon: Icon(Icons.search,color: Colors.white)),
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              gradient: App.linearGradient,
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight:  Radius.circular(20)),
-              boxShadow: [
-                App.darkBottomShadow,
-              ]
-          ),
-        ),
-      ),
+      backgroundColor: App.background,
+      appBar:App.myHeader(context, height: 60, child: Center(
+          child:  Container(
+              width: Get.width*0.9,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          Get.back();
+                        },
+                        child: Icon(Icons.arrow_back_ios,color: App.primary,),
+                      ),
+                      SizedBox(width: 10,),
+                      Text(title,style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          filterSortBottomSheet(context);
+                        },
+                        child: SvgPicture.asset("assets/icons/Filter.svg",color: App.primary),
+                      ),
+                      SizedBox(width: 10,),
+                      GestureDetector(
+                        onTap: (){
+                          showSearch(context: context, delegate: SearchTextField());
+                        },
+                        child: SvgPicture.asset("assets/icons/stroke/search.svg",color: App.primary),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+          )
+      ),),
       body: Obx(()=>Column(
         children: [
           Expanded(
@@ -124,56 +137,78 @@ class Products extends StatelessWidget {
     }
     showMaterialModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15),
-            topRight: Radius.circular(15),
-          )
-      ),
+      // shape: const RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(15),
+      //       topRight: Radius.circular(15),
+      //     )
+      // ),
       builder: (context) => SingleChildScrollView(
         controller: ModalScrollController.of(context),
-        child: Container(
+        child: Obx(() =>  Container(
           width: Get.width,
           height: Get.height * 0.8,
           decoration: BoxDecoration(
-              gradient: App.linearGradient,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15),
-              topRight: Radius.circular(15),
-            )
+            // gradient: App.linearGradient,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              color: Colors.white
           ),
           child: DefaultTabController(
             length: 2,  // Added
-            initialIndex: 0, //Added
+            initialIndex: productsController.selectedTap.value, //Added
             child: Column(
               children:[
-                TabBar(
+                Container(
+                  height: 55,
+                  margin: EdgeInsets.only(bottom: 0,left: 15,right: 15,top: 15),
+                  decoration: BoxDecoration(
+                      color: App.grey,
+                      borderRadius: BorderRadius.circular(15)
+                  ),
+                  child: TabBar(
 
-                  indicatorColor: Colors.white,
-                  tabs: [
-                    Tab(child: Container(
-                      width: Get.width*0.5,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.filter_list,color: Colors.white),
-                          SizedBox(width: 10,),
-                          Text(App_Localization.of(context).translate("filter"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),)
-                        ],
-                      ),
-                    ),),
-                    Tab(child: Container(
-                      width: Get.width*0.5,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.compare_arrows,color: Colors.white),
-                          SizedBox(width: 10,),
-                          Text(App_Localization.of(context).translate("sort"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),)
-                        ],
-                      ),
-                    ),),
-                  ],
+                    indicatorColor: Colors.transparent,
+                    onTap: (index){
+                      productsController.selectedTap.value = index;
+                    },
+                    tabs: [
+                      Tab(child: Container(
+                        width: Get.width*0.5,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: productsController.selectedTap.value == 0?Colors.white:App.grey
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.filter_list,color: productsController.selectedTap.value == 0?App.primary:App.dark_grey),
+                            SizedBox(width: 10,),
+                            Text(App_Localization.of(context).translate("filter"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: productsController.selectedTap.value == 0?Colors.black:App.dark_grey),)
+                          ],
+                        ),
+                      ),),
+                      Tab(child: Container(
+                        width: Get.width*0.5,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: productsController.selectedTap.value == 1?Colors.white:App.grey
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset("assets/icons/sort.svg",color: productsController.selectedTap.value == 1?App.primary:App.dark_grey,width: 12,),
+                            SizedBox(width: 10,),
+                            Text(App_Localization.of(context).translate("sort"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: productsController.selectedTap.value == 1?Colors.black:App.dark_grey),)
+                          ],
+                        ),
+                      ),),
+                    ],
+                  ),
                 ),
                 Expanded(child: TabBarView(
                   children: [
@@ -182,11 +217,11 @@ class Products extends StatelessWidget {
                   ],
                 ))
               ],
-              
+
             ),
           ),
 
-        ),
+        ),)
       ),
     );
   }
@@ -202,33 +237,43 @@ class Products extends StatelessWidget {
             children: [
               productsController.fake.value?Center():Center(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 child: GestureDetector(
                   onTap: (){
                     productsController.openFilterCategory.value = productsController.openFilterCategory.value == 0 ? 1 : 0;
                   },
-                  child: Row(
-                    children: [
-                      Text(App_Localization.of(context).translate("category"),style: TextStyle(color: App.primary,fontSize: 18,fontWeight: FontWeight.bold),),
-                      Center(
-                        child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 350),
-                            transitionBuilder: (child, anim) => RotationTransition(
-                              turns: child.key == ValueKey('icon1')
-                                  ? Tween<double>(begin: 1, end: 0).animate(anim)
-                                  : Tween<double>(begin: 0, end: 1).animate(anim),
-                              child: ScaleTransition(scale: anim, child: child),
-                            ),
-                            child: productsController.openFilterCategory.value == 0
-                                ? Icon(Icons.arrow_drop_down,size: 30,color: App.primary, key: const ValueKey('icon1'))
-                                : Icon(
-                              Icons.arrow_drop_up,size: 30,
-                              color: App.primary,
-                              key: const ValueKey('icon2'),
-                            )),
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: App.grey,
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 15,),
+                        Text(App_Localization.of(context).translate("category"),style: TextStyle(color: App.primary,fontSize: 18,fontWeight: FontWeight.bold),),
+                        Spacer(),
+                        Center(
+                          child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 350),
+                              transitionBuilder: (child, anim) => RotationTransition(
+                                turns: child.key == ValueKey('icon1')
+                                    ? Tween<double>(begin: 1, end: 0).animate(anim)
+                                    : Tween<double>(begin: 0, end: 1).animate(anim),
+                                child: ScaleTransition(scale: anim, child: child),
+                              ),
+                              child: productsController.openFilterCategory.value == 0
+                                  ? Icon(Icons.keyboard_arrow_down,size: 30,color: App.primary, key: const ValueKey('icon1'))
+                                  : Icon(
+                                Icons.keyboard_arrow_up,size: 30,
+                                color: App.primary,
+                                key: const ValueKey('icon2'),
+                              )),
 
-                      )
-                    ],
+                        ),
+                        SizedBox(width: 15,),
+                      ],
+                    ),
                   ),
                 )
               ),
@@ -242,13 +287,26 @@ class Products extends StatelessWidget {
                     itemBuilder: (context,index){
                       return Container(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(homeController.categories[index].title),
-                                  SizedBox(width: 10,),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        height: 30,
+                                        width: 30,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(image: NetworkImage(Api.media_url+homeController.categories[index].image))
+                                        ),
+                                      ),
+                                      SizedBox(width: 10,),
+                                      Text(homeController.categories[index].title,style: TextStyle(fontWeight: FontWeight.bold,),),
+                                    ],
+                                  ),
                                   Checkbox(value: homeController.categories[index].isCheckedFilter(productsController.filterResult!.filter.categories)
                                       , onChanged: (value){
                                         if(value!){
@@ -269,21 +327,29 @@ class Products extends StatelessWidget {
                                   itemBuilder: (context,subIndex){
                                     return Container(
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        padding: EdgeInsets.symmetric(horizontal: 0),
                                         child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
-
-
-                                            Checkbox(value: homeController.categories[index].subCategories[subIndex].isCheckedFilter(productsController.filterResult!.filter.subCategories)
-                                                , onChanged: (value){
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: 30,
+                                                  width: 30,
+                                                ),
+                                                SizedBox(width: 10,),
+                                                Text(homeController.categories[index].subCategories[subIndex].title,style: TextStyle(fontWeight: FontWeight.bold,color:App.dark_grey),),
+                                              ],
+                                            ),
+                                            Checkbox(value: homeController.categories[index].subCategories[subIndex].isCheckedFilter(productsController.filterResult!.filter.subCategories),
+                                                shape: CircleBorder(),
+                                                onChanged: (value){
                                                   if(value!){
                                                     productsController.addSubCategory(homeController.categories[index].subCategories[subIndex].subCategorySlug);
                                                   }else{
                                                     productsController.removeSubCategory(homeController.categories[index].subCategories[subIndex].subCategorySlug);
                                                   }
                                                 }),
-                                            SizedBox(width: 10,),
-                                            Text(homeController.categories[index].subCategories[subIndex].title),
                                           ],
                                         ),
                                       ),
@@ -299,99 +365,113 @@ class Products extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: GestureDetector(
-                    onTap: (){
-                      productsController.openFilterBrand.value = productsController.openFilterBrand.value == 0 ? 1 : 0;
-                    },
-                    child: Row(
-                      children: [
-                        Text(App_Localization.of(context).translate("brands"),style: TextStyle(color: App.primary,fontSize: 18,fontWeight: FontWeight.bold),),
-                        Center(
-                          child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 350),
-                              transitionBuilder: (child, anim) => RotationTransition(
-                                turns: child.key == ValueKey('icon1')
-                                    ? Tween<double>(begin: 1, end: 0).animate(anim)
-                                    : Tween<double>(begin: 0, end: 1).animate(anim),
-                                child: ScaleTransition(scale: anim, child: child),
-                              ),
-                              child: productsController.openFilterBrand.value == 0
-                                  ? Icon(Icons.arrow_drop_down,size: 30,color: App.primary, key: const ValueKey('icon1'))
-                                  : Icon(
-                                Icons.arrow_drop_up,size: 30,
-                                color: App.primary,
-                                key: const ValueKey('icon2'),
-                              )),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: App.grey,
+                        borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: GestureDetector(
+                      onTap: (){
+                        productsController.openFilterBrand.value = productsController.openFilterBrand.value == 0 ? 1 : 0;
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(width: 15,),
+                          Text(App_Localization.of(context).translate("brands"),style: TextStyle(color: App.primary,fontSize: 18,fontWeight: FontWeight.bold),),
+                          Spacer(),
+                          Center(
+                            child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 350),
+                                transitionBuilder: (child, anim) => RotationTransition(
+                                  turns: child.key == ValueKey('icon1')
+                                      ? Tween<double>(begin: 1, end: 0).animate(anim)
+                                      : Tween<double>(begin: 0, end: 1).animate(anim),
+                                  child: ScaleTransition(scale: anim, child: child),
+                                ),
+                                child: productsController.openFilterBrand.value == 0
+                                    ? Icon(Icons.keyboard_arrow_down_outlined,size: 30,color: App.primary, key: const ValueKey('icon1'))
+                                    : Icon(
+                                  Icons.keyboard_arrow_up_outlined,size: 30,
+                                  color: App.primary,
+                                  key: const ValueKey('icon2'),
+                                )),
 
-                        )
-                      ],
+                          ),
+                          SizedBox(width: 15,),
+                        ],
+                      ),
                     ),
                   )
               ),
-              AnimatedSize(
-                duration: Duration(milliseconds: 350),
-                child: productsController.openFilterBrand.value==0
-                    ?Center()
-                    :GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 1
-                  ),
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: homeController.brands.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context,index){
-                      return Container(
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                        image: NetworkImage(Api.media_url+homeController.brands[index].image)
-                                    )
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: (){
-                                  if(homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)){
-                                    productsController.removeBrand(homeController.brands[index].brandSlug);
-                                  }else{
-                                    productsController.addBrand(homeController.brands[index].brandSlug);
-                                  }
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 350),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: Colors.grey.withOpacity(0.5)),
-                                      gradient:homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)
-                                      ?App.linearGradientWithOpacity:null,
-                                      // color: App.primary.withOpacity(0.5),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Icon(Icons.check_circle,size: 20,
-                                        color: homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)
-                                            ?App.primary:Colors.transparent
+              SizedBox(height: 10,),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child:  AnimatedSize(
+                  duration: Duration(milliseconds: 350),
+                  child: productsController.openFilterBrand.value==0
+                      ?Center()
+                      :GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 1
+                      ),
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: homeController.brands.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context,index){
+                        return Container(
+                          child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.grey.withOpacity(0.5)),
+                                        color: Colors.white,
+                                        image: DecorationImage(
+                                            image: NetworkImage(Api.media_url+homeController.brands[index].image)
+                                        )
                                     ),
                                   ),
-                                ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      if(homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)){
+                                        productsController.removeBrand(homeController.brands[index].brandSlug);
+                                      }else{
+                                        productsController.addBrand(homeController.brands[index].brandSlug);
+                                      }
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: Duration(milliseconds: 350),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(color: Colors.grey.withOpacity(0.5)),
+                                        gradient:homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)
+                                            ?App.linearGradientWithOpacity:null,
+                                        // color: App.primary.withOpacity(0.5),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(Icons.check_circle,size: 20,
+                                            color: homeController.brands[index].isCheckedFilter(productsController.filterResult!.filter.brands)
+                                                ?App.primary:Colors.transparent
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               )
-                            ],
-                          )
-                        ),
-                      );
-                    }),
+                          ),
+                        );
+                      }),
+                ),
               ),
-              SizedBox(height: 60,),
+              SizedBox(height: 80,),
             ],
           ),
           Positioned(
@@ -399,9 +479,13 @@ class Products extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                color: Colors.white,
-                height: 45,
+
+                height: 70,
                 width: Get.width,
+                decoration: BoxDecoration(
+                  color: Color(0xff022B3A),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -414,12 +498,13 @@ class Products extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: App.red,
+                            border: Border.all(color: Colors.white),
+                            color: Colors.transparent,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.delete,color: Colors.white,),
+                              Icon(Icons.delete_outline ,color: Colors.white,),
                               SizedBox(width: 10,),
                               Text(App_Localization.of(context).translate("clear"),style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),)
                             ],
@@ -435,7 +520,7 @@ class Products extends StatelessWidget {
                           height: 40,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: App.green,
+                            color: App.primary,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -476,7 +561,7 @@ class Products extends StatelessWidget {
               productsController.apply();
               productsController.updateFake();
             },
-            leading: CircleAvatar(backgroundColor: App.primary,child: Icon(Icons.new_label_outlined)),
+            leading: CircleAvatar(backgroundColor: App.background,child: SvgPicture.asset("assets/icons/Newest.svg")),
             title: Text(App_Localization.of(context).translate("newest"),),
             subtitle: Text(App_Localization.of(context).translate("newest_desc"),),
             trailing: Container(
@@ -502,7 +587,7 @@ class Products extends StatelessWidget {
               productsController.apply();
               productsController.updateFake();
             },
-            leading: CircleAvatar(backgroundColor: App.primary,child: Icon(Icons.new_label_outlined)),
+            leading: CircleAvatar(backgroundColor: App.background,child: SvgPicture.asset("assets/icons/TopRated.svg")),
             title: Text(App_Localization.of(context).translate("top_rated"),),
             subtitle: Text(App_Localization.of(context).translate("top_rated_desc"),),
             trailing: Container(
@@ -527,7 +612,7 @@ class Products extends StatelessWidget {
               productsController.apply();
               productsController.updateFake();
             },
-            leading: CircleAvatar(backgroundColor: App.primary,child: Icon(Icons.new_label_outlined)),
+            leading: CircleAvatar(backgroundColor: App.background,child: SvgPicture.asset("assets/icons/LowestPrice.svg")),
             title: Text(App_Localization.of(context).translate("lower_price"),),
             subtitle: Text(App_Localization.of(context).translate("lower_price_desc"),),
             trailing: Container(
@@ -552,7 +637,7 @@ class Products extends StatelessWidget {
               productsController.apply();
               productsController.updateFake();
             },
-            leading: CircleAvatar(backgroundColor: App.primary,child: Icon(Icons.new_label_outlined)),
+            leading: CircleAvatar(backgroundColor: App.background,child: SvgPicture.asset("assets/icons/HighestPrice.svg")),
             title: Text(App_Localization.of(context).translate("higher_price"),),
             subtitle: Text(App_Localization.of(context).translate("higher_price_desc"),),
             trailing: Container(

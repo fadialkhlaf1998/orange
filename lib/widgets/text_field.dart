@@ -45,9 +45,8 @@ class _MyTextFieldState extends State<MyTextField> {
         keyboardType: widget.keyboardType,
         onChanged: widget.onChanged,
         obscureText: widget.isPassword?widget.hidden.value:false,
-        style: TextStyle(color: App.dark_grey),
+        style: TextStyle(color: App.dark_blue),
         decoration: InputDecoration(
-
           suffix: widget.isPassword?GestureDetector(
             onTap: (){
               widget.hidden(!widget.hidden.value);
@@ -73,7 +72,9 @@ class _MyTextFieldState extends State<MyTextField> {
           )
               :OutlineInputBorder(
               borderSide: BorderSide(color: App.primary),
-              borderRadius: BorderRadius.circular(widget.height/2)
+              borderRadius: BorderRadius.circular(widget.height/2),
+
+
           ),
 
           label: Padding(

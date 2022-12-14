@@ -15,6 +15,7 @@ class ProductsController extends GetxController {
 
   RxInt openFilterCategory = 1.obs;
   RxInt openFilterBrand = 1.obs;
+  RxInt selectedTap = 0.obs;
 
   getData(
       List<String> categories,

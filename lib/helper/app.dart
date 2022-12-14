@@ -25,6 +25,8 @@ class App{
   static Color white_1 = Color(0xffE9E28c);
   static Color white_2 = Color(0xfff0f0f0);
   static Color dark_blue = Color(0xff0f3047);
+
+  static Color text_color = Color(0xff022B3A);
   static Color red = Color(0xffc63a32);
   static Color green = Color(0xff058240);
 
@@ -157,13 +159,10 @@ class App{
       child: Container(
         width: 150,
         child: Center(
-          // child: Lottie.asset("assets/loading.json"),
-          // child: LinearProgressIndicator(),
           child:
           Platform.isAndroid
           ?CircularProgressIndicator()
           :CupertinoActivityIndicator(color: App.primary,radius: 15,),
-
         ),
       ),
     );

@@ -40,6 +40,7 @@ class ProductDetails extends StatelessWidget {
           child:  Container(
             width: Get.width*0.9,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                     onTap: (){
@@ -51,29 +52,6 @@ class ProductDetails extends StatelessWidget {
                       child: Icon(Icons.arrow_back_ios,color: App.primary,),
                     )
                 ),
-                SizedBox(width: 20,),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: (){
-                      showSearch(context: context, delegate: SearchTextField());
-                    },
-                    child: Container(
-                      height: 40,
-
-                      decoration: BoxDecoration(
-                          color: App.grey,
-                          borderRadius: BorderRadius.circular(25)
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(width: 10,),
-                          SvgPicture.asset("assets/icons/stroke/search.svg",width: 25,height: 25,),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 20,),
                 GestureDetector(
                     onTap: (){
                       Get.back();

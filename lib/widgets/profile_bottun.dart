@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
+import 'package:orange/helper/app.dart';
 
 class ProfileBtn extends StatelessWidget {
 
@@ -20,9 +21,10 @@ class ProfileBtn extends StatelessWidget {
       child: Container(
           width: Get.width,
           height: 30,
+          padding: EdgeInsets.only(bottom: 5),
           decoration: BoxDecoration(
               border: Border(
-                  bottom: BorderSide(color: Colors.grey,width: 1.5)
+                  bottom: BorderSide(color: App.dark_grey,width: 1.5)
               )
           ),
           child: Row(
@@ -33,10 +35,10 @@ class ProfileBtn extends StatelessWidget {
                   SizedBox(width: 10,),
                   icon,
                   SizedBox(width: 10,),
-                  Text(App_Localization.of(context).translate(text),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)
+                  Text(App_Localization.of(context).translate(text),style: TextStyle(fontSize: 16,color: App.dark_blue,fontWeight: FontWeight.bold),)
                 ],
               ),
-              Icon(Icons.arrow_forward_ios,color: Colors.black)
+              Icon(Icons.arrow_forward_ios,color: App.dark_grey)
             ],
           )
       ),

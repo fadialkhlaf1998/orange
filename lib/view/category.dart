@@ -21,16 +21,25 @@ class Category extends StatelessWidget {
       appBar:App.myHeader(context, height: 60, child: Center(
           child:  Container(
               width: Get.width*0.9,
-              child: Center(
-                child: Text(App_Localization.of(context).translate("category"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(App_Localization.of(context).translate("category"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+                  GestureDetector(
+                    onTap: (){
+                      showSearch(context: context, delegate: SearchTextField());
+                    },
+                    child: SvgPicture.asset("assets/icons/stroke/search.svg",color: App.primary),
+                  )
+                ],
               )
           )
       ),),
       body: Obx(() => Column(
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 20,),
           _category(context),
+          SizedBox(height: 10,),
           Expanded(
             child: Container(
               width: Get.width,
@@ -42,15 +51,7 @@ class Category extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: Offset(3,3)
-                              ),
-                            ]
+                            color: App.grey,
                           ),
                           child:  categoryController.subCategory.isEmpty
                               ?Padding(padding: EdgeInsets.symmetric(horizontal: 10),
@@ -59,44 +60,49 @@ class Category extends StatelessWidget {
                               :ListView.builder(
                               itemCount: categoryController.subCategory.length,
                               itemBuilder: (context,index){
-                                return GestureDetector(
-                                  onTap: (){
-                                    categoryController.selectProduct(index);
-                                  },
-                                  child: Container(
-                                    width: Get.width*0.25,
-                                    height: Get.width*0.35,
-                                    margin: EdgeInsets.symmetric(horizontal: 10),
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 14),
+                                  child: GestureDetector(
+                                    onTap: (){
+                                      categoryController.selectProduct(index);
+                                    },
+                                    child: Container(
+                                      width: Get.width*0.2,
+                                      height: Get.width*0.2 + 30,
+                                      margin: EdgeInsets.symmetric(horizontal: 10),
 
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: Get.width*0.25,
-                                          height: Get.width*0.25,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.all(color: categoryController.selectedSubCategory.value == index ?App.primary:Colors.transparent),
-                                              image: DecorationImage(
-                                                  image: NetworkImage(Api.media_url+categoryController.subCategory[index].image),
-                                                fit: BoxFit.contain
-                                              )
-                                          ),
-                                        ),
-                                        Container(
-                                          width: Get.width*0.25 ,
-                                          height: Get.width*0.1,
-                                          child: Center(child: Text(
-                                            categoryController.subCategory[index].title,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: categoryController.selectedSubCategory.value == index?App.primary:Colors.black,
-
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: Get.width*0.2,
+                                            height: Get.width*0.2,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(color: categoryController.selectedSubCategory.value == index ?App.primary:Colors.transparent),
+                                                // color: Colors.white,
+                                                image: DecorationImage(
+                                                    image: NetworkImage(Api.media_url+categoryController.subCategory[index].image),
+                                                  fit: BoxFit.fill
+                                                )
                                             ),
-                                          )),
-                                        )
-                                      ],
+                                          ),
+                                          Container(
+                                            width: Get.width*0.2 ,
+                                            height: 30,
+                                            // color: Colors.red,
+                                            child: Center(child: Text(
+                                              categoryController.subCategory[index].title,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.bold,
+                                                color: categoryController.selectedSubCategory.value == index?App.primary:Colors.black,
+                                              ),
+                                            )),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -116,8 +122,8 @@ class Category extends StatelessWidget {
                         :GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 8,
                             childAspectRatio: 4/6
                           ),
                             itemCount: categoryController.products.length,
@@ -127,20 +133,35 @@ class Category extends StatelessWidget {
                                   Get.to((()=>ProductDetails(categoryController.products[index].ProductSlug)));
                                 },
                                 child: Container(
-                                  width: Get.width*0.25,
+                                  width: Get.width/4 - 20,
                                   height: Get.width*0.35,
                                   margin: EdgeInsets.symmetric(horizontal: 10),
 
                                   child: Column(
                                     children: [
                                       Container(
-                                        width: Get.width*0.25,
+                                        width:  Get.width*0.25,
                                         height: Get.width*0.25,
                                         decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: NetworkImage(Api.media_url+categoryController.products[index].image),
-                                                fit: BoxFit.contain
-                                            )
+                                          color: App.grey,
+                                          borderRadius: BorderRadius.circular(15)
+                                        ),
+                                        child: Center(
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8),
+                                            child: Container(
+
+
+                                              decoration: BoxDecoration(
+                                                  color: App.background,
+                                                  borderRadius: BorderRadius.circular(15),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(Api.media_url+categoryController.products[index].image),
+                                                      fit: BoxFit.cover
+                                                  )
+                                              ),
+                                            ),
+                                          )
                                         ),
                                       ),
                                       Container(
@@ -153,7 +174,7 @@ class Category extends StatelessWidget {
                                           style: TextStyle(
                                             fontSize: 13,
                                             color: Colors.black,
-
+                                            fontWeight: FontWeight.bold
                                           ),
                                         )),
                                       )
@@ -177,6 +198,7 @@ class Category extends StatelessWidget {
   }
   _category(BuildContext context){
     return Container(
+      width: Get.width * 0.9,
       height: 30,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -189,16 +211,21 @@ class Category extends StatelessWidget {
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 300),
                 height: 30,
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.only(left: index==0?0:8),
                 decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: categoryController.selectedCategory==index?App.primary:Colors.transparent,width: 2)
-                    )
+                    border: Border.all(color: categoryController.selectedCategory==index?App.primary:App.dark_grey),
+                    color: categoryController.selectedCategory==index?App.primary:Colors.transparent,
+                  borderRadius: BorderRadius.circular(10)
                 ),
-                child: Column(
-                  children: [
-                    Text(homeController.categories[index].title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),maxLines: 1,),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(homeController.categories[index].title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: categoryController.selectedCategory==index?Colors.white:Colors.black),maxLines: 1,),
+                    ],
+                  ),
                 ),
               ),
             );

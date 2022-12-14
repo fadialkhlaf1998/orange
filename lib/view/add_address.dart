@@ -186,21 +186,21 @@ class AddAddress extends StatelessWidget {
                 maxLength: 9,
                 inputDecoration: InputDecoration(
                   label: Text(App_Localization.of(context).translate("phone")),
-                  labelStyle: TextStyle(color: Colors.black),
+                  labelStyle: TextStyle(color: App.dark_grey),
                   focusedBorder: addressController.phone.text.isEmpty&&addressController.validate.value
                       ?OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red)
-                  )
+                          borderSide: BorderSide(color: Colors.red)
+                      )
                       :OutlineInputBorder(
-                      borderSide: BorderSide(color: App.grey)
-                  ),
+                          borderSide: BorderSide(color: App.primary)
+                      ),
                   enabledBorder: addressController.phone.text.isEmpty&&addressController.validate.value
                       ?OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.red)
-                  )
+                          borderSide: BorderSide(color: Colors.red)
+                      )
                       :OutlineInputBorder(
-                      borderSide: BorderSide(color: App.grey)
-                  ),
+                          borderSide: BorderSide(color: App.grey)
+                      ),
                 ),
                 
                 inputBorder:addressController.phone.text.isEmpty&&addressController.validate.value
@@ -243,14 +243,14 @@ class AddAddress extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15,),
-            PrimaryBottun(width: Get.width*0.5, height: 40,
+            PrimaryBottun(width: Get.width*0.8, height: 50,
               onPressed: (){
               if(address == null){
                 addressController.AddEditAddress(false);
               }else{
                 addressController.AddEditAddress(true , id:address!.id);
               }
-            }, color: Colors.white, text: "submit",linearGradient: App.linearGradient,)
+            }, color: App.dark_grey, text: "submit",radiuce: 25,)
           ],
         ),)
       ),

@@ -21,7 +21,7 @@ class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -311,18 +311,19 @@ class Checkout extends StatelessWidget {
                   );
                 })
             ),
-
+            SizedBox(height: 10,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 PrimaryBottun(width: Get.width * 0.4, height: 40, onPressed: (){
                   Get.to(()=>AddAddress());
-                }, color: Colors.white, text: "add_address",linearGradient: App.linearGradient),
+                }, color: App.primary, text: "add_address",radiuce: 20),
 
 
                 PrimaryBottun(width: Get.width * 0.4, height: 40, onPressed: (){
                   checkoutController.addOrder(context);
-                }, color: Colors.white, text: "submit",linearGradient: App.linearGradient),
+                }, color: App.primary, text: "submit",radiuce: 20),
 
               ],
             ),

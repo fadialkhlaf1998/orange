@@ -101,7 +101,7 @@ class Returns extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Container(
                         width: Get.width*0.9,
-                        height: 170,
+                        height: 200,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
@@ -123,6 +123,7 @@ class Returns extends StatelessWidget {
                                 Text("#"+returnController.returns[index].orderId.toString(),),
                               ],
                             ),
+                            SizedBox(height: 10,),
                             Row(
                               children: [
                                 Container(
@@ -161,18 +162,19 @@ class Returns extends StatelessWidget {
                                 )
                               ],
                             ),
+                            SizedBox(height: 10,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 PrimaryBottun(
                                     width: Get.width * 0.4,
-                                    height: 30,
+                                    height: 40,
                                     onPressed: (){
                                       returnController.select(index);
                                     },
                                     color: App.primary,
                                     text: "return",
-                                    linearGradient: App.linearGradient,
+                                    radiuce: 20,
                                 )
                               ],
                             )

@@ -19,7 +19,7 @@ class Orders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -95,18 +95,10 @@ class Orders extends StatelessWidget {
                             },
                             child: Container(
                               width: Get.width * 0.9,
-                              height: 168,
+                              height: 220,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: App.grey,
                                 borderRadius: BorderRadius.circular(10),
-
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      blurRadius: 2,
-                                      spreadRadius: 1
-                                  )
-                                ],
                               ),
                               child: Obx(() => ordersController.orders[index].loading.value
                                   ? App.shimmerLoading(radius: 10)
@@ -115,7 +107,7 @@ class Orders extends StatelessWidget {
                                   Center(
                                     child: Container(
                                       width: Get.width * 0.9,
-                                      height: 128,
+                                      height: 150,
                                       padding: EdgeInsets.symmetric(horizontal: 10),
 
                                       child: Column(
@@ -123,8 +115,10 @@ class Orders extends StatelessWidget {
                                         children: [
                                           SizedBox(height: 5,),
                                           Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text("#"+ordersController.orders[index].id.toString(),style: TextStyle(fontWeight: FontWeight.bold),),
+                                              Text("#"+ordersController.orders[index].id.toString(),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue,fontSize: 18),),
+                                              getState(context, ordersController.orders[index].state),
                                             ],
                                           ),
 
@@ -133,12 +127,12 @@ class Orders extends StatelessWidget {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Text(App_Localization.of(context).translate("placed_at")+":",style: TextStyle(fontWeight: FontWeight.bold),),
+                                                  Text(App_Localization.of(context).translate("placed_at")+":",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
                                                   SizedBox(width: 5,),
-                                                  Text(App.getDate(ordersController.orders[index].placedAt),),
+                                                  Text(App.getDate(ordersController.orders[index].placedAt),style: TextStyle(color: App.dark_blue),),
                                                 ],
                                               ),
-                                              getState(context, ordersController.orders[index].state),
+
                                             ],
                                           ),
 
@@ -173,73 +167,83 @@ class Orders extends StatelessWidget {
                                   ),
                                   SizedBox(height: 10,),
                                   Container(
-                                    height: 30,
+                                    height: 50,
                                     child:
-                                    ordersController.orders[index].def <= 15 && ordersController.orders[index].state == 0
+                                    (ordersController.orders[index].def <= 15 && ordersController.orders[index].state == 0)
                                         ?
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
 
+                                        SizedBox(width: 10,),
                                         Expanded(
                                             child: GestureDetector(
                                               onTap: (){
                                                 Get.to(()=>MyPDFViewer(ordersController.orders[index].invoice));
                                               },
                                               child: Container(
-                                                height: 30,
-                                                // width: Get.width*0.5,
-                                                decoration: BoxDecoration(
-                                                  color: App.green,
-                                                  borderRadius: Global.locale=="en"
-                                                      ?BorderRadius.only(bottomLeft: Radius.circular(10))
-                                                      :BorderRadius.only(bottomRight: Radius.circular(10)),
-                                                ),
-                                                child: Center(
-                                                  child: Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                                                ),
+                                                  height: 40,
+                                                  width: Get.width*0.5,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: App.dark_grey),
+                                                      borderRadius: BorderRadius.circular(10)
+                                                  ),
+                                                  child:Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Icon(Icons.article_outlined,color: App.dark_grey,size: 22,),
+                                                      SizedBox(width: 5,),
+                                                      Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: App.dark_grey,fontWeight: FontWeight.bold,fontSize: 12),),
+                                                    ],
+                                                  )
                                               ),
                                             )
                                         ),
-                                        Expanded(
-                                            child: GestureDetector(
-                                              onTap: (){
-                                                Get.to(()=>OrderDetails(ordersController.orders[index].id));
-                                              },
-                                              child: Container(
-                                                height: 30,
-                                                // width: Get.width*0.5,
-                                                decoration: BoxDecoration(
-                                                  gradient: App.linearGradient,
-                                                  // borderRadius: BorderRadius.only(bottomRight: Radius.circular(10)),
-                                                ),
-                                                child: Center(
-                                                  child: Text(App_Localization.of(context).translate("view_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                                                ),
-                                              ),
-                                            )
-                                        ),
+                                        SizedBox(width: 10,),
                                         Expanded(
                                             child: GestureDetector(
                                               onTap: (){
                                                 ordersController.cancelOrder(context, index);
                                               },
                                               child: Container(
-                                                height: 30,
+                                                height: 40,
                                                 // width: Get.width*0.5,
                                                 decoration: BoxDecoration(
-                                                  color: App.red,
-                                                  borderRadius: Global.locale=="en"
-                                                      ? BorderRadius.only(bottomRight: Radius.circular(10))
-                                                      : BorderRadius.only(bottomLeft: Radius.circular(10))
+                                                    color: App.red,
+                                                    borderRadius: BorderRadius.circular(10)
                                                 ),
                                                 child: Center(
-                                                  child: Text(App_Localization.of(context).translate("cancel_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                                  child: Text(App_Localization.of(context).translate("cancel_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
                                                 ),
                                               ),
                                             )
                                         ),
+                                        SizedBox(width: 10,),
+                                        Expanded(
+                                            child: GestureDetector(
+                                              onTap: (){
+                                                Get.to(()=>OrderDetails(ordersController.orders[index].id));
+                                              },
+                                              child: Container(
+                                                  height: 40,
+                                                  width: Get.width*0.5,
+                                                  decoration: BoxDecoration(
+                                                      color: App.primary,
+                                                      borderRadius: BorderRadius.circular(10)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(App_Localization.of(context).translate("view_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
+                                                      SizedBox(width: 5,),
+                                                      Icon(Icons.arrow_circle_right_outlined,color: Colors.white,size: 22),
+                                                    ],
+                                                  )
+                                              ),
+                                            )
+                                        ),
+                                        SizedBox(width: 10,),
 
                                       ],
                                     )
@@ -247,46 +251,55 @@ class Orders extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
+                                        SizedBox(width: 10,),
                                         Expanded(
                                             child: GestureDetector(
                                               onTap: (){
                                                 Get.to(()=>MyPDFViewer(ordersController.orders[index].invoice));
                                               },
                                               child: Container(
-                                                height: 30,
+                                                height: 40,
                                                 width: Get.width*0.5,
                                                 decoration: BoxDecoration(
-                                                  color: App.green,
-                                                  borderRadius: Global.locale=="en"
-                                                      ? BorderRadius.only(bottomLeft: Radius.circular(10))
-                                                      : BorderRadius.only(bottomRight: Radius.circular(10)),
+                                                  border: Border.all(color: App.dark_grey),
+                                                  borderRadius: BorderRadius.circular(10)
                                                 ),
-                                                child: Center(
-                                                  child: Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                                                ),
+                                                child:Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.article_outlined,color: App.dark_grey,),
+                                                    SizedBox(width: 5,),
+                                                    Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: App.dark_grey,fontWeight: FontWeight.bold,),),
+                                                  ],
+                                                ) 
                                               ),
                                             )
                                         ),
+                                        SizedBox(width: 10,),
                                         Expanded(
                                             child: GestureDetector(
                                               onTap: (){
                                                 Get.to(()=>OrderDetails(ordersController.orders[index].id));
                                               },
                                               child: Container(
-                                                height: 30,
+                                                height: 40,
                                                 width: Get.width*0.5,
                                                 decoration: BoxDecoration(
-                                                  gradient: App.linearGradient,
-                                                  borderRadius: Global.locale=="en"
-                                                      ? BorderRadius.only(bottomRight: Radius.circular(10))
-                                                      : BorderRadius.only(bottomLeft: Radius.circular(10)),
+                                                    color: App.primary,
+                                                    borderRadius: BorderRadius.circular(10)
                                                 ),
-                                                child: Center(
-                                                  child: Text(App_Localization.of(context).translate("view_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(App_Localization.of(context).translate("view_order"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                                    SizedBox(width: 5,),
+                                                    Icon(Icons.arrow_circle_right_outlined,color: Colors.white),
+                                                  ],
+                                                )
                                               ),
                                             )
                                         ),
+                                        SizedBox(width: 10,),
                                       ],
                                     )
                                     ,
@@ -309,11 +322,38 @@ class Orders extends StatelessWidget {
 
   getState(BuildContext context , int state){
     if(state == 1){
-      return Text(App_Localization.of(context).translate("delivered"),style: TextStyle(color: App.green,fontWeight: FontWeight.bold),);
+      return Container(
+          decoration: BoxDecoration(
+              color: App.green,
+              borderRadius: BorderRadius.circular(25)
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+            child: Text(App_Localization.of(context).translate("delivered"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          )
+      );
     }else if(state == 0){
-      return Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),);
+      return Container(
+          decoration: BoxDecoration(
+              color: App.primary,
+              borderRadius: BorderRadius.circular(25)
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+            child: Text(App_Localization.of(context).translate("pending"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          )
+      );
     }else{
-      return Text(App_Localization.of(context).translate("canceled"),style: TextStyle(color: App.red,fontWeight: FontWeight.bold),);
+      return Container(
+          decoration: BoxDecoration(
+              color: App.red,
+              borderRadius: BorderRadius.circular(25)
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10,vertical: 1),
+            child: Text(App_Localization.of(context).translate("canceled"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+          )
+      );
     }
   }
 
@@ -328,9 +368,9 @@ class Orders extends StatelessWidget {
   itemPrice(BuildContext context,String title,double amount){
     return Row(
       children: [
-        Text(App_Localization.of(context).translate(title)+":",style: TextStyle(fontWeight: FontWeight.bold),),
+        Text(App_Localization.of(context).translate(title)+":",style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_blue),),
         SizedBox(width: 5,),
-        Text(amount.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"))
+        Text(amount.toStringAsFixed(2)+" "+App_Localization.of(context).translate("aed"),style: TextStyle(color: App.dark_blue),)
       ],
     );
   }
