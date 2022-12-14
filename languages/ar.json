@@ -125,5 +125,15 @@
   "items": "عناصر",
   "how_many_items_you_want_to_return": "كم عدد المنتجات التي تريد أرجاعها",
   "success_return": "لقد أستلمنا طلبك سنوافيك بالتفاصيل بأقصى سرة ممكنة",
-  "returned": "مسترجع"
+  "returned": "مسترجع",
+  "have_account": "أملك حساب",
+  "donot_have_account": "لا أملك حساب",
+  "your_wishlist_is_empty": "الفضلة فارغة",
+  "your_cart_is_empty": "سلتك فارغة",
+  "what_you_are_waiting_for": "ماذا تنتظر",
+  "continue_shopping": "أكمل التسوق",
+  "remove": "حذف",
+  "confirm_dialog": "أشعار تأكيد",
+  "are_u_want_to": "هل تريد",
+  "cancel": "إلغاء"
 }

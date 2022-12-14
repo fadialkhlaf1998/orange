@@ -81,7 +81,7 @@ class ChangePassword extends StatelessWidget {
             profileController.fake.value?Center():Center(),
             SizedBox(height: Get.height*0.3,),
             MyTextField(
-                width: Get.width*0.9,
+                width: Get.width*0.8,
                 height: 50,
                 controller: profileController.oldPassword,
                 validate: (profileController.oldPassword.text.isEmpty && profileController.validate.value).obs,
@@ -92,7 +92,7 @@ class ChangePassword extends StatelessWidget {
             ),
             SizedBox(height: 15,),
             MyTextField(
-                width: Get.width*0.9,
+                width: Get.width*0.8,
                 height: 50,
                 controller: profileController.newPassword,
                 validate: ((profileController.newPassword.text.isEmpty||profileController.newPassword.text.length < 6) && profileController.validate.value).obs,
@@ -103,7 +103,7 @@ class ChangePassword extends StatelessWidget {
             ),
             SizedBox(height: 15,),
             MyTextField(
-                width: Get.width*0.9,
+                width: Get.width*0.8,
                 height: 50,
                 controller: profileController.confirmPassword,
                 validate: ((profileController.confirmPassword.text.isEmpty||profileController.confirmPassword.text.length < 6) && profileController.validate.value).obs,
@@ -113,9 +113,9 @@ class ChangePassword extends StatelessWidget {
                 }
             ),
             SizedBox(height: 15,),
-            PrimaryBottun(width: Get.width*0.5, height: 40, onPressed: (){
+            PrimaryBottun(width: Get.width*0.8, height: 50,radiuce: 25, onPressed: (){
               profileController.changePassword(context);
-            }, color: Colors.white, text: "submit",linearGradient: App.linearGradient,)
+            }, color: App.dark_grey, text: "submit",)
           ],
         )),
       ),
