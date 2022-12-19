@@ -233,7 +233,7 @@ class ProductDetails extends StatelessWidget {
                         itemBuilder: (context,index){
                           return Center(
                             child: Container(
-                                width: Get.width*0.8,
+                                width: Get.width*0.9,
                                 // height: 60,
                                 margin: EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
@@ -269,7 +269,7 @@ class ProductDetails extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(right: 5,top: 5,bottom: 5),
                                       child: Container(
-                                        width: Get.width*0.8-70,
+                                        width: Get.width*0.9-70,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.center,
