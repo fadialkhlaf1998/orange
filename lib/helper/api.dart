@@ -545,8 +545,20 @@ class Api{
       }
     }
     else {
-      print(response.reasonPhrase);
-      return Result(code: -1, message: "wrong");
+      try{
+        String data = (await response.stream.bytesToString());
+        Result result = Result.fromJson(data);
+        if(result.code == -1){
+          return Result(code: -1, message: "code_activated_previously");
+        }else{
+          return Result(code: -1, message: "wrong");
+        }
+      }catch(e){
+        print(response.reasonPhrase);
+        return Result(code: -1, message: "wrong");
+      }
+
+
     }
 
   }

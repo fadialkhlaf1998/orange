@@ -211,7 +211,7 @@ class Category extends StatelessWidget {
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 300),
                 height: 30,
-                margin: EdgeInsets.only(left: index==0?0:8),
+                margin: EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                     border: Border.all(color: categoryController.selectedCategory==index?App.primary:App.dark_grey),
                     color: categoryController.selectedCategory==index?App.primary:Colors.transparent,

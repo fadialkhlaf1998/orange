@@ -130,7 +130,7 @@ class OrderDetails extends StatelessWidget {
                           padding: const EdgeInsets.all(10),
                           child: Container(
                             width: Get.width,
-                            height: 100,
+                            height: 107,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Color(0xffE7E8EA)
@@ -139,7 +139,7 @@ class OrderDetails extends StatelessWidget {
                               children: [
                                 Container(
                                   width: 100,
-                                  height: 100,
+                                  height: 105,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(image: NetworkImage(Api.media_url+orderDetailsController.order!.lineItems[index].image)),

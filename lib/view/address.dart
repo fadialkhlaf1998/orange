@@ -94,7 +94,7 @@ class Address extends StatelessWidget {
               child: Center(
                 child: Container(
                   padding: EdgeInsets.all(10),
-                  height: 210,
+                  height: 216,
                   width: Get.width*0.9,
                   decoration: BoxDecoration(
                       color: App.grey,
@@ -121,7 +121,7 @@ class Address extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(15)
                                 ),
                                 child: Center(
-                                  child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                  child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
                                 ),
                               ):Center()
                             ],
