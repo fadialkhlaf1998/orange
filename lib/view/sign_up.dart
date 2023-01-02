@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orange/controller/sign_up_controller.dart';
 import 'package:orange/helper/app.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import '../app_localization.dart';
 import 'package:orange/widgets/text_field.dart';
@@ -31,7 +32,7 @@ class SignUp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       signupController.fake.value?Center():Center(),
-                      _logo(context),
+                      Logo(70),
                       SizedBox(height: 30,),
                       MyTextField(
                         width: Get.width,
@@ -42,6 +43,7 @@ class SignUp extends StatelessWidget {
                         onChanged: (value){
                           signupController.fake.value = !signupController.fake.value;
                         },
+                        errText: (signupController.name.text.isEmpty&&signupController.validate.value)?"name_is_required":null,
                       ),
                       SizedBox(height: 30,),
                       MyTextField(
@@ -53,6 +55,7 @@ class SignUp extends StatelessWidget {
                         onChanged: (value){
                           signupController.fake.value = !signupController.fake.value;
                         },
+                        errText: ((signupController.email.text.isEmpty||!signupController.email.text.isEmail)&&signupController.validate.value)?"plz_enter_a_valid_email":null,
                       ),
 
                       SizedBox(height: 30,),
@@ -66,6 +69,8 @@ class SignUp extends StatelessWidget {
                         onChanged: (value){
                           signupController.fake.value = !signupController.fake.value;
                         },
+                        hidden: signupController.hidePassword,
+                        errText: ((signupController.password.text.isEmpty||signupController.password.text.length<6)&&signupController.validate.value)?"password_must_be_more_than_6":null,
                       ),
                       SizedBox(height: 30,),
                       PrimaryBottun(
@@ -108,19 +113,5 @@ class SignUp extends StatelessWidget {
     );
   }
 
-  _logo(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/logo.png")),
-          ),
-        ),
-        SizedBox(height: 10,),
-        Text("ORANGE",style: TextStyle(letterSpacing: 1.5,color: App.primary,fontWeight: FontWeight.bold,fontSize: 15),)
-      ],
-    );
-  }
+  
 }

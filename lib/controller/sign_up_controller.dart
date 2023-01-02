@@ -12,6 +12,7 @@ class SignupController extends GetxController{
   RxBool validate = false.obs;
   RxBool loading = false.obs;
   RxBool fake = false.obs;
+  RxBool hidePassword = false.obs;
 
   signup(BuildContext context)async{
     validate.value = true;

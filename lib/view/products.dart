@@ -106,8 +106,8 @@ class Products extends StatelessWidget {
                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             childAspectRatio: 45/60,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 0,
+                            crossAxisSpacing: 0,
                           ),
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -366,16 +366,16 @@ class Products extends StatelessWidget {
               SizedBox(height: 20,),
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                        color: App.grey,
-                        borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: GestureDetector(
-                      onTap: (){
-                        productsController.openFilterBrand.value = productsController.openFilterBrand.value == 0 ? 1 : 0;
-                      },
+                  child: GestureDetector(
+                    onTap: (){
+                      productsController.openFilterBrand.value = productsController.openFilterBrand.value == 0 ? 1 : 0;
+                    },
+                    child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: App.grey,
+                          borderRadius: BorderRadius.circular(15)
+                      ),
                       child: Row(
                         children: [
                           SizedBox(width: 15,),

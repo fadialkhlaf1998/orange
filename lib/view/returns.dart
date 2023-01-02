@@ -93,7 +93,7 @@ class Returns extends StatelessWidget {
             child: Stack(
               children: [
                 ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  padding: EdgeInsets.symmetric(vertical: 0),
                 itemCount: returnController.returns.length,
                 itemBuilder: (context , index){
                   return Center(
@@ -245,16 +245,40 @@ class Returns extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              PrimaryBottun(
-                                  width: Get.width * 0.4,
-                                  height: 35,
-                                  onPressed: (){
-                                    returnController.returnProduct(context);
-                                  },
-                                  color: App.primary,
-                                  text: "submit",
-                                  linearGradient: App.linearGradient,
-                              )
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  GestureDetector(
+                                    onTap: (){
+                                      // Get.back();
+                                      returnController.openCart(false);
+                                    },
+                                    child: Container(
+                                      width: 100,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: App.dark_grey
+                                      ),
+                                      child: Center(
+                                        child: Text(App_Localization.of(context).translate("cancel"),style:
+                                        TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  PrimaryBottun(
+                                    width: 100,
+                                    height: 30,
+                                    onPressed: (){
+                                      returnController.returnProduct(context);
+                                    },
+                                    color: App.primary,
+                                    text: "submit",
+                                    linearGradient: App.linearGradient,
+                                  )
+                                ],
+                              ),
                             ],
                           ),
                         )

@@ -58,6 +58,7 @@ class Category extends StatelessWidget {
                                 child: App.noResult(context),
                               )
                               :ListView.builder(
+                            padding: EdgeInsets.only(bottom: 20),
                               itemCount: categoryController.subCategory.length,
                               itemBuilder: (context,index){
                                 return Padding(

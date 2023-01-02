@@ -7,6 +7,7 @@ import 'package:orange/controller/login_controller.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/view/main.dart';
 import 'package:orange/view/sign_up.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:orange/widgets/text_field.dart';
 
@@ -34,7 +35,7 @@ class Login extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       loginController.fake.value?Center():Center(),
-                      _logo(context),
+                    Logo(70),
                       SizedBox(height: 30,),
                       MyTextField(
                         width: Get.width,
@@ -45,6 +46,7 @@ class Login extends StatelessWidget {
                         onChanged: (value){
                           loginController.fake.value = !loginController.fake.value;
                         },
+                        errText: ((loginController.email.text.isEmpty||!loginController.email.text.isEmail)&&loginController.validate.value)?"plz_enter_a_valid_email":null,
                       ),
                       SizedBox(height: 30,),
                       MyTextField(
@@ -56,7 +58,10 @@ class Login extends StatelessWidget {
                           onChanged: (value){
                             loginController.fake.value = !loginController.fake.value;
                           },
+                        hidden: loginController.hidePassword,
                         isPassword: true,
+                          errText: (loginController.password.text.isEmpty&&loginController.validate.value)?"password_is_required":null,
+
                       ),
                       SizedBox(height: 10,),
                       Row(
@@ -148,19 +153,5 @@ class Login extends StatelessWidget {
       ),
     );
   }
-  _logo(BuildContext context){
-    return Column(
-      children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/logo.png")),
-          ),
-        ),
-        SizedBox(height: 10,),
-        Text("ORANGE",style: TextStyle(letterSpacing: 1.5,color: App.primary,fontWeight: FontWeight.bold,fontSize: 15),)
-      ],
-    );
-  }
+
 }

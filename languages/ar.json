@@ -6,7 +6,7 @@
   "email": "البريد الإلكتروني",
   "password": "كلمة المرور",
   "sign_up": "اشتراك",
-  "forgot_password": "نسيت كلمة المرور",
+  "forgot_password": "نسيت كلمة المرور؟",
   "name": "الاسم",
   "sign_up_successfully": "تم الاشتراك بنجاح",
   "wrong": "حدث خطأ ما",
@@ -135,5 +135,13 @@
   "remove": "حذف",
   "confirm_dialog": "أشعار تأكيد",
   "are_u_want_to": "هل تريد",
-  "cancel": "إلغاء"
+  "cancel": "إلغاء",
+  "plz_enter_a_valid_email": "الرجاء إدخال بريد إلكتروني صالح",
+  "password_is_required": "كلمة المرور مطلوبة",
+  "name_is_required": "الاسم مطلوب",
+  "verification_code_is_required": "رمز التحقق مطلوب",
+  "old_password_is_required": "كلمة المرور القديمة مطلوبة",
+  "new_password_is_required": "كلمة المرور الجديدة مطلوبة",
+  "confirm_password_is_required": "تأكيد كلمة المرور مطلوب",
+  "no_address_please_add_yours": "لا يوجد عنوان من فضلك أضف عنوانك"
 }

@@ -69,11 +69,11 @@ class SearchTextField extends SearchDelegate<String> {
     Container(
       height: Get.height,
       width: Get.width,
-      color: App.primary,
+      color: App.background,
       child: Center(
         child: Text(App_Localization.of(context).translate("no_results_found"),
-            style: const TextStyle(
-                // color: App.lightWhite,
+            style: TextStyle(
+                color: App.primary,
                 // fontSize: App.small,
                 fontWeight: FontWeight.w600
             )
@@ -85,18 +85,17 @@ class SearchTextField extends SearchDelegate<String> {
         width: Get.width,
         color: Colors.white,
         child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 50),
           itemCount: suggestions.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
               child: Card(
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-
-                  // tileColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(50),
                   ),
@@ -144,11 +143,11 @@ class SearchTextField extends SearchDelegate<String> {
     Container(
       height: Get.height,
       width: Get.width,
-      color: App.primary,
+      color: App.background,
       child: Center(
         child: Text(App_Localization.of(context).translate("no_results_found"),
-            style: const TextStyle(
-              // color: App.lightWhite,
+            style: TextStyle(
+              color: App.primary,
               // fontSize: App.small,
                 fontWeight: FontWeight.w600
             )
@@ -160,10 +159,11 @@ class SearchTextField extends SearchDelegate<String> {
         width: Get.width,
         color: Colors.white,
         child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 50),
           itemCount: suggestions.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
               child: Card(
                 elevation: 5,
                 shape: RoundedRectangleBorder(

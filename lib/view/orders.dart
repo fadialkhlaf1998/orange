@@ -87,7 +87,7 @@ class Orders extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context,index){
                       return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.symmetric(vertical: 0),
                         child: Center(
                           child: GestureDetector(
                             onTap: (){

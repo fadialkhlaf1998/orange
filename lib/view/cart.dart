@@ -76,7 +76,7 @@ class Cart extends StatelessWidget {
               ],
             )
             :ListView.builder(
-              padding: EdgeInsets.only(top: 20,bottom: 260),
+              padding: EdgeInsets.only(top: 0,bottom: 260),
                 itemCount: cartController.cartModel!.cart.length,
                 itemBuilder: (context,index){
                   return Center(
@@ -119,7 +119,7 @@ class Cart extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
 
-                                        Text(cartController.cartModel!.cart[index].title +" "+cartController.cartModel!.cart[index].hard +" "+ cartController.cartModel!.cart[index].ram +" "+ cartController.cartModel!.cart[index].color +" "+ cartController.cartModel!.cart[index].additionatlOption),
+                                        Text(cartController.cartModel!.cart[index].title +" "+cartController.cartModel!.cart[index].hard +" "+ cartController.cartModel!.cart[index].ram +" "+ cartController.cartModel!.cart[index].color +" "+ cartController.cartModel!.cart[index].additionatlOption,maxLines: 2,overflow: TextOverflow.ellipsis),
                                         
                                         Divider(height: 2,),
                                         App.price(context,
@@ -164,6 +164,8 @@ class Cart extends StatelessWidget {
                                             },
                                             child: Container(
                                               width: 25,
+                                              height: 25,
+                                              color: Color(0xffE7E8EA),
                                               child: Center(
                                                 child: Container(
                                                   height: 2,
@@ -260,7 +262,7 @@ class Cart extends StatelessWidget {
                 // borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25)),
               ),
               child: cartController.loading.value || cartController.detailsLoading.value
-                  ?App.shimmerLoading()
+                  ?App.shimmerLoading(radius: 0)
                   :Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
@@ -282,9 +284,10 @@ class Cart extends StatelessWidget {
                             width: Get.width * 0.7 - 5,
                             child: TextField(
                               controller: cartController.code,
+                              textAlignVertical: TextAlignVertical.bottom,
                               decoration: InputDecoration(
                                 hintText: App_Localization.of(context).translate("discount_code"),
-                                hintStyle: TextStyle(fontSize: 12,color: App.dark_grey),
+                                hintStyle: TextStyle(fontSize: 12,color: App.dark_grey,),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.transparent)
                                 ),
@@ -318,10 +321,17 @@ class Cart extends StatelessWidget {
                       ),
                     ),
 
-                    itemDetails(context,"sub_total",cartController.cartModel!.subTotal),
-                    itemDetails(context,"shipping",cartController.cartModel!.shipping),
-                    cartController.cartModel!.discount>0?itemDetails(context,"discount",cartController.cartModel!.discount):Center(),
-                    itemDetails(context,"vat",cartController.cartModel!.vat),
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Column(
+                        children: [
+                          itemDetails(context,"sub_total",cartController.cartModel!.subTotal),
+                          itemDetails(context,"shipping",cartController.cartModel!.shipping),
+                          cartController.cartModel!.discount>0?itemDetails(context,"discount",cartController.cartModel!.discount):Center(),
+                          itemDetails(context,"vat",cartController.cartModel!.vat),
+                        ],
+                      ),
+                    ),
                     // itemDetails(context,"",),
 
 
@@ -332,7 +342,7 @@ class Cart extends StatelessWidget {
                         }
                       },
                       child: Container(
-                        height: 60,
+                        height: 63,
                         width: Get.width - 20,
                         decoration: BoxDecoration(
                           color: App.dark_blue,
@@ -377,7 +387,8 @@ class Cart extends StatelessWidget {
                                     children: [
                                       Text(App_Localization.of(context).translate("checkout"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),),
                                       SizedBox(width: 5,),
-                                      Icon(Icons.arrow_circle_right_outlined,color: Colors.white,)
+                                      Icon(
+                                        Global.locale=="ar"?Icons.arrow_circle_left_outlined:Icons.arrow_circle_right_outlined,color: Colors.white,)
                                     ],
                                   ),
                                 )

@@ -41,6 +41,7 @@ class CheckoutController extends GetxController{
     bool succ = await Api.addOrder(selectedAddressId, 0);
     if(succ){
       Get.offAll(()=>Main());
+      cartController.getData();
       App.succMsg(context, "checkout", "your_order_placed_successfully");
     }else{
       App.errMsg(context, "checkout", "wrong");
@@ -54,6 +55,7 @@ class CheckoutController extends GetxController{
     if(succ){
       loadind.value = false;
       Get.offAll(()=>Main());
+      cartController.getData();
       App.succMsg(context, "checkout", "your_order_placed_successfully");
     }else{
       addOrderForPayment(context);

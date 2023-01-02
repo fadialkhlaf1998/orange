@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: App.primary_mid,
+      backgroundColor: App.background,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -95,7 +95,6 @@ class _HomeState extends State<Home> {
               :Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 10,),
               _slider(context),
               SizedBox(height: 20,),
               _category(context),
@@ -112,7 +111,8 @@ class _HomeState extends State<Home> {
                       child: _section(context,homeController.sections[index]),
                     );
                   }
-              )
+              ),
+              SizedBox(height: 20,),
             ],
           ),
         )),
@@ -218,7 +218,7 @@ class _HomeState extends State<Home> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Text(App_Localization.of(context).translate("shop_by_category"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+            child: Text(App_Localization.of(context).translate("shop_by_category"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           ),
           Container(
             height: Get.height*0.1,
@@ -294,7 +294,7 @@ class _HomeState extends State<Home> {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
-            child: Text(App_Localization.of(context).translate("shop_by_brand"),style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+            child: Text(App_Localization.of(context).translate("shop_by_brand"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           ),
           Container(
             height: Get.height*0.15,
@@ -351,14 +351,17 @@ class _HomeState extends State<Home> {
 
   _productSection(BuildContext context ,Section section){
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
-          child: Text(section.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-        ),
         Container(
-          width: Get.width,
+            width: Get.width * 0.9,
+            child: Row(
+          children: [
+            Text(section.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+          ],
+        )),
+        Container(
+          width: Get.width*0.9,
           height: Get.width*0.6+20,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),

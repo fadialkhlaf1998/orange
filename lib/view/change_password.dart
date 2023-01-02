@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/profile_controller.dart';
 import 'package:orange/helper/app.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:orange/widgets/text_field.dart';
 
@@ -77,9 +78,13 @@ class ChangePassword extends StatelessWidget {
           ),
         )
             :Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             profileController.fake.value?Center():Center(),
-            SizedBox(height: Get.height*0.3,),
+
+            SizedBox(height: Get.height*0.1 ,),
+            Logo(70),
+            SizedBox(height: Get.height*0.1,),
             MyTextField(
                 width: Get.width*0.8,
                 height: 50,
@@ -88,7 +93,8 @@ class ChangePassword extends StatelessWidget {
                 label: "old_password",
                 onChanged: (value){
                   profileController.fake.value = !profileController.fake.value;
-                }
+                },
+              errText: (profileController.oldPassword.text.isEmpty && profileController.validate.value)?"old_password_is_required":null,
             ),
             SizedBox(height: 15,),
             MyTextField(
@@ -99,7 +105,8 @@ class ChangePassword extends StatelessWidget {
                 label: "new_password",
                 onChanged: (value){
                   profileController.fake.value = !profileController.fake.value;
-                }
+                },
+              errText: (profileController.oldPassword.text.isEmpty && profileController.validate.value)?"new_password_is_required":null,
             ),
             SizedBox(height: 15,),
             MyTextField(
@@ -110,7 +117,8 @@ class ChangePassword extends StatelessWidget {
                 label: "confirm_password",
                 onChanged: (value){
                   profileController.fake.value = !profileController.fake.value;
-                }
+                },
+              errText: (profileController.oldPassword.text.isEmpty && profileController.validate.value)?"confirm_password_is_required":null,
             ),
             SizedBox(height: 15,),
             PrimaryBottun(width: Get.width*0.8, height: 50,radiuce: 25, onPressed: (){

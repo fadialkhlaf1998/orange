@@ -86,9 +86,21 @@ class Address extends StatelessWidget {
       addressController.loading.value?
           App.loading(context)
           :
+          addressController.address.length == 0 ?
+              Container(
+                width: Get.width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(App_Localization.of(context).translate("no_address_please_add_yours"),style: TextStyle(color: App.dark_blue,fontSize: 14,fontWeight: FontWeight.bold),)
+                  ],
+                ),
+              )
+              :
           ListView.builder(
             itemCount: addressController.address.length,
-          padding: EdgeInsets.only(top: 20,bottom: 40),
+          padding: EdgeInsets.only(top: 0,bottom: 70),
           itemBuilder: (context,index){
             return Padding(padding: EdgeInsets.symmetric(vertical: 10),
               child: Center(

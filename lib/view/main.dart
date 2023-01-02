@@ -26,7 +26,9 @@ class Main extends StatelessWidget {
         Obx(() => homeController.selectedPage.value == 0?
         SvgPicture.asset("assets/icons/fill/Home.svg")
             : SvgPicture.asset("assets/icons/stroke/Home.svg")),
-        title: App_Localization.of(context).translate("home"),
+        title: Global.locale=="ar"?
+        " "+ App_Localization.of(context).translate("home").toUpperCase():
+        ""+ App_Localization.of(context).translate("home").toUpperCase(),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),
@@ -34,7 +36,9 @@ class Main extends StatelessWidget {
         icon: Obx(() => homeController.selectedPage.value == 1?
         SvgPicture.asset("assets/icons/fill/Category.svg")
             : SvgPicture.asset("assets/icons/stroke/Category.svg")),
-        title: App_Localization.of(context).translate("category"),
+        title: Global.locale=="ar"?
+        " "+ App_Localization.of(context).translate("category").toUpperCase():
+        ""+ App_Localization.of(context).translate("category").toUpperCase(),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),
@@ -42,7 +46,10 @@ class Main extends StatelessWidget {
         icon: Obx(() => homeController.selectedPage.value == 2?
         SvgPicture.asset("assets/icons/fill/Heart.svg")
             : SvgPicture.asset("assets/icons/stroke/Heart.svg")),
-        title: App_Localization.of(context).translate("wishlist"),
+        // contentPadding: 10,
+        title: Global.locale=="ar"?
+        " "+ App_Localization.of(context).translate("wishlist").toUpperCase():
+        ""+ App_Localization.of(context).translate("wishlist").toUpperCase(),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),
@@ -50,7 +57,9 @@ class Main extends StatelessWidget {
         icon: Obx(() => homeController.selectedPage.value == 3?
         SvgPicture.asset("assets/icons/fill/Bag.svg")
             : SvgPicture.asset("assets/icons/stroke/Bag.svg")),
-        title: App_Localization.of(context).translate("cart"),
+        title: Global.locale=="ar"?
+        " "+ App_Localization.of(context).translate("cart").toUpperCase():
+        ""+ App_Localization.of(context).translate("cart").toUpperCase(),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),
@@ -58,7 +67,9 @@ class Main extends StatelessWidget {
         icon: Obx(() => homeController.selectedPage.value == 4?
         SvgPicture.asset("assets/icons/fill/profile.svg")
             : SvgPicture.asset("assets/icons/stroke/profile.svg")),
-        title: App_Localization.of(context).translate("profile"),
+        title: Global.locale=="ar"?
+        " "+ App_Localization.of(context).translate("profile").toUpperCase():
+        ""+ App_Localization.of(context).translate("profile").toUpperCase(),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),

@@ -207,8 +207,10 @@ class Checkout extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             addressController.loading.value?
-                Container(
-                  child: App.loading(context),
+                Expanded(
+                  child: Center(
+                    child: App.loading(context),
+                  ),
                 )
 
                 :Expanded(
@@ -226,7 +228,7 @@ class Checkout extends StatelessWidget {
                         child: Center(
                           child: Container(
                             padding: EdgeInsets.all(10),
-                            height: 155,
+                            // height: 170,
                             width: Get.width*0.9,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -299,7 +301,7 @@ class Checkout extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(5)
                                       ),
                                       child: Center(
-                                        child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                                        child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
                                       ),
                                     )):Center(),
                               ],

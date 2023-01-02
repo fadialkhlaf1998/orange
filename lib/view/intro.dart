@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:orange/controller/home_controller.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/view/pdf_viewer.dart';
+import 'package:orange/widgets/logo.dart';
 
 class Intro extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
@@ -18,15 +19,7 @@ class Intro extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage("assets/images/logo.png")),
-                ),
-              ),
-              SizedBox(height: 20,),
-              Text("ORANGE",style: TextStyle(letterSpacing: 1.5,color: App.primary,fontWeight: FontWeight.bold,fontSize: 30),)
+              Logo(150),
             ],
           ),
         ),

@@ -87,7 +87,7 @@ class OrderDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     getState(context, orderDetailsController.order!.state),
-                    Text(App.getDate(orderDetailsController.order!.placedAt),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                    Text(App.getDate(orderDetailsController.order!.placedAt),style: TextStyle(fontWeight: FontWeight.normal,color: Colors.black),),
                   ],
                 ),
                 SizedBox(height: 15,),
@@ -203,7 +203,7 @@ class OrderDetails extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(App_Localization.of(context).translate("total"),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+                          Text(App_Localization.of(context).translate("total"),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.normal)),
 
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -231,14 +231,14 @@ class OrderDetails extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(App_Localization.of(context).translate(title),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+        Text(App_Localization.of(context).translate(title),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.normal)),
 
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(amount.toStringAsFixed(2),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold)),
+            Text(amount.toStringAsFixed(2),style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.normal)),
             SizedBox(width: 3,),
-            Text(App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.dark_blue,fontWeight: FontWeight.bold)),
+            Text(App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.dark_blue,fontWeight: FontWeight.normal)),
           ],
         )
       ],

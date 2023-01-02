@@ -6,7 +6,7 @@
   "email": "Email",
   "password": "Password",
   "sign_up": "Sign Up",
-  "forgot_password": "Forgot Password",
+  "forgot_password": "Forgot Password?",
   "name": "Name",
   "sign_up_successfully": "Sign Up Has Been Successfully",
   "wrong": "Oops something went wrong",
@@ -135,5 +135,13 @@
   "remove": "Remove",
   "confirm_dialog": "Confirm Dialog",
   "are_u_want_to": "Are Your Want To",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "plz_enter_a_valid_email": "Please Enter A Valid Email",
+  "password_is_required": "Password Is Required",
+  "name_is_required": "Name Is Required",
+  "verification_code_is_required": "Verification Code Is Required",
+  "old_password_is_required": "Old Password Is Required",
+  "new_password_is_required": "New Password Is Required",
+  "confirm_password_is_required": "Confirm Password Is Required",
+  "no_address_please_add_yours": "No Address Please Add Yours"
 }

@@ -22,6 +22,7 @@ class ProductCard extends StatelessWidget {
         Get.to((()=>ProductDetails(product.ProductSlug)));
       },
       child: Padding(
+
           padding:const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         child: Stack(
           children: [

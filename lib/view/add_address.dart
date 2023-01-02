@@ -186,7 +186,7 @@ class AddAddress extends StatelessWidget {
                 maxLength: 9,
                 inputDecoration: InputDecoration(
                   label: Text(App_Localization.of(context).translate("phone")),
-                  labelStyle: TextStyle(color: App.dark_grey),
+                  labelStyle: TextStyle(color: App.dark_grey,fontSize: 12),
                   focusedBorder: addressController.phone.text.isEmpty&&addressController.validate.value
                       ?OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red)

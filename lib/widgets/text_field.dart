@@ -12,8 +12,9 @@ class MyTextField extends StatefulWidget {
   final void Function(String) onChanged;
   final TextInputType keyboardType;
   final bool isPassword;
+  final String? errText;
 
-  final RxBool hidden = true.obs;
+  final RxBool? hidden ;
 
 
   MyTextField({
@@ -24,7 +25,9 @@ class MyTextField extends StatefulWidget {
     required this.label,
     required this.onChanged,
     this.keyboardType = TextInputType.text,
-    this.isPassword = false
+    this.isPassword = false,
+    this.errText = null,
+    this.hidden
   });
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -33,57 +36,73 @@ class MyTextField extends StatefulWidget {
 class _MyTextFieldState extends State<MyTextField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      decoration: BoxDecoration(
-        color: App.grey,
-        borderRadius: BorderRadius.circular(widget.height/2)
-      ),
-      child: Obx(() => TextField(
-        controller: widget.controller,
-        keyboardType: widget.keyboardType,
-        onChanged: widget.onChanged,
-        obscureText: widget.isPassword?widget.hidden.value:false,
-        style: TextStyle(color: App.dark_blue),
-        decoration: InputDecoration(
-          suffix: widget.isPassword?GestureDetector(
-            onTap: (){
-              widget.hidden(!widget.hidden.value);
-              print(widget.hidden.value);
-            },
-            child: Icon(widget.hidden.value?Icons.visibility_off_outlined:Icons.visibility_outlined,color: App.dark_grey,),
-          ):null,
-
-          enabledBorder: widget.validate.value
-              ?OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.circular(widget.height/2)
-          )
-              :OutlineInputBorder(
-              borderSide: BorderSide(color: App.grey),
-              borderRadius: BorderRadius.circular(widget.height/2)
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: widget.width,
+          height: widget.height,
+          decoration: BoxDecoration(
+            color: App.grey,
+            borderRadius: BorderRadius.circular(widget.height/2)
           ),
+          child: Obx(() => TextField(
+            controller: widget.controller,
+            keyboardType: widget.keyboardType,
+            onChanged: widget.onChanged,
+            obscureText: widget.isPassword?widget.hidden!.value:false,
+            style: widget.isPassword?TextStyle(color: App.dark_blue,fontSize: 12):TextStyle(color: App.dark_blue,fontSize: 12,height: 1),
+            decoration: InputDecoration(
+              suffix: widget.isPassword?IconButton(onPressed: (){
+                widget.hidden!(!widget.hidden!.value);
+                print(widget.hidden!.value);
+              },icon: Icon(widget.hidden!.value?Icons.visibility_off_outlined:Icons.visibility_outlined,color: App.dark_grey,),):null,
 
-          focusedBorder:  widget.validate.value
-              ?OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.circular(widget.height/2)
-          )
-              :OutlineInputBorder(
-              borderSide: BorderSide(color: App.primary),
-              borderRadius: BorderRadius.circular(widget.height/2),
+              enabledBorder: widget.validate.value
+                  ?OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.circular(widget.height/2)
+              )
+                  :OutlineInputBorder(
+                  borderSide: BorderSide(color: App.grey),
+                  borderRadius: BorderRadius.circular(widget.height/2)
+              ),
 
-
-          ),
-
-          label: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 0),
-            child: Text(App_Localization.of(context).translate(widget.label),style: TextStyle(color: App.dark_grey),),
-          ),
-          labelStyle: TextStyle(color: App.grey),
+              focusedBorder:  widget.validate.value
+                  ?OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.circular(widget.height/2)
+              )
+                  :OutlineInputBorder(
+                  borderSide: BorderSide(color: App.primary),
+                  borderRadius: BorderRadius.circular(widget.height/2),
+              ),
+              label: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 0),
+                child: Text(App_Localization.of(context).translate(widget.label),style: TextStyle(color: App.dark_grey),),
+              ),
+              labelStyle: TextStyle(color: App.grey),
+            ),
+          )),
         ),
-      )),
+        widget.errText!=null?
+            Container(
+              width: widget.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      SizedBox(width: 15,),
+                      Text(App_Localization.of(context).translate(widget.errText!),style: TextStyle(color: Colors.red,fontSize: 12),)
+                    ],
+                  )
+                ],
+              ),
+            )
+            :Center()
+      ],
     );
   }
 }

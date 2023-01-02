@@ -125,20 +125,21 @@ class ProductDetails extends StatelessWidget {
                               Container(
                                   width: Get.width*0.5-10,
                                   child: Align(
-                                    alignment: Alignment.centerRight,
+                                    alignment: Global.locale=="ar"?Alignment.centerLeft:Alignment.centerRight,
                                     child: Container(
                                       width: 60,
                                       decoration: BoxDecoration(
                                           color: App.primary,
-                                          borderRadius: BorderRadius.circular(5)
+                                          borderRadius: BorderRadius.circular(20)
                                       ),
+                                      // padding: EdgeInsets.symmetric(horizontal: 5),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(vertical: 2),
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
-                                            Icon(Icons.star,color: Colors.white,),
-                                            Text(productDetailsController.product!.rate.toStringAsFixed(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.white),)
+                                            Icon(Icons.star,color: Colors.white,size: 20,),
+                                            Text(productDetailsController.product!.rate.toStringAsFixed(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.white),)
                                           ],
                                         ),
                                       ),
@@ -147,7 +148,12 @@ class ProductDetails extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(height: 15,),
+                          Divider(
+                            color: App.dark_grey,
+                            height: 1,
+                            thickness: 0.5,
+                          ),
                           Stack(
                             children: [
                               Column(
@@ -194,10 +200,11 @@ class ProductDetails extends StatelessWidget {
                                   = !productDetailsController.veiwMore.value;
                                 },
                                 child: Container(
-                                  width: Get.width*0.4,
+                                  width: Get.width*0.85,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                      border: Border.all(color: App.primary),
+                                    color: App.grey,
+                                      // border: Border.all(color: App.primary),
                                       borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Center(
@@ -205,7 +212,7 @@ class ProductDetails extends StatelessWidget {
                                       productDetailsController.veiwMore.value
                                           ?App_Localization.of(context).translate("view_less")
                                           :App_Localization.of(context).translate("view_more"),
-                                      style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 18),
+                                      style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 16),
                                     ),
                                   ),
                                 ),
@@ -261,13 +268,13 @@ class ProductDetails extends StatelessWidget {
                                             height: 50,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!))
+                                                image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!),fit: BoxFit.cover)
                                             ),
                                           )
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 5,top: 5,bottom: 5),
+                                      padding: const EdgeInsets.all(5),
                                       child: Container(
                                         width: Get.width*0.9-70,
                                         child: Column(
@@ -278,7 +285,7 @@ class ProductDetails extends StatelessWidget {
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(productDetailsController.product!.rateReview[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
-                                                RatingBar.builder(
+                                                productDetailsController.product!.rateReview[index].rate>0?RatingBar.builder(
                                                   initialRating: productDetailsController.product!.rateReview[index].rate,
                                                   minRating: 1,
                                                   direction: Axis.horizontal,
@@ -294,7 +301,7 @@ class ProductDetails extends StatelessWidget {
                                                   onRatingUpdate: (rating) {
                                                     print(rating);
                                                   },
-                                                ),
+                                                ):Center(),
                                               ],
                                             ),
                                             productDetailsController.product!.rateReview[index].review.isEmpty
@@ -428,7 +435,6 @@ class ProductDetails extends StatelessWidget {
     return Container(
       width: Get.width,
       height: Get.width*0.7,
-
       child: Stack(
         children: [
           CarouselSlider(
@@ -723,7 +729,9 @@ class ProductDetails extends StatelessWidget {
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+              itemSize: 25,
+
+              itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
               itemBuilder: (context, _) => Icon(
                 Icons.star,
                 color: Colors.amber,
@@ -746,10 +754,11 @@ class ProductDetails extends StatelessWidget {
         ):Center(),
         productDetailsController.product!.checkout==0?Center():
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: 55,
-              width: Get.width - 20 - 100,
+              height: 50,
+              width: Get.width - 20 - 80,
               child: TextField(
                 controller: productDetailsController.review,
                 style: TextStyle(fontSize: 12,height: 1),
@@ -765,29 +774,32 @@ class ProductDetails extends StatelessWidget {
             ),
             Container(
               height: 55,
-              width: 100,
-              child: Center(
-                child: GestureDetector(
-                  onTap: (){
-                    productDetailsController.addReview(context);
-                  },
-                  child: Container(
-                    height: 40,
-                    width: 70,
-                    decoration: BoxDecoration(
-                      color: App.primary,
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+              width: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      productDetailsController.addReview(context);
+                    },
+                    child: Container(
+                      height: 40,
+                      width: 70,
+                      decoration: BoxDecoration(
+                          color: App.primary,
+                          borderRadius: BorderRadius.circular(10)
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(App_Localization.of(context).translate("post"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
                           Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
                         ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
+                  )
+                ],
+              )
             )
           ],
         ),
