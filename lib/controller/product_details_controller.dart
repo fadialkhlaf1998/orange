@@ -26,10 +26,10 @@ class ProductDetailsController extends GetxController{
   RxBool veiwMore = false.obs;
   TextEditingController review = TextEditingController();
 
-  Future<void> getData(String slug)async{
+  Future<void> getData(String slug,int selectedOptionId)async{
     loading.value = true;
     await Api.hasInternet();
-    product = await Api.productDetails(slug);
+    product = await Api.productDetails(slug,selectedOptionId.toString());
     if(product == null){
       Get.back();
     }else{
@@ -147,7 +147,7 @@ class ProductDetailsController extends GetxController{
       reviewLoading.value = true;
       var succ = await Api.addReview(review.text, product!.languageParent);
       if(succ){
-        Product? requestProduct = await Api.productDetails(product!.ProductSlug);
+        Product? requestProduct = await Api.productDetails(product!.ProductSlug,product!.option!.id.toString());
         if(requestProduct != null){
           product!.rateReview = requestProduct.rateReview;
         }

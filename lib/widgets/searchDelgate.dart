@@ -20,7 +20,7 @@ class SearchTextField extends SearchDelegate<String> {
         visible: false,
         child: Text('')
       ) : IconButton(
-        icon: const Icon(Icons.close, color: Colors.white),
+        icon: const Icon(Icons.close, color: Colors.black),
         onPressed: () {
           query="";
         },
@@ -31,7 +31,7 @@ class SearchTextField extends SearchDelegate<String> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: const Icon(Icons.arrow_back,color: Colors.white),
+      icon: const Icon(Icons.arrow_back,color: Colors.black),
       onPressed: () {
         close(context, "");
       },
@@ -42,17 +42,18 @@ class SearchTextField extends SearchDelegate<String> {
   ThemeData appBarTheme(BuildContext context) {
     return super.appBarTheme(context).copyWith(
       appBarTheme: AppBarTheme(
-        color: App.primary,
+        color: Colors.white,
       ),
-
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: Colors.white
+        cursorColor: Colors.black
       ),
-      hintColor: Colors.white,
+      hintColor: App.grey95,
       textTheme: const TextTheme(
+
         headline6: TextStyle(
           // fontSize: App.medium,
           // color: App.lightWhite,
+          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -65,7 +66,14 @@ class SearchTextField extends SearchDelegate<String> {
     final suggestions = homeController.search_suggestions.where((elm) {
       return elm.title.toLowerCase().contains(query.toLowerCase());
     });
-    return suggestions.isEmpty ?
+    return
+      query.isEmpty?
+          Container(
+            height: Get.height,
+            width: Get.width,
+            color: Colors.white.withOpacity(0.8),
+          )
+      :suggestions.isEmpty ?
     Container(
       height: Get.height,
       width: Get.width,
@@ -88,44 +96,14 @@ class SearchTextField extends SearchDelegate<String> {
           padding: EdgeInsets.only(bottom: 50),
           itemCount: suggestions.length,
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  style: ListTileStyle.drawer,
-                  leading: Container(
-                    width: 100,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              "${Api.media_url}/${suggestions.elementAt(index).image}",
-                            ),
-                            fit: BoxFit.contain
-                        )
-                    ),
-                  ),
-                  title: Text(suggestions.elementAt(index).title,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      // fontSize: App.medium,
-                      // color: App.lightWhite,
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis,
-
-                    ),
-                  ),
-                  onTap: (){
-                    Get.to(()=>ProductDetails(suggestions.elementAt(index).slug));
-                  },
+            return GestureDetector(
+              onTap: (){
+                Get.to(()=>ProductDetails(suggestions.elementAt(index).slug,-1));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                child: RichText(
+                  text: searchMatch(suggestions.elementAt(index).title),
                 ),
               ),
             );
@@ -139,7 +117,15 @@ class SearchTextField extends SearchDelegate<String> {
     final suggestions = homeController.search_suggestions.where((elm) {
       return elm.title.toLowerCase().contains(query.toLowerCase());
     });
-    return suggestions.isEmpty ?
+
+    return
+      query.isEmpty?
+      Container(
+        height: Get.height,
+        width: Get.width,
+        color: Colors.white,
+      )
+          :suggestions.isEmpty ?
     Container(
       height: Get.height,
       width: Get.width,
@@ -162,51 +148,69 @@ class SearchTextField extends SearchDelegate<String> {
           padding: EdgeInsets.only(bottom: 50),
           itemCount: suggestions.length,
           itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: ListTile(
-
-                  // tileColor: Colors.black,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  style: ListTileStyle.drawer,
-                  leading: Container(
-                    width: 100,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              "${Api.media_url}/${suggestions.elementAt(index).image}",
-                            ),
-                            fit: BoxFit.contain
-                        )
-                    ),
-                  ),
-                  title: Text(suggestions.elementAt(index).title,
-                    maxLines: 2,
-                    style: const TextStyle(
-                      // fontSize: App.medium,
-                      // color: App.lightWhite,
-                      color: Colors.black,
-                      overflow: TextOverflow.ellipsis,
-
-                    ),
-                  ),
-                  onTap: (){
-                    Get.to(()=>ProductDetails(suggestions.elementAt(index).slug));
-                  },
+            return GestureDetector(
+              onTap: (){
+                Get.to(()=>ProductDetails(suggestions.elementAt(index).slug,-1));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                child: RichText(
+                  text: searchMatch(suggestions.elementAt(index).title),
                 ),
               ),
             );
           },
         )
+    );
+  }
+  TextStyle positiveColorStyle = TextStyle(color: Colors.black,fontSize: 16);
+  TextStyle negativeColorStyle = TextStyle(color: App.grey95,fontSize: 16);
+
+  TextSpan searchMatch(String match) {
+    if (query == null || query == "")
+      return TextSpan(text: match, style: negativeColorStyle);
+    var refinedMatch = match.toLowerCase();
+    var refinedSearch = query.toLowerCase();
+    if (refinedMatch.contains(refinedSearch)) {
+      if (refinedMatch.substring(0, refinedSearch.length) == refinedSearch) {
+        return TextSpan(
+          style: positiveColorStyle,
+          text: match.substring(0, refinedSearch.length),
+          children: [
+            searchMatch(
+              match.substring(
+                refinedSearch.length,
+              ),
+            ),
+          ],
+        );
+      } else if (refinedMatch.length == refinedSearch.length) {
+        return TextSpan(text: match, style: positiveColorStyle);
+      } else {
+        return TextSpan(
+          style: negativeColorStyle,
+          text: match.substring(
+            0,
+            refinedMatch.indexOf(refinedSearch),
+          ),
+          children: [
+            searchMatch(
+              match.substring(
+                refinedMatch.indexOf(refinedSearch),
+              ),
+            ),
+          ],
+        );
+      }
+    } else if (!refinedMatch.contains(refinedSearch)) {
+      return TextSpan(text: match, style: negativeColorStyle);
+    }
+    return TextSpan(
+      text: match.substring(0, refinedMatch.indexOf(refinedSearch)),
+      style: negativeColorStyle,
+      children: [
+        searchMatch(match.substring(refinedMatch.indexOf(refinedSearch)))
+      ],
     );
   }
 }

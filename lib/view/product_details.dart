@@ -16,6 +16,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:orange/helper/global.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:orange/widgets/searchDelgate.dart';
+import 'package:readmore/readmore.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -25,8 +26,8 @@ class ProductDetails extends StatelessWidget {
   HomeController homeController = Get.find();
   CartController cartController = Get.find();
 
-  ProductDetails(String slug){
-    productDetailsController.getData(slug);
+  ProductDetails(String slug,int selectedOptionId){
+    productDetailsController.getData(slug,selectedOptionId);
   }
 
 
@@ -35,41 +36,41 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: App.background,
-      appBar: App.myHeader(context, height: 60, child: Center(
-          child:  Container(
-            width: Get.width*0.9,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                    onTap: (){
-                      Get.back();
-                    },
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      child: Icon(Icons.arrow_back_ios,color: App.primary,),
-                    )
-                ),
-                GestureDetector(
-                    onTap: (){
-                      Get.back();
-                      Get.back();
-                      homeController.pageController.jumpToTab(3);
-                      homeController.selectedPage.value = 3;
-                    },
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
-                    )
-                )
-              ],
-            ),
-          )
-      ),),
-      body: Stack(
+      backgroundColor: App.greyFE,
+      // appBar: App.myHeader(context, height: 60, child: Center(
+      //     child:  Container(
+      //       width: Get.width*0.9,
+      //       child: Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: [
+      //           GestureDetector(
+      //               onTap: (){
+      //                 Get.back();
+      //               },
+      //               child: Container(
+      //                 width: 25,
+      //                 height: 25,
+      //                 child: Icon(Icons.arrow_back_ios,color: App.primary,),
+      //               )
+      //           ),
+      //           GestureDetector(
+      //               onTap: (){
+      //                 Get.back();
+      //                 Get.back();
+      //                 homeController.pageController.jumpToTab(3);
+      //                 homeController.selectedPage.value = 3;
+      //               },
+      //               child: Container(
+      //                 width: 25,
+      //                 height: 25,
+      //                 child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
+      //               )
+      //           )
+      //         ],
+      //       ),
+      //     )
+      // ),),
+      body: SafeArea(child: Stack(
         children: [
           SingleChildScrollView(
             physics: BouncingScrollPhysics(),
@@ -79,9 +80,9 @@ class ProductDetails extends StatelessWidget {
               height: Get.height*0.6,
               child: App.loading(context),
             )
-            : Container(
+                : Container(
               width: Get.width,
-              color: App.background,
+              color: App.greyFE,
               child: Column(
                 children: [
                   _slider(context,
@@ -92,146 +93,152 @@ class ProductDetails extends StatelessWidget {
 
                   Container(
                     width: Get.width,
-                    decoration: BoxDecoration(
-                      color: App.background,
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff000000).withOpacity(0.1),
-                          blurRadius: 8,
-                          spreadRadius: 0,
 
-                          offset: Offset(0,-10)
-                        )
-                      ]
+                    decoration: BoxDecoration(
+                        color: Color(0xfff6f6f6),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xff000000).withOpacity(0.1),
+                              blurRadius: 8,
+                              spreadRadius: 0,
+                              offset: Offset(0,-4)
+                          )
+                        ]
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 20,),
-                          Text(productDetailsController.product!.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                          SizedBox(height: 10,),
-                          Row(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: Get.width*0.5-10,
-                                child: App.price(context,
-                                    productDetailsController.product!.oldPrice!=null?
-                                    productDetailsController.product!.oldPrice!+productDetailsController.product!.option!.addetionalPrice
-                                        :productDetailsController.product!.oldPrice, productDetailsController.product!.price+productDetailsController.product!.option!.addetionalPrice,space: false),
-                              ),
-                              Container(
-                                  width: Get.width*0.5-10,
-                                  child: Align(
-                                    alignment: Global.locale=="ar"?Alignment.centerLeft:Alignment.centerRight,
-                                    child: Container(
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                          color: App.primary,
-                                          borderRadius: BorderRadius.circular(20)
-                                      ),
-                                      // padding: EdgeInsets.symmetric(horizontal: 5),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(vertical: 2),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Icon(Icons.star,color: Colors.white,size: 20,),
-                                            Text(productDetailsController.product!.rate.toStringAsFixed(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.white),)
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15,),
-                          Divider(
-                            color: App.dark_grey,
-                            height: 1,
-                            thickness: 0.5,
-                          ),
-                          Stack(
-                            children: [
-                              Column(
+                              SizedBox(height: 20,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  productDetailsController.product!.colors.isEmpty?Center():_colorsList(context),
-                                  productDetailsController.product!.rams.isEmpty?Center():_ramsList(context),
-                                  productDetailsController.product!.hards.isEmpty?Center():_hardsList(context),
-                                  productDetailsController.product!.additionatlOptions.isEmpty?Center():_additionalOptionList(context),
+                                  Text(productDetailsController.product!.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                                  Container(
+                                      child: Align(
+                                        alignment: Global.locale=="ar"?Alignment.centerLeft:Alignment.centerRight,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(vertical: 2),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(productDetailsController.product!.rate.toStringAsFixed(1),style: TextStyle(fontSize: 12,color: App.grey95),),
+                                                SizedBox(width: 2,),
+                                                Icon(Icons.star,color: Colors.amber,size: 16,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                  ),
                                 ],
                               ),
-                              productDetailsController.optionLoading.value?
-                              Positioned.fill(child: Container(
-                                width: Get.width,
-                                color: Colors.white.withOpacity(0.5),
-                                child: App.loading(context),
-                              )):Center()
+                              (productDetailsController.product!.oldPrice!=null &&
+                                  productDetailsController.product!.oldPrice! > productDetailsController.product!.price)?SizedBox(height: 5,):Center(),
+                              (productDetailsController.product!.oldPrice!=null &&
+                                  productDetailsController.product!.oldPrice! > productDetailsController.product!.price)?Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(App_Localization.of(context).translate("aed")+" "+(productDetailsController.product!.oldPrice!+productDetailsController.product!.option!.addetionalPrice).toStringAsFixed(2),style: TextStyle(fontSize: 12,color: App.grey95 , decoration: TextDecoration.lineThrough),),
+                                  Text(App_Localization.of(context).translate("save_off")+" "+(100 - ((productDetailsController.product!.price+productDetailsController.product!.option!.addetionalPrice) * 100 / (productDetailsController.product!.oldPrice!+productDetailsController.product!.option!.addetionalPrice))).toStringAsFixed(0)+"%",
+                                    style: TextStyle(fontSize: 12,color: Color(0xff48D66B),fontWeight: FontWeight.bold),),
+                                ],
+                              ):Center(),
+                              SizedBox(height: 5,),
+                              Text(App_Localization.of(context).translate("aed")+" "+(productDetailsController.product!.price+productDetailsController.product!.option!.addetionalPrice).toStringAsFixed(2),style: TextStyle(color: App.primary , fontWeight: FontWeight.bold,),),
+                              SizedBox(height: 5,),
+                              Divider(
+                                color: App.dark_grey,
+                                height: 1,
+                                thickness: 0.5,
+                              ),
                             ],
                           ),
-                          SizedBox(height: 10,),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Text(App_Localization.of(context).translate("description"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                        ),
+                        Stack(
+                          children: [
+                            Column(
+                              children: [
+                                productDetailsController.product!.colors.isEmpty?Center():_colorsList(context),
+                                productDetailsController.product!.rams.isEmpty?Center():_ramsList(context),
+                                productDetailsController.product!.hards.isEmpty?Center():_hardsList(context),
+                                productDetailsController.product!.additionatlOptions.isEmpty?Center():_additionalOptionList(context),
+                              ],
+                            ),
+                            productDetailsController.optionLoading.value?
+                            Positioned.fill(child: Container(
+                              width: Get.width,
+                              color: Colors.white.withOpacity(0.5),
+                              child: App.loading(context),
+                            )):Center()
+                          ],
+                        ),
+                        SizedBox(height: 10,),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+                          child: Row(
+                            children: [
+                              Text(App_Localization.of(context).translate("description"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),)
+                            ],
                           ),
-                          AnimatedContainer(
-                            color: App.background,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: AnimatedContainer(
+                            color: Color(0xfff6f6f6),
                             key: _key,
                             duration: Duration(milliseconds: 700),
                             height:
                             productDetailsController.veiwMore.value
                                 ?null
-                                :Get.width* 0.5 ,
+                                :120,
                             child: Html(data: productDetailsController.product!.description,style: {
-                              "*":Style(color: Color(0xff7C9299))
+                              "*":Style(color: App.grey95,fontSize: FontSize(12),fontFamily: "Poppins")
                             }),
                           ),
-                          //todo check height of description _key.currentContext!.size.height
-                          SizedBox(height: 10,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              GestureDetector(
-                                onTap: (){
-                                  productDetailsController.veiwMore.value
-                                  = !productDetailsController.veiwMore.value;
-                                },
-                                child: Container(
-                                  width: Get.width*0.85,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: App.grey,
-                                      // border: Border.all(color: App.primary),
-                                      borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      productDetailsController.veiwMore.value
-                                          ?App_Localization.of(context).translate("view_less")
-                                          :App_Localization.of(context).translate("view_more"),
-                                      style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 16),
-                                    ),
+                        ),
+                        //todo check height of description _key.currentContext!.size.height
+                        SizedBox(height: 8,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                productDetailsController.veiwMore.value
+                                = !productDetailsController.veiwMore.value;
+                              },
+                              child: Container(
+                                width: Get.width*0.85,
+                                decoration: BoxDecoration(
+                                  // color: App.grey,
+                                  // border: Border.all(color: App.primary),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    productDetailsController.veiwMore.value
+                                        ?App_Localization.of(context).translate("view_less")
+                                        :App_Localization.of(context).translate("view_more"),
+                                    style: TextStyle(color: App.primary,fontWeight: FontWeight.bold,fontSize: 16),
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                          _rateReview(context),
-
-
-
-                        ],
-                      ),
+                              ),
+                            )
+                          ],
+                        ),
+                        _rateReview(context),
+                      ],
                     ),
                   ),
                   productDetailsController.product!.rateReview.isEmpty
-                  ?SizedBox(height: 70,)
-                  :Container(
+                      ?SizedBox(height: 70,)
+                      :Container(
                     width: Get.width,
-                    color: App.grey,
                     padding: EdgeInsets.only(top: 20,bottom: 70),
                     child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
@@ -244,28 +251,28 @@ class ProductDetails extends StatelessWidget {
                                 // height: 60,
                                 margin: EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Obx(() => productDetailsController.reviewLoading.value
                                     ?App.shimmerLoading()
                                     :Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: productDetailsController.product!.rateReview[index].review.isEmpty
-                                  ?CrossAxisAlignment.center
-                                  :CrossAxisAlignment.start,
+                                      ?CrossAxisAlignment.center
+                                      :CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(left: 5,right: 5,top: 5,bottom: 5),
                                       child: CircleAvatar(
                                           backgroundColor: App.primary,
-                                          radius: 25,
+                                          radius: 45/2,
                                           child: productDetailsController.product!.rateReview[index].image == null
                                               || productDetailsController.product!.rateReview[index].image!.isEmpty
                                               ?Icon(Icons.person,size: 30,):
                                           Container(
-                                            width: 50,
-                                            height: 50,
+                                            width: 45,
+                                            height: 45,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(image: NetworkImage(Api.media_url+productDetailsController.product!.rateReview[index].image!),fit: BoxFit.cover)
@@ -284,7 +291,7 @@ class ProductDetails extends StatelessWidget {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text(productDetailsController.product!.rateReview[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                                                Text(productDetailsController.product!.rateReview[index].name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14),),
                                                 productDetailsController.product!.rateReview[index].rate>0?RatingBar.builder(
                                                   initialRating: productDetailsController.product!.rateReview[index].rate,
                                                   minRating: 1,
@@ -306,7 +313,7 @@ class ProductDetails extends StatelessWidget {
                                             ),
                                             productDetailsController.product!.rateReview[index].review.isEmpty
                                                 ?Center()
-                                                :Text(productDetailsController.product!.rateReview[index].review,style: TextStyle(fontSize: 13,overflow: TextOverflow.ellipsis),maxLines: 20,),
+                                                :Text(productDetailsController.product!.rateReview[index].review,style: TextStyle(fontSize: 12,color: App.grey95,overflow: TextOverflow.ellipsis),maxLines: 20,),
                                           ],
                                         ),
                                       ),
@@ -331,79 +338,82 @@ class ProductDetails extends StatelessWidget {
                   width: Get.width,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Color(0xff022B3A),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(25))
+                      color: App.greyFE,
+                      // color: Colors.red,
+                      boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 9,
+                        spreadRadius: 2,
+                        offset: Offset(0,-2)
+                      )
+                    ]
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        width: Get.width*0.4,
-                        height: 45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Color(0xff33535f),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 120,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Color(0xffE7E8EA),
 
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
 
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: GestureDetector(
-                                  onTap: (){
-                                    if(productDetailsController.cartCounter.value > 1){
-                                      productDetailsController.cartCounter.value -- ;
-                                    }
-                                  },
-                                  child:CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: App.primary,
-                                    child: SvgPicture.asset("assets/icons/minus.svg"),
-                                  )),
-                            ),
-                            Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: GestureDetector(
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: GestureDetector(
+                                    onTap: (){
+                                      if(productDetailsController.cartCounter.value > 1){
+                                        productDetailsController.cartCounter.value -- ;
+                                      }
+                                    },
+                                    child:Text("-",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                              ),
+                              Text(productDetailsController.cartCounter.toString(),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 5),
+                                child: GestureDetector(
                                   onTap: (){
                                     if(productDetailsController.product!.option!.stock >  productDetailsController.cartCounter.value){
                                       productDetailsController.cartCounter.value ++ ;
                                     }
                                   },
-                                  child: CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: App.primary,
-                                    child: SvgPicture.asset("assets/icons/plus.svg"),
-                                  ),
-                              ),
-                            )
-                          ],
+                                  child: Text("+",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      productDetailsController.cartLoading.value?
-                      _cartBtnLoading()
-                          :productDetailsController.product!.option !=null
-                      &&productDetailsController.product!.option!.stock ==0?
-                      PrimaryBottun(
-                        width: Get.width*0.4,
-                        height: 45,
-                        onPressed: ()async{
-                          // print(_key.currentContext!.size!.height);
-                          // productDetailsController.cartLoading.value = true;
-                          // await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
-                          // productDetailsController.cartLoading.value = false;
-                        },
-                        color: Colors.red,
-                        text: "out_of_stock",
-                        radiuce: 15,
-                        // linearGradient: App.linearGradient,
-                      )
-                      :PrimaryBottun(
-                          width: Get.width*0.4,
-                          height: 45,
+                        productDetailsController.cartLoading.value?
+                        _cartBtnLoading()
+                            :productDetailsController.product!.option !=null
+                            &&productDetailsController.product!.option!.stock ==0?
+                        PrimaryBottun(
+                          width: Get.width*0.5,
+                          height: 40,
+                          onPressed: ()async{
+                            // print(_key.currentContext!.size!.height);
+                            // productDetailsController.cartLoading.value = true;
+                            // await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
+                            // productDetailsController.cartLoading.value = false;
+                          },
+                          color: Colors.red,
+                          text: "out_of_stock",
+                          radiuce: 5,
+                          fontSize: 14,
+                          // linearGradient: App.linearGradient,
+                        )
+                            :PrimaryBottun(
+                          width: Get.width*0.5,
+                          height: 40,
                           onPressed: ()async{
                             // print(_key.currentContext!.size!.height);
                             productDetailsController.cartLoading.value = true;
@@ -412,10 +422,13 @@ class ProductDetails extends StatelessWidget {
                           },
                           color: App.primary,
                           text: "add_to_cart",
-                        radiuce: 15,
+                          fontSize: 16,
+                          radiuce: 5,
+                          fontWeight: FontWeight.w500,
                           // linearGradient: App.linearGradient,
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Platform.isAndroid?Center():Container(
@@ -427,7 +440,7 @@ class ProductDetails extends StatelessWidget {
             ),
           )
         ],
-      ),
+      )),
     ));
   }
 
@@ -435,6 +448,7 @@ class ProductDetails extends StatelessWidget {
     return Container(
       width: Get.width,
       height: Get.width*0.7,
+      color: Colors.white,
       child: Stack(
         children: [
           CarouselSlider(
@@ -465,6 +479,7 @@ class ProductDetails extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
                         image: DecorationImage(
                             image: NetworkImage(Api.media_url+elm),
                             fit: BoxFit.contain
@@ -489,23 +504,16 @@ class ProductDetails extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context,index){
                           return Obx(() => Center(
-                            child: AnimatedContainer(
-                              margin: EdgeInsets.symmetric(horizontal: 2),
-                              duration: Duration(milliseconds: 400),
-                              height: 15,
-                              width: 15,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: productDetailsController.activeSlider.value==index?App.primary:Colors.transparent,),
-                              ),
-                              child: Center(
-                                child: Container(
-                                  width: 8,
-                                    height: 8,
-                                   decoration: BoxDecoration(
-                                     shape: BoxShape.circle,
-                                     color: productDetailsController.activeSlider.value==index?App.primary:Colors.grey,
-                                   ),
+                            child:Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 2.5),
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 400),
+                                height: 6,
+                                width: productDetailsController.activeSlider.value==index?20:6,
+                                decoration: BoxDecoration(
+                                    color: productDetailsController.activeSlider.value==index?App.primary:App.primary.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(3)
+                                  // shape: BoxShape.circle,
                                 ),
                               ),
                             ),
@@ -515,13 +523,28 @@ class ProductDetails extends StatelessWidget {
                 ),
               )),
           Positioned(
-            top: 30,
-            right: Get.width*0.05,
-            child: GestureDetector(
-              onTap: () {
-                wishlistController.wishlistFunction(context, productDetailsController.product!);
-              },
-              child: Obx(() => Icon(productDetailsController.product!.wishlist.value>0?Icons.favorite:Icons.favorite_border,color: App.primary)),
+            top: 15,
+            
+            child:Container(
+              width: Get.width,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Icon(Icons.arrow_back_ios,color: App.primary,size: 22,),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      wishlistController.wishlistFunction(context, productDetailsController.product!);
+                    },
+                    child: Obx(() => Icon(productDetailsController.product!.wishlist.value>0?Icons.favorite:Icons.favorite_border,color: App.primary,size: 22)),
+                  )
+                ],
+              ),
             ),
           ),
         ],
@@ -532,13 +555,14 @@ class ProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 8,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("colors"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+          child: Text(App_Localization.of(context).translate("colors"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         ),
         Container(
-          width: Get.width - 20,
-          height: 120,
+          width: Get.width,
+          height: 70,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
@@ -550,13 +574,13 @@ class ProductDetails extends StatelessWidget {
                   productDetailsController.selectColor(productDetailsController.product!.colors[index].id);
                 },
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.only(left: 15),
                   child: Container(
-                    width: 100,
-                    height: 100,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                        color: App.greyF5,
                         border: Border.all(color: productDetailsController.product!.colors[index].selected.value ?App.primary:Colors.grey),
                         image: DecorationImage(
                             image: NetworkImage(Api.media_url + productDetailsController.product!.colors[index].image),
@@ -576,12 +600,13 @@ class ProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 8,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("rams"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),),
+          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+          child: Text(App_Localization.of(context).translate("rams"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,),),
         ),
         Container(
-          width: Get.width - 20,
+          width: Get.width ,
           height: 30,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -594,19 +619,19 @@ class ProductDetails extends StatelessWidget {
                       productDetailsController.selectRam(productDetailsController.product!.rams[index].ram);
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.only(left: 15),
                       child: Container(
                         // width: 100,
                         height: 30,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: productDetailsController.product!.rams[index].selected.value ?App.primary:Colors.white,
-                          border: Border.all(color: productDetailsController.product!.rams[index].selected.value ?App.primary:Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                          color: productDetailsController.product!.rams[index].selected.value ?Colors.black:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.rams[index].selected.value ?Colors.white:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.rams[index].ram,style: TextStyle(color: productDetailsController.product!.rams[index].selected.value ?Colors.white:Colors.black),),
+                            child: Text(productDetailsController.product!.rams[index].ram,style: TextStyle(fontSize: 12,color: productDetailsController.product!.rams[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -622,12 +647,13 @@ class ProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 8,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("hards"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+          child: Text(App_Localization.of(context).translate("hards"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         ),
         Container(
-          width: Get.width - 20,
+          width: Get.width,
           height: 30,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -640,19 +666,19 @@ class ProductDetails extends StatelessWidget {
                       productDetailsController.selectHard(productDetailsController.product!.hards[index].hard);
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.only(left: 15),
                       child: Container(
                         // width: 100,
                         height: 30,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                            color: productDetailsController.product!.hards[index].selected.value ?App.primary:Colors.white,
-                          border: Border.all(color: productDetailsController.product!.hards[index].selected.value ?App.primary:Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                            color: productDetailsController.product!.hards[index].selected.value ?Colors.black:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.hards[index].selected.value ?Colors.white:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.hards[index].hard,style: TextStyle(color: productDetailsController.product!.hards[index].selected.value ?Colors.white:Colors.black),),
+                            child: Text(productDetailsController.product!.hards[index].hard,style: TextStyle(fontSize: 12,color: productDetailsController.product!.hards[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -668,12 +694,13 @@ class ProductDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 8,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("additional_option"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+          padding: EdgeInsets.symmetric(vertical: 8,horizontal: 15),
+          child: Text(App_Localization.of(context).translate("additional_option"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
         ),
         Container(
-          width: Get.width - 20,
+          width: Get.width,
           height: 30,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -686,19 +713,19 @@ class ProductDetails extends StatelessWidget {
                       productDetailsController.selectAdditionalOption(productDetailsController.product!.additionatlOptions[index].additionatlOption);
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      padding: EdgeInsets.only(left: 15),
                       child: Container(
                         // width: 100,
                         height: 30,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: productDetailsController.product!.additionatlOptions[index].selected.value ?App.primary:Colors.white,
-                          border: Border.all(color: productDetailsController.product!.additionatlOptions[index].selected.value ?App.primary:Colors.black),
+                          borderRadius: BorderRadius.circular(15),
+                          color: productDetailsController.product!.additionatlOptions[index].selected.value ?Colors.black:Colors.white,
+                          border: Border.all(color: productDetailsController.product!.additionatlOptions[index].selected.value ?Colors.white:Colors.black),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Center(
-                            child: Text(productDetailsController.product!.additionatlOptions[index].additionatlOption,style: TextStyle(color: productDetailsController.product!.additionatlOptions[index].selected.value ?Colors.white:Colors.black),),
+                            child: Text(productDetailsController.product!.additionatlOptions[index].additionatlOption,style: TextStyle(fontSize: 12,color: productDetailsController.product!.additionatlOptions[index].selected.value ?Colors.white:Colors.black),),
                           ),
                         ),
                       ),
@@ -711,114 +738,124 @@ class ProductDetails extends StatelessWidget {
     );
   }
   _rateReview(BuildContext context){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 8,),
+          productDetailsController.product!.checkout==0?Center():Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Text(App_Localization.of(context).translate("rate"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+          ),
+          productDetailsController.product!.checkout==0?Center():
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              RatingBar.builder(
+                initialRating: productDetailsController.product!.myRate,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: 18,
 
-        productDetailsController.product!.checkout==0?Center():Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("rate"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-        ),
-        productDetailsController.product!.checkout==0?Center():
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RatingBar.builder(
-              initialRating: productDetailsController.product!.myRate,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemSize: 25,
-
-              itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Colors.amber,
+                itemBuilder: (context, _) => Padding(padding: EdgeInsets.only(right: Global.locale=="en"?3:0,left: Global.locale=="ar"?3:0),child:Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                )),
+                onRatingUpdate: (rating) async{
+                  print(rating);
+                  await Api.hasInternet();
+                  var succ = await Api.addRate(rating, productDetailsController.product!.languageParent);
+                  if(succ){
+                    productDetailsController.product!.myRate = rating;
+                  }
+                },
               ),
-              onRatingUpdate: (rating) async{
-                print(rating);
-                await Api.hasInternet();
-                var succ = await Api.addRate(rating, productDetailsController.product!.languageParent);
-                if(succ){
-                  productDetailsController.product!.myRate = rating;
-                }
-              },
-            ),
-          ],
-        ),
-
-        productDetailsController.product!.rateReview.isNotEmpty||productDetailsController.product!.checkout!=0?Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(App_Localization.of(context).translate("review"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-        ):Center(),
-        productDetailsController.product!.checkout==0?Center():
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              height: 50,
-              width: Get.width - 20 - 80,
-              child: TextField(
-                controller: productDetailsController.review,
-                style: TextStyle(fontSize: 12,height: 1),
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
+            ],
+          ),
+          SizedBox(height: 8,),
+          productDetailsController.product!.rateReview.isNotEmpty||productDetailsController.product!.checkout!=0?Padding(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: Text(App_Localization.of(context).translate("review"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+          ):Center(),
+          productDetailsController.product!.checkout==0?Center():
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                height: 37,
+                width: Get.width - 30 - 50,
+                decoration: BoxDecoration(
+                  color: Color(0xffece9e9),
+                  borderRadius: BorderRadius.circular(5)
+                ),
+                child: TextField(
+                  controller: productDetailsController.review,
+                  textAlignVertical: TextAlignVertical.bottom,
+                  style: TextStyle(fontSize: 12,height: 1),
+                  decoration: InputDecoration(
+                    hintText: App_Localization.of(context).translate("write_you_comment"),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(5)
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(5)
+                    ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: 55,
-              width: 80,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      productDetailsController.addReview(context);
-                    },
-                    child: Container(
-                      height: 40,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          color: App.primary,
-                          borderRadius: BorderRadius.circular(10)
+              Container(
+                height: 37,
+                width: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        productDetailsController.addReview(context);
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: App.primary,
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: Center(
+                          child: CircleAvatar(
+                            radius: 13,
+                            backgroundColor: Colors.white,
+                            child: Icon(Icons.check,color: App.primary,size: 17,),
+                          ),
+                        )
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(App_Localization.of(context).translate("post"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
-                          Text(App_Localization.of(context).translate("review"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 11),),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                )
               )
-            )
-          ],
-        ),
-        SizedBox(height: 10,),
+            ],
+          ),
+          SizedBox(height: 10,),
 
-      ],
+        ],
+      ),
     );
   }
 
   _cartBtnLoading(){
     return Container(
       width: Get.width*0.4,
-      height: 45,
+      height: 40,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(5),
         // gradient: App.linearGradient,
         color: App.primary
       ),
-      child: App.shimmerLoading(radius: 15)
+      child: App.shimmerLoading(radius: 5)
     );
   }
 }

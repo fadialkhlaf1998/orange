@@ -53,6 +53,8 @@ class ProfileController extends GetxController{
       var succ = await Api.deletePhoto();
       if(succ){
         await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
+        homeController.selectedPage.value = 3;
+        homeController.selectedPage.value = 4;
       }else{
         App.errMsg(context, "profile", "wrong");
       }
@@ -79,6 +81,8 @@ class ProfileController extends GetxController{
       var succ = await Api.selectImage(image);
       if(succ){
         await Api.login(Global.loginInfo!.email, Global.loginInfo!.password);
+        homeController.selectedPage.value = 3;
+        homeController.selectedPage.value = 4;
       }else{
         App.errMsg(context, "profile", "wrong");
       }

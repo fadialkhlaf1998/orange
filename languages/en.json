@@ -143,5 +143,14 @@
   "old_password_is_required": "Old Password Is Required",
   "new_password_is_required": "New Password Is Required",
   "confirm_password_is_required": "Confirm Password Is Required",
-  "no_address_please_add_yours": "No Address Please Add Yours"
+  "no_address_please_add_yours": "No Address Please Add Yours",
+  "what_are_you_looking_for": "What are you looking for ?",
+  "products": "products",
+  "product": "product",
+  "save_off": "Save Off",
+  "write_you_comment": "Write Your Comment",
+  "price": "Price",
+  "sign_in_to_shop_now": "Sign In To Shop Now",
+  "or_continue_with": "Or Continue With",
+  "create_your_account": "Create Your Account"
 }

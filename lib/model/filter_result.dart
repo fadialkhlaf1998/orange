@@ -11,21 +11,23 @@ class FilterResult {
   FilterResult({
     required this.filter,
     required this.products,
+    required this.priceRange,
   });
 
   Filter filter;
+  PriceRange priceRange;
   List<Product> products;
 
   factory FilterResult.fromJson(String str) => FilterResult.fromMap(json.decode(str));
 
   factory FilterResult.fromMap(Map<String, dynamic> json) => FilterResult(
     filter: Filter.fromMap(json["filter"]),
+    priceRange: PriceRange.fromMap(json["price_range"]),
     products:  List<Product>.from(json["products"].map((x) => Product.fromMap(x))),
   );
 
 
 }
-
 class Filter {
   Filter({
     required this.categories,
@@ -38,6 +40,8 @@ class Filter {
     required this.locale,
     required this.customerId,
     required this.option,
+    required this.min_price,
+    required this.max_price,
   });
 
   List<String> categories;
@@ -47,6 +51,8 @@ class Filter {
   int? sort;
   int? limit;
   int? lazyLoad;
+  double? min_price;
+  double? max_price;
   String locale;
   String option;
   int customerId;
@@ -66,6 +72,8 @@ class Filter {
     locale: json["locale"],
     customerId: json["customer_id"],
     option: json["option"],
+    min_price: json["min_price"] == null?null:double.parse(json["min_price"].toString()),
+    max_price: json["max_price"] == null?null:double.parse(json["max_price"].toString()),
   );
 
   Map<String, dynamic> toMap() => {
@@ -78,5 +86,29 @@ class Filter {
     "lazy_load": lazyLoad,
     "locale": locale,
     "customer_id": customerId,
+  };
+}
+
+class PriceRange {
+  PriceRange({
+    required this.min_price,
+    required this.max_price,
+  });
+
+  double? min_price;
+  double? max_price;
+
+  factory PriceRange.fromJson(String str) => PriceRange.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory PriceRange.fromMap(Map<String, dynamic> json) => PriceRange(
+    min_price: json["min_price"]!= null?double.parse(json["min_price"].toString()):null,
+    max_price: json["max_price"]!= null?double.parse(json["max_price"].toString()):null,
+  );
+
+  Map<String, dynamic> toMap() => {
+    "min_price": min_price,
+    "max_price": max_price,
   };
 }

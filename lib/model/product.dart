@@ -65,6 +65,15 @@ class Product {
     required this.rams,
     required this.hards,
     required this.additionatlOptions,
+    required this.ram,
+    required this.hard,
+    required this.additionatl_option,
+    required this.addetional_price,
+    required this.color_id,
+    required this.color_image,
+    required this.color_name,
+    required this.stock,
+    required this.selected_option_id,
   });
 
   int id;
@@ -96,12 +105,33 @@ class Product {
   List<Hard> hards;
   List<AdditionatlOption> additionatlOptions;
 
+  String ram;
+  String hard;
+  String additionatl_option;
+  double addetional_price;
+  int stock;
+  int color_id;
+  int selected_option_id;
+  String color_name;
+  String color_image;
+  
   factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
     id: json["id"],
+
+    ram: json["ram"]==null?"":json["ram"],
+    hard: json["hard"]==null?"":json["hard"],
+    additionatl_option: json["additionatl_option"]==null?"":json["additionatl_option"],
+    color_name: json["color_name"]==null?"":json["color_name"],
+    color_image: json["color_image"]==null?"":json["color_image"],
+    addetional_price: json["addetional_price"]==null?0.0:double.parse(json["addetional_price"].toString()),
+    stock: json["stock"]==null?0:json["stock"],
+    selected_option_id: json["selected_option_id"]==null?-1:json["selected_option_id"],
+    color_id: json["color_id"]==null?-1:json["color_id"],
+    
     title: json["title"],
     image: json["image"],
     ProductSlug: json["slug"],

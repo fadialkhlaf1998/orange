@@ -47,48 +47,6 @@ class Section {
   List<Product> products;
   List<BannerItem> bannerItems;
 
-  ScrollController scrollController = ScrollController();
-  beginAnimate(){
-    try{
-      int count = 0;
-      if(bannerItems.length > 4){
-        Future.doWhile(() async{
-          try{
-            await Future.delayed(Duration(seconds: 5));
-            if (scrollController.position.extentAfter == 0){
-              count = 0;
-              return scrollController
-                  .animateTo(0,
-                  duration: Duration(milliseconds: 2000), curve: Curves.linear)
-                  .then((value) => true);
-            }else{
-              count++;
-              return scrollController
-                  .animateTo(Get.width * count /2,
-                  duration: Duration(milliseconds: 500), curve: Curves.linear)
-                  .then((value) => true);
-            }
-          }catch(err){
-            print(err);
-            print('********* Err *********');
-            // scrollController = ScrollController();
-            count = 0;
-            return scrollController
-                .animateTo(0,
-                duration: Duration(milliseconds: 2000), curve: Curves.linear)
-                .then((value) => true);
-            // beginAnimate();
-          }
-
-        });
-      }
-    }catch(e){
-      print(e);
-      print('********* Error *********');
-      // scrollController = ScrollController();
-      beginAnimate();
-    }
-  }
 
   factory Section.fromJson(String str) => Section.fromMap(json.decode(str));
 

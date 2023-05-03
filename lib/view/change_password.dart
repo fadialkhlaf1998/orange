@@ -83,7 +83,7 @@ class ChangePassword extends StatelessWidget {
             profileController.fake.value?Center():Center(),
 
             SizedBox(height: Get.height*0.1 ,),
-            Logo(70),
+            Logo(70,false),
             SizedBox(height: Get.height*0.1,),
             MyTextField(
                 width: Get.width*0.8,

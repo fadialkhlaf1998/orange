@@ -6,6 +6,7 @@ import 'package:orange/app_localization.dart';
 import 'package:orange/controller/cart_controller.dart';
 import 'package:orange/controller/home_controller.dart';
 import 'package:orange/controller/wishlist_controller.dart';
+import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/helper/global.dart';
 import 'package:orange/view/cart.dart';
@@ -24,8 +25,8 @@ class Main extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon:
         Obx(() => homeController.selectedPage.value == 0?
-        SvgPicture.asset("assets/icons/fill/Home.svg")
-            : SvgPicture.asset("assets/icons/stroke/Home.svg")),
+        SvgPicture.asset("assets/icons/fill/Home.svg",color: App.primary,)
+            : SvgPicture.asset("assets/icons/stroke/Home.svg",color: App.greyC5)),
         title: Global.locale=="ar"?
         " "+ App_Localization.of(context).translate("home").toUpperCase():
         ""+ App_Localization.of(context).translate("home").toUpperCase(),
@@ -34,8 +35,8 @@ class Main extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: Obx(() => homeController.selectedPage.value == 1?
-        SvgPicture.asset("assets/icons/fill/Category.svg")
-            : SvgPicture.asset("assets/icons/stroke/Category.svg")),
+        SvgPicture.asset("assets/icons/fill/Category.svg",color: App.primary)
+            : SvgPicture.asset("assets/icons/stroke/Category.svg",color: App.greyC5)),
         title: Global.locale=="ar"?
         " "+ App_Localization.of(context).translate("category").toUpperCase():
         ""+ App_Localization.of(context).translate("category").toUpperCase(),
@@ -44,8 +45,8 @@ class Main extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: Obx(() => homeController.selectedPage.value == 2?
-        SvgPicture.asset("assets/icons/fill/Heart.svg")
-            : SvgPicture.asset("assets/icons/stroke/Heart.svg")),
+        SvgPicture.asset("assets/icons/fill/Heart.svg",color: App.primary)
+            : SvgPicture.asset("assets/icons/stroke/Heart.svg",color: App.greyC5)),
         // contentPadding: 10,
         title: Global.locale=="ar"?
         " "+ App_Localization.of(context).translate("wishlist").toUpperCase():
@@ -55,8 +56,8 @@ class Main extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         icon: Obx(() => homeController.selectedPage.value == 3?
-        SvgPicture.asset("assets/icons/fill/Bag.svg")
-            : SvgPicture.asset("assets/icons/stroke/Bag.svg")),
+        SvgPicture.asset("assets/icons/fill/Bag.svg",color: App.primary)
+            : SvgPicture.asset("assets/icons/stroke/Bag.svg",color: App.greyC5)),
         title: Global.locale=="ar"?
         " "+ App_Localization.of(context).translate("cart").toUpperCase():
         ""+ App_Localization.of(context).translate("cart").toUpperCase(),
@@ -64,9 +65,22 @@ class Main extends StatelessWidget {
         inactiveColorPrimary: CupertinoColors.black.withOpacity(0.8),
       ),
       PersistentBottomNavBarItem(
-        icon: Obx(() => homeController.selectedPage.value == 4?
-        SvgPicture.asset("assets/icons/fill/profile.svg")
-            : SvgPicture.asset("assets/icons/stroke/profile.svg")),
+        icon: Obx(() =>
+
+        Global.customer!= null && Global.customer!.image.length > 0
+            ?Container(
+          width: 27,
+          height: 27,
+          decoration: BoxDecoration(
+            border: homeController.selectedPage.value == 4?Border.all(color: App.primary):null,
+            image: DecorationImage(image: NetworkImage(Api.media_url+Global.customer!.image)),
+            shape: BoxShape.circle
+          ),
+        )
+            :
+        homeController.selectedPage.value == 4?
+        SvgPicture.asset("assets/icons/fill/profile.svg",color: App.primary)
+            : SvgPicture.asset("assets/icons/stroke/profile.svg",color: App.greyC5)),
         title: Global.locale=="ar"?
         " "+ App_Localization.of(context).translate("profile").toUpperCase():
         ""+ App_Localization.of(context).translate("profile").toUpperCase(),
@@ -81,6 +95,7 @@ class Main extends StatelessWidget {
     return PersistentTabView(
       context,
       controller: homeController.pageController,
+      navBarHeight: 65,
       screens: [
         Home(),
         Category(),
@@ -106,9 +121,17 @@ class Main extends StatelessWidget {
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
       decoration: NavBarDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25),topRight: Radius.circular(25)),
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
         colorBehindNavBar: Colors.white,
-        gradient:  LinearGradient(colors: [App.primary_light,App.primary],begin: Alignment.topCenter ,end: Alignment.bottomCenter)
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.14),
+            offset: Offset(0, -2),
+            spreadRadius: 2,
+            blurRadius: 9
+          )
+        ]
+        // gradient:  LinearGradient(colors: [App.primary_light,App.primary],begin: Alignment.topCenter ,end: Alignment.bottomCenter)
       ),
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
@@ -121,7 +144,7 @@ class Main extends StatelessWidget {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle: NavBarStyle.style1, // Choose the nav bar style with this property.
+      navBarStyle: NavBarStyle.style13, // Choose the nav bar style with this property.
     );
   }
 }

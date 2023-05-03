@@ -22,6 +22,7 @@ import 'package:orange/view/main.dart';
 import 'package:orange/view/product_details.dart';
 import 'package:orange/view/products.dart';
 import 'package:orange/view/verification_code.dart';
+import 'package:orange/view/welcome.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeController extends GetxController{
@@ -104,7 +105,7 @@ class HomeController extends GetxController{
     categoryController.getData();
   }
 
-  navigate(StartUpDecoder startUpDecoder,Result? loginResult){
+  navigate(StartUpDecoder startUpDecoder,Result? loginResult)async{
 
     categories = startUpDecoder.categories;
     brands = startUpDecoder.brands;
@@ -112,9 +113,11 @@ class HomeController extends GetxController{
     banners = startUpDecoder.banners;
     search_suggestions = startUpDecoder.search_suggestions;
 
-    beginAnimate();
-
-    if(loginResult == null){
+    bool firstTime = await Store.loadFirstTime();
+    if(firstTime){
+      Get.off(()=>Welcome());
+    }
+    else if(loginResult == null){
       Get.off(()=>Login());
     }else if(loginResult.code == 1){
       Get.off(()=>Main());
@@ -125,9 +128,6 @@ class HomeController extends GetxController{
     }
   }
 
-  beginAnimate(){
-    sections.forEach((element) {element.beginAnimate();});
-  }
 
   refreshData()async{
     loading.value = true;
@@ -151,7 +151,6 @@ class HomeController extends GetxController{
 
       refreshController();
 
-      beginAnimate();
 
       loading.value = false;
     }
@@ -160,7 +159,7 @@ class HomeController extends GetxController{
 
   mainBannerPress(MyBanner banner,BuildContext context){
     if(banner.products.length == 1 && banner.category.isEmpty && banner.subCategory.isEmpty && banner.brand.isEmpty ){
-      Get.to(()=>ProductDetails((banner.products.first)));
+      Get.to(()=>ProductDetails((banner.products.first),-1));
     }else{
       Get.to(()=>Products(title: "",categories: banner.category,sub_categories: banner.subCategory,brands: banner.brand,products: banner.products,option: "or",));
     }
@@ -168,7 +167,7 @@ class HomeController extends GetxController{
 
   bannerItemPress(BannerItem banner,BuildContext context){
     if(banner.productSlug.isNotEmpty && banner.subCategorySlug.isEmpty && banner.brandSlug.isEmpty && banner.categorySlug.isEmpty ){
-      Get.to(()=>ProductDetails((banner.productSlug)));
+      Get.to(()=>ProductDetails((banner.productSlug),-1));
     }else{
       Get.to(()=>Products(
         title: App_Localization.of(context).translate("offers"),

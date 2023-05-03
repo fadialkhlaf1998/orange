@@ -53,6 +53,10 @@ class _MyAppState extends State<MyApp> {
         title: 'Syria Store',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          sliderTheme: SliderThemeData(
+            // showValueIndicator: ShowValueIndicator.always,
+            valueIndicatorColor: Colors.transparent,
+          ),
             primaryColor: App.primary,
             primarySwatch: generateMaterialColor(App.primary),
             fontFamily: "Poppins",

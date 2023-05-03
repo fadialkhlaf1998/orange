@@ -5,6 +5,7 @@ import 'package:orange/controller/wishlist_controller.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/helper/global.dart';
 import 'package:orange/view/main.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/product_card.dart';
 import 'package:orange/widgets/searchDelgate.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,18 @@ class Wishlist extends StatelessWidget {
       appBar:App.myHeader(context, height: 60, child: Center(
           child:  Container(
               width: Get.width*0.9,
-              child: Center(
-                child: Text(App_Localization.of(context).translate("wishlist"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap: (){
+                        wishlistController.homeController.pageController.jumpToTab(0);
+                        wishlistController.homeController.selectedPage(0);
+                      },
+                      child: Logo(30, false),
+                  ),
+                  SizedBox(width: 10,),
+                  Text(App_Localization.of(context).translate("wishlist"),style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
+                ],
               )
           )
       ),),
@@ -76,9 +87,10 @@ class Wishlist extends StatelessWidget {
                   ),
                 ):
               GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 45/60,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                    Get.width > 600 ? 3 : 2,
+                    childAspectRatio: 0.65,
                     mainAxisSpacing: 0,
                     crossAxisSpacing: 0,
                   ),
@@ -86,7 +98,7 @@ class Wishlist extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: wishlistController.wishlist.length,
                   itemBuilder: (context,index){
-                    return ProductCard(wishlistController.wishlist[index]);
+                    return ProductCard(wishlistController.wishlist[index],false);
                   }
               ),
             )

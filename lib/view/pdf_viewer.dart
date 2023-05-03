@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class MyPDFViewer extends StatelessWidget {
   String url;
@@ -68,11 +68,11 @@ class MyPDFViewer extends StatelessWidget {
               ),
             )
         ),),
-
-      body: Container(
-        color: Colors.white,
-        child: SfPdfViewer.network(Api.media_url+url,),
-      )
+//todo pdf
+      // body: Container(
+      //   color: Colors.white,
+      //   child: SfPdfViewer.network(Api.media_url+url,),
+      // )
     );
   }
 }

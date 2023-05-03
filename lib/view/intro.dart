@@ -19,7 +19,7 @@ class Intro extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Logo(150),
+              Logo(150,false),
             ],
           ),
         ),

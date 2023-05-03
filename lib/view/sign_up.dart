@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +21,7 @@ class SignUp extends StatelessWidget {
           height: Get.height,
           child: Center(
             child: Container(
-              width: Get.width*0.8,
+              width: Get.width*0.92,
               child:Obx(() {
                 return signupController.loading.value
                     ?App.loading(context)
@@ -32,10 +30,20 @@ class SignUp extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       signupController.fake.value?Center():Center(),
-                      Logo(70),
-                      SizedBox(height: 30,),
+                      Logo(70,false),
+                      SizedBox(height: 70,),
+                      Text(App_Localization.of(context).translate("create_your_account"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),),
+                      SizedBox(height: 20,),
                       MyTextField(
                         width: Get.width,
+                        prefix: Container(
+                          width: 50,
+                          height: 50,
+                            child: Padding(
+                              padding: EdgeInsets.all(13),
+                              child: Image.asset("assets/icons/name.png"),
+                            ),
+                        ),
                         height: 50,
                         controller: signupController.name,
                         validate: (signupController.name.text.isEmpty&&signupController.validate.value).obs,
@@ -48,6 +56,14 @@ class SignUp extends StatelessWidget {
                       SizedBox(height: 30,),
                       MyTextField(
                         width: Get.width,
+                        prefix: Container(
+                          width: 50,
+                          height: 50,
+                          child: Padding(
+                            padding: EdgeInsets.all(13),
+                            child: Image.asset("assets/icons/email.png"),
+                          ),
+                        ),
                         height: 50,
                         controller: signupController.email,
                         validate: ((signupController.email.text.isEmpty||!signupController.email.text.isEmail)&&signupController.validate.value).obs,
@@ -61,6 +77,14 @@ class SignUp extends StatelessWidget {
                       SizedBox(height: 30,),
                       MyTextField(
                         width: Get.width,
+                        prefix: Container(
+                          width: 50,
+                          height: 50,
+                          child: Padding(
+                            padding: EdgeInsets.all(13),
+                            child: Image.asset("assets/icons/lock-Filled@2x.png"),
+                          ),
+                        ),
                         height: 50,
                         controller: signupController.password,
                         validate: ((signupController.password.text.isEmpty||signupController.password.text.length<6)&&signupController.validate.value).obs,
@@ -74,13 +98,13 @@ class SignUp extends StatelessWidget {
                       ),
                       SizedBox(height: 30,),
                       PrimaryBottun(
-                        width: Get.width*0.8,
+                        width: Get.width*0.92,
                         radiuce: 25,
                         height: 50,
                         onPressed: (){
                           signupController.signup(context);
                         },
-                        color: App.dark_grey,
+                        color: App.primary,
                         text: "sign_up",
                         // linearGradient: App.linearGradient,
                       ),

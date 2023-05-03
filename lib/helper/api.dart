@@ -191,7 +191,9 @@ class Api{
     required int? sort,
     required int? lazy_load,
     required int? limit,
-    required String option
+    required String option,
+    required double? min_price,
+    required double? max_price,
     })async{
     var headers = {
       'Content-Type': 'application/json'
@@ -211,6 +213,8 @@ class Api{
       "limit": limit,
       "locale": Global.locale,
       "option":option,
+      "min_price":min_price,
+      "max_price":max_price,
       "customer_id":customer_id
     });
     request.headers.addAll(headers);
@@ -225,7 +229,7 @@ class Api{
       print(response.reasonPhrase);
       return FilterResult(filter: Filter(categories: [], brands: [], subCategories: [],
           products: [], sort: null, limit: null, lazyLoad: null, locale: "en",
-          customerId: -1,option: "and"), products: [],);
+          customerId: -1,option: "and",max_price: null,min_price: null), products: [],priceRange: PriceRange(min_price: null, max_price: null));
     }
 
   }
@@ -317,12 +321,12 @@ class Api{
     }
   }
 
-  static Future<Product?> productDetails(String slug)async{
+  static Future<Product?> productDetails(String slug,String optionId)async{
     int customer_id = -1;
     if(Global.customer != null){
       customer_id = Global.customer!.id;
     }
-    var request = http.Request('GET', Uri.parse(url+'/api/product-details/${Global.locale}/$slug/$customer_id'));
+    var request = http.Request('GET', Uri.parse(url+'/api/product-details/${Global.locale}/$slug/$customer_id/$optionId'));
 
     http.StreamedResponse response = await request.send();
 

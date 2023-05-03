@@ -122,63 +122,75 @@ class Category extends StatelessWidget {
                         ?App.noResult(context)
                         :GridView.builder(
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 5,
+                            crossAxisCount: Get.width < 600 ?2:3,
+                            crossAxisSpacing: 0,
                             mainAxisSpacing: 8,
-                            childAspectRatio: 4/6
+                            childAspectRatio: 3/4.5
                           ),
+                            padding: EdgeInsets.only(bottom: 30),
                             itemCount: categoryController.products.length,
                             itemBuilder: (context,index){
                               return GestureDetector(
                                 onTap: (){
-                                  Get.to((()=>ProductDetails(categoryController.products[index].ProductSlug)));
+                                  Get.to((()=>ProductDetails(categoryController.products[index].ProductSlug,categoryController.products[index].selected_option_id)));
                                 },
-                                child: Container(
-                                  width: Get.width/4 - 20,
-                                  height: Get.width*0.35,
-                                  margin: EdgeInsets.symmetric(horizontal: 10),
-
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Column(
                                     children: [
-                                      Container(
-                                        width:  Get.width*0.25,
-                                        height: Get.width*0.25,
-                                        decoration: BoxDecoration(
-                                          color: App.grey,
-                                          borderRadius: BorderRadius.circular(15)
-                                        ),
-                                        child: Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Container(
+                                      Expanded(
+                                        flex: 6,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: App.grey,
+                                              borderRadius: BorderRadius.circular(5)
+                                          ),
+                                          child: Center(
+                                              child: Padding(
+                                                padding: EdgeInsets.all(0),
+                                                child: Container(
 
 
-                                              decoration: BoxDecoration(
-                                                  color: App.background,
-                                                  borderRadius: BorderRadius.circular(15),
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(Api.media_url+categoryController.products[index].image),
-                                                      fit: BoxFit.cover
-                                                  )
+                                                  decoration: BoxDecoration(
+                                                      color: App.greyF5,
+                                                      borderRadius: BorderRadius.circular(5),
+                                                      image: DecorationImage(
+                                                          image: NetworkImage(Api.media_url+(categoryController.products[index].color_image.isNotEmpty
+                                                              ?categoryController.products[index].color_image:categoryController.products[index].image)),
+                                                          fit: BoxFit.cover
+                                                      )
+                                                  ),
+                                                ),
+                                              )
+                                          ),
+                                        ),),
+                                      Expanded(
+                                        flex: 3,
+                                        child: Container(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(height: 5,),
+                                              Text(
+                                                categoryController.products[index].title,
+                                                textAlign: TextAlign.center,
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    fontSize: 11,
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold
+                                                ),
                                               ),
-                                            ),
-                                          )
+                                          Text(
+                                              categoryController.products[index].color_name +(categoryController.products[index].color_name.isNotEmpty?" ":"")+
+                                                  categoryController.products[index].hard + (categoryController.products[index].hard.isNotEmpty?" ":"")+
+                                                  categoryController.products[index].ram + (categoryController.products[index].ram.isNotEmpty?" ":"")+
+                                                  categoryController.products[index].additionatl_option,textAlign: TextAlign.center,style: TextStyle(color: App.grey95,fontSize: 10),overflow: TextOverflow.ellipsis,maxLines: 2),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      Container(
-                                        width: Get.width*0.25 ,
-                                        height: Get.width*0.1,
-                                        child: Center(child: Text(
-                                          categoryController.products[index].title,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold
-                                          ),
-                                        )),
-                                      )
                                     ],
                                   ),
                                 ),

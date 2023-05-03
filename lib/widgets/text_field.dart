@@ -13,8 +13,8 @@ class MyTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final bool isPassword;
   final String? errText;
-
   final RxBool? hidden ;
+  final Widget? prefix;
 
 
   MyTextField({
@@ -27,6 +27,7 @@ class MyTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
     this.errText = null,
+    this.prefix = null,
     this.hidden
   });
   @override
@@ -43,8 +44,8 @@ class _MyTextFieldState extends State<MyTextField> {
           width: widget.width,
           height: widget.height,
           decoration: BoxDecoration(
-            color: App.grey,
-            borderRadius: BorderRadius.circular(widget.height/2)
+            color: App.greyF5,
+            borderRadius: BorderRadius.circular(5)
           ),
           child: Obx(() => TextField(
             controller: widget.controller,
@@ -57,25 +58,25 @@ class _MyTextFieldState extends State<MyTextField> {
                 widget.hidden!(!widget.hidden!.value);
                 print(widget.hidden!.value);
               },icon: Icon(widget.hidden!.value?Icons.visibility_off_outlined:Icons.visibility_outlined,color: App.dark_grey,),):null,
-
+              prefixIcon: widget.prefix,
               enabledBorder: widget.validate.value
                   ?OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.circular(widget.height/2)
+                  borderRadius: BorderRadius.circular(5)
               )
                   :OutlineInputBorder(
-                  borderSide: BorderSide(color: App.grey),
-                  borderRadius: BorderRadius.circular(widget.height/2)
+                  borderSide: BorderSide(color: App.greyF5),
+                  borderRadius: BorderRadius.circular(5)
               ),
 
               focusedBorder:  widget.validate.value
                   ?OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.circular(widget.height/2)
+                  borderRadius: BorderRadius.circular(5)
               )
                   :OutlineInputBorder(
                   borderSide: BorderSide(color: App.primary),
-                  borderRadius: BorderRadius.circular(widget.height/2),
+                  borderRadius: BorderRadius.circular(5),
               ),
               label: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0),

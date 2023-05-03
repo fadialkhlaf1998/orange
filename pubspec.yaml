@@ -52,7 +52,8 @@ dependencies:
   image_picker: ^0.8.6
   intl_phone_number_input: ^0.7.1
   lottie: ^2.0.0
-  syncfusion_flutter_pdfviewer: ^20.3.58
+#  syncfusion_flutter_pdfviewer: ^20.4.41
+  readmore: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -100,7 +101,7 @@ flutter:
    - family: Poppins
      fonts:
        - asset: assets/fonts/Poppins-Regular.ttf
-       - asset: assets/fonts/Poppins-ExtraBold.ttf
+       - asset: assets/fonts/Poppins-Medium.ttf
          weight: 500
 
   #   - family: Trajan Pro

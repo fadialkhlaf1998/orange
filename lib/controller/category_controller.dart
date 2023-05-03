@@ -54,7 +54,9 @@ class CategoryController extends GetxController{
       products: [],
       sort: null,
       sub_categories: [subCategory[index].subCategorySlug],
-      option: "and"
+      option: "and",
+      min_price: null,
+      max_price: null
     )).products;
     productLoading.value =false;
   }

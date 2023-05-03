@@ -1,6 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="8.855" height="10.417" viewBox="0 0 8.855 10.417">
-  <g id="sort_1" data-name="sort 1" transform="translate(-254.219 -507.571)">
-    <path id="Path_36169" data-name="Path 36169" d="M282.956,497.219v8.917l1.655-1.655-1.655,1.655-1.7-1.655" transform="translate(-22.286 11.102)" fill="none" stroke="#fe7902" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-    <path id="Path_36179" data-name="Path 36179" d="M282.956,497.219v8.917l1.655-1.655-1.655,1.655-1.7-1.655" transform="translate(539.58 1014.457) rotate(180)" fill="none" stroke="#fe7902" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="26" viewBox="0 0 24 26">
+  <g id="Mask_Group_451" data-name="Mask Group 451" transform="translate(17482 -9103)" clip-path="url(#clip-path)">
+    <g id="Group_36532" data-name="Group 36532" transform="translate(-17616.789 8335.339)">
+      <path id="arrow-down-Bold_1_" d="M935.989,1827.272l-4.006,4.006a.572.572,0,0,1-.809,0l-4.006-4.006a.572.572,0,0,1,.809-.809l3.029,3.029v-8.92a.572.572,0,1,1,1.145,0v8.92l3.029-3.029a.572.572,0,1,1,.809.809Z" transform="translate(-780.726 -1041.943)" fill="#fff"/>
+      <path id="arrow-down-Bold_1_2" data-name="arrow-down-Bold_1_" d="M8.99,7.272,4.983,11.279a.572.572,0,0,1-.809,0L.168,7.272a.572.572,0,0,1,.809-.809L4.006,9.492V.572a.572.572,0,1,1,1.145,0v8.92L8.18,6.463a.572.572,0,1,1,.809.809Z" transform="translate(147.991 782.78) rotate(180)" fill="#fff"/>
+    </g>
   </g>
 </svg>

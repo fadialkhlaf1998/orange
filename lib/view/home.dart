@@ -8,6 +8,7 @@ import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
 import 'package:orange/model/section.dart';
 import 'package:orange/view/products.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/product_card.dart';
 import 'package:orange/widgets/searchDelgate.dart';
 
@@ -34,49 +35,32 @@ class _HomeState extends State<Home> {
             width: Get.width*0.9,
             child: Row(
               children: [
-                GestureDetector(
-                    onTap: (){
-                    },
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      child: Image.asset("assets/images/logo.png",),
-                    )
-                ),
-                SizedBox(width: 20,),
+                Logo(30, false),
+                SizedBox(width: 15,),
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
                       showSearch(context: context, delegate: SearchTextField());
                     },
                     child: Container(
-                      height: 40,
+                      height: 35,
 
                       decoration: BoxDecoration(
-                          color: App.grey,
-                          borderRadius: BorderRadius.circular(25)
+                          color: App.greyF5,
+                          borderRadius: BorderRadius.circular(5)
                       ),
                       child: Row(
                         children: [
                           SizedBox(width: 10,),
-                          SvgPicture.asset("assets/icons/stroke/search.svg",width: 25,height: 25,),
+                          Icon(Icons.search,color: App.greyCCC,),
+                          SizedBox(width: 5,),
+                          Text(App_Localization.of(context).translate("what_are_you_looking_for"),style: TextStyle(color: App.greyCCC,fontSize: 11),)
                         ],
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 20,),
-                GestureDetector(
-                    onTap: (){
-                      homeController.pageController.jumpToTab(3);
-                      homeController.selectedPage.value = 3;
-                    },
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
-                    )
-                )
+
               ],
             ),
           )
@@ -100,7 +84,7 @@ class _HomeState extends State<Home> {
               _category(context),
               SizedBox(height: 20,),
               _brands(context),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
               ListView.builder(
                   shrinkWrap: true,
                   itemCount: homeController.sections.length,
@@ -123,15 +107,15 @@ class _HomeState extends State<Home> {
   _slider(BuildContext context){
     return Container(
       width: Get.width,
-      height: Get.width*0.5,
+      height: Get.width*0.48  + 30,
       // color: Colors.red,
-      child: Stack(
+      child: Column(
         children: [
           CarouselSlider(
             options: CarouselOptions(
-              height: Get.width*0.5,
+              height: Get.width*0.48,
               // aspectRatio: 2/1,
-              viewportFraction: 1,
+              viewportFraction: 0.9,
               initialPage: 0,
               enableInfiniteScroll: true,
               reverse: false,
@@ -139,7 +123,7 @@ class _HomeState extends State<Home> {
               // autoPlayInterval: Duration(seconds: 5),
               autoPlayAnimationDuration: Duration(milliseconds: 800),
               autoPlayCurve: Curves.fastOutSlowIn,
-              enlargeCenterPage: true,
+              // enlargeCenterPage: true,
               enlargeStrategy: CenterPageEnlargeStrategy.height,
 
               onPageChanged: (index,controller){
@@ -150,21 +134,24 @@ class _HomeState extends State<Home> {
             items: homeController.banners.map((elm) {
               return Builder(
                 builder: (BuildContext context) {
-                  return GestureDetector(
-                    onTap: (){
-                      homeController.mainBannerPress(elm,context);
-                    },
-                    child: Container(
-                      width: Get.width,
-                      height: Get.width*0.5,
-                      margin: EdgeInsets.symmetric(horizontal: 0.0),
-                      decoration: BoxDecoration(
-                        // color: Colors.red,
-                          borderRadius: BorderRadius.circular(0),
-                          image: DecorationImage(
-                              image: NetworkImage(Api.media_url+elm.image),
-                              fit: BoxFit.fill
-                          )
+                  return Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: GestureDetector(
+                      onTap: (){
+                        homeController.mainBannerPress(elm,context);
+                      },
+                      child: Container(
+                        width: Get.width,
+                        height: Get.width*0.5,
+                        margin: EdgeInsets.symmetric(horizontal: 0.0),
+                        decoration: BoxDecoration(
+                          // color: Colors.red,
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                                image: NetworkImage(Api.media_url+elm.image),
+                                fit: BoxFit.fill
+                            )
+                        ),
                       ),
                     ),
                   );
@@ -172,38 +159,36 @@ class _HomeState extends State<Home> {
               );
             }).toList(),
           ),
-         Positioned(
-             bottom: 0,
-             child:  Container(
-           width: Get.width,
-           height: 30,
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               ListView.builder(
-                   itemCount: homeController.banners.length,
-                   scrollDirection: Axis.horizontal,
-                   shrinkWrap: true,
-                   itemBuilder: (context,index){
-                     return Padding(
-                       padding: const EdgeInsets.symmetric(horizontal: 2,vertical: 10),
-                       child: Obx(() => Center(
-                         child: AnimatedContainer(
-                           duration: Duration(milliseconds: 400),
-                           height: 5,
-                           width: 20,
-                           decoration: BoxDecoration(
-                             color: homeController.activeSlider.value==index?App.primary:Colors.grey,
-                             borderRadius: BorderRadius.circular(2.5)
-                             // shape: BoxShape.circle,
-                           ),
-                         ),
-                       )),
-                     );
-                   })
-             ],
-           ),
-         ))
+          Container(
+            width: Get.width,
+            height: 30,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ListView.builder(
+                    itemCount: homeController.banners.length,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context,index){
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 2,right: 2,top: 10),
+                        child: Obx(() => Center(
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 400),
+                            height: 5,
+                            width: homeController.activeSlider.value==index?20:10,
+                            decoration: BoxDecoration(
+                                color: homeController.activeSlider.value==index?App.primary:App.primary.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(2.5)
+                              // shape: BoxShape.circle,
+                            ),
+                          ),
+                        )),
+                      );
+                    })
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -211,17 +196,17 @@ class _HomeState extends State<Home> {
 
   _category(BuildContext context){
     return Container(
-      width: Get.width*0.9,
+      width: Get.width,
       // height: Get.height*0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 15,left: 15,right: 15),
             child: Text(App_Localization.of(context).translate("shop_by_category"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           ),
           Container(
-            height: Get.height*0.1,
+            height: 70,
             child: ListView.builder(
                 itemCount: homeController.categories.length,
                 scrollDirection: Axis.horizontal,
@@ -236,12 +221,12 @@ class _HomeState extends State<Home> {
                         Get.to(()=>Products(title: homeController.categories[index].title,categories: [homeController.categories[index].categorySlug],));
                       },
                       child: Container(
-                        height: Get.height*0.8,
+                        height: 70,
                         padding: EdgeInsets.all(5),
-                        width:Get.height*0.2+10,
+                        width:167,
                         decoration: BoxDecoration(
                           color: App.grey,
-                          borderRadius: BorderRadius.circular(15)
+                          borderRadius: BorderRadius.circular(8)
                         ),
                         // color: Colors.red,
                         child: Row(
@@ -266,11 +251,19 @@ class _HomeState extends State<Home> {
                                   Text(homeController.categories[index].title,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                                      fontSize: 12,
                                     ),
                                     textAlign: TextAlign.left,
                                     maxLines: 2,
                                   ),
+                                  homeController.categories[index].productCount > 0?Text(homeController.categories[index].productCount.toString()+" "+(homeController.categories[index].productCount == 1?App_Localization.of(context).translate("product"):App_Localization.of(context).translate("products")),
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: App.grey95
+                                    ),
+                                    textAlign: TextAlign.left,
+                                    maxLines: 2,
+                                  ):Center(),
                                 ],
                               ),
                             )
@@ -287,17 +280,17 @@ class _HomeState extends State<Home> {
   }
   _brands(BuildContext context){
     return Container(
-      width: Get.width*0.9,
+      width: Get.width,
       // height: Get.height*0.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 15,right: 15,left: 15),
             child: Text(App_Localization.of(context).translate("shop_by_brand"),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
           ),
           Container(
-            height: Get.height*0.15,
+            height: 65,
             child: ListView.builder(
                 itemCount: homeController.brands.length,
                 scrollDirection: Axis.horizontal,
@@ -312,13 +305,13 @@ class _HomeState extends State<Home> {
                         Get.to(()=>Products(title: homeController.brands[index].title,brands: [homeController.brands[index].brandSlug],));
                       },
                       child: Container(
-                        height: Get.height*0.15,
-                        width:Get.height*0.15,
+                        height: 65,
+                        width: 65,
 
                         decoration: BoxDecoration(
                             // shape: BoxShape.circle,
                           borderRadius: BorderRadius.circular(15),
-                            color: App.grey,
+                            // color: App.grey,
                             // border: Border.all(color: Colors.grey.withOpacity(0.5)),
                             image: DecorationImage(
                                 image: NetworkImage(Api.media_url+homeController.brands[index].image),
@@ -343,10 +336,8 @@ class _HomeState extends State<Home> {
 
   _bannerSection(BuildContext context ,Section section){
     return section.bannerItems.length == 1?_oneBanner(context, section, section.bannerItems[0])
-            :section.bannerItems.length == 2?_twoBanner(context, section, section.bannerItems[0], section.bannerItems[1])
-              :section.bannerItems.length == 3?_threeBanner(context, section, section.bannerItems[0], section.bannerItems[1],section.bannerItems[2])
-                :section.bannerItems.length == 4?_fourBanner(context, section, section.bannerItems[0], section.bannerItems[1],section.bannerItems[2],section.bannerItems[3])
-                  :_listBanner(context,section,section.bannerItems);
+        :_listBanner(context, section, section.bannerItems);
+
   }
 
   _productSection(BuildContext context ,Section section){
@@ -354,21 +345,25 @@ class _HomeState extends State<Home> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-            width: Get.width * 0.9,
+            width: Get.width - 30,
             child: Row(
           children: [
             Text(section.title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
           ],
         )),
+        SizedBox(height: 5,),
         Container(
-          width: Get.width*0.9,
-          height: Get.width*0.6+20,
+          width: Get.width,
+          height:  Get.width*0.45 + 110,
           child: ListView.builder(
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
               itemCount: section.products.length,
               itemBuilder: (context,index){
-                return ProductCard(section.products[index]);
+                return Container(
+                  width: Get.width > 600 ? Get.width * 0.3 : Get.width * 0.45,
+                  child: ProductCard(section.products[index],false),
+                );
           }),
         ),
       ],
@@ -377,16 +372,16 @@ class _HomeState extends State<Home> {
 
   _oneBanner(BuildContext context,Section section,BannerItem bannerItem_1){
     return Container(
-      width: Get.width,
-      height: Get.width*0.5,
+      width: Get.width - 30,
+      height: (Get.width - 30)* 0.35,
       decoration: BoxDecoration(
-        image: DecorationImage(
+        image: section.backgroundImage.isNotEmpty?DecorationImage(
           image: NetworkImage(Api.media_url+section.backgroundImage),
           fit: BoxFit.cover
-        )
+        ):null
       ),
       child: Center(
-        child: _bannerImage(Get.width*0.45,bannerItem_1),
+        child: _bannerImage(Get.width - 30,bannerItem_1),
       ),
     );
   }
@@ -469,27 +464,33 @@ class _HomeState extends State<Home> {
   _listBanner(BuildContext context,Section section,List<BannerItem> list){
     return Container(
       width: Get.width,
-      height: Get.width*0.5,
+      height: ((Get.width - 30)*0.75 * 0.52) + 20 ,
       decoration: BoxDecoration(
-          image: DecorationImage(
+          image: section.backgroundImage.isNotEmpty?DecorationImage(
               image: NetworkImage(Api.media_url+section.backgroundImage),
               fit: BoxFit.cover
-          )
+          ):null
       ),
-      child: ListView.builder(
-        controller: section.scrollController,
-          scrollDirection: Axis.horizontal,
-          itemCount: list.length,
-          physics: BouncingScrollPhysics(),
-          itemBuilder: (context,index){
-            return Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Center(child: _bannerImage(Get.width*0.45, list[index]),),
-            );
-          }),
+      child: Column(
+        children: [
+          SizedBox(height: 10,),
+          Container(
+            height: ((Get.width - 30)*0.75 * 0.52) ,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: list.length,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context,index){
+                  return Padding(padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Center(child: _bannerImage((Get.width - 30)*0.75, list[index]),),
+                  );
+                }),
+          ),
+          SizedBox(height: 10,),
+        ],
+      ),
     );
   }
-
-  ScrollController scrollController = ScrollController();
 
   _bannerImage(double size,BannerItem bannerItem){
     return GestureDetector(

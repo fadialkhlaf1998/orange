@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/global.dart';
@@ -7,15 +8,19 @@ import 'package:orange/model/product.dart';
 
 class ProductsController extends GetxController {
 
-  Filter initialFilter = Filter(categories: [], brands: [], subCategories: [], products: [], sort: null, limit: null, lazyLoad: 1, locale: Global.locale, customerId: -1,option: "and");
+  Filter initialFilter = Filter(categories: [], brands: [], subCategories: [], products: [], sort: null, limit: null, lazyLoad: 1, locale: Global.locale, customerId: -1,option: "and",max_price: null,min_price: null);
   RxBool loading = false.obs;
   RxBool lazyLoading = false.obs;
   RxBool fake = false.obs;
   FilterResult? filterResult;
 
   RxInt openFilterCategory = 1.obs;
-  RxInt openFilterBrand = 1.obs;
+  RxInt openFilterBrand = 0.obs;
+  RxInt openFilterPrice = 0.obs;
+  RxDouble? min = null;
+  RxDouble? max = null;
   RxInt selectedTap = 0.obs;
+  Rx<RangeValues> range = RangeValues(1,100).obs;
 
   getData(
       List<String> categories,
@@ -25,11 +30,16 @@ class ProductsController extends GetxController {
       int? sort,
       int? lazy_load,
       int? limit,
-      String option
+      String option,
+      double? min_price,
+      double? max_price
       ) async{
     await Api.hasInternet();
     loading.value = true;
-    filterResult = await Api.filter(categories: categories, brands: brands, sub_categories: sub_categories, products: products, sort: sort, lazy_load: lazy_load, limit: limit,option: option);
+    filterResult = await Api.filter(categories: categories, brands: brands, sub_categories: sub_categories, products: products, sort: sort, lazy_load: lazy_load, limit: limit,option: option,max_price: max_price,min_price: min_price);
+
+    saveRange();
+
     saveInitailFilter(filterResult!.filter);
     loading.value = false;
   }
@@ -45,8 +55,21 @@ class ProductsController extends GetxController {
     initialFilter.limit = filter.limit;
     initialFilter.customerId = filter.customerId;
     initialFilter.option = filter.option;
+    initialFilter.max_price = filter.max_price;
+    initialFilter.min_price = filter.min_price;
   }
-
+  saveRange(){
+    if(filterResult!= null && filterResult!.priceRange.min_price!= null
+        &&filterResult!.priceRange.max_price!= null){
+      min = filterResult!.priceRange.min_price!.obs;
+      max = filterResult!.priceRange.max_price!.obs;
+      if(filterResult!.filter.max_price != null && filterResult!.filter.min_price != null){
+        range.value = RangeValues(filterResult!.filter.min_price!, filterResult!.filter.max_price!);
+      }else{
+        range.value = RangeValues(min!.value, max!.value);
+      }
+    }
+  }
   apply()async{
     loading.value = true;
     filterResult!.filter.lazyLoad = 0;
@@ -58,8 +81,11 @@ class ProductsController extends GetxController {
         sort: filterResult!.filter.sort,
         lazy_load: filterResult!.filter.lazyLoad,
         limit: filterResult!.filter.limit,
+        max_price: range.value.end,
+        min_price: range.value.start,
         option: "and"
     );
+    saveRange();
     loading.value = false;
   }
 
@@ -75,8 +101,11 @@ class ProductsController extends GetxController {
         sort: initialFilter.sort,
         lazy_load: initialFilter.lazyLoad,
         limit: initialFilter.limit,
+        max_price: initialFilter.max_price,
+        min_price: initialFilter.min_price,
         option: initialFilter.option
     );
+    saveRange();
     loading.value = false;
   }
 
@@ -94,6 +123,8 @@ class ProductsController extends GetxController {
         sort: filterResult!.filter.sort,
         lazy_load: filterResult!.filter.lazyLoad,
         limit: filterResult!.filter.limit,
+        min_price: filterResult!.filter.min_price,
+        max_price: filterResult!.filter.max_price,
         option: filterResult!.filter.option
     );
     filterResult!.products.addAll(temp.products);

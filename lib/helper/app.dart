@@ -15,20 +15,29 @@ import 'package:intl/intl.dart';
 class App{
   // static Color primary = Color(0xfff37335);
   // static Color primary = Colors.orange;
-  static Color primary = Color(0xffFE7902);
-  static Color primary_mid = Color(0xfffda018);
-  static Color primary_light = Color(0xffEEA427);
-  static Color background = Color(0xffF6F6F7);
+  static const Color primary = Color(0xfffe7902);
+  static const Color primary_mid = Color(0xfffda018);
+  static const Color primary_light = Color(0xffEEA427);
+  static const Color background = Colors.white;
   // static Color primary_light = Colors.orange.withOpacity(0.5);
-  static Color grey = Color(0xffededef);
-  static Color dark_grey = Color(0xffACBAC3);
-  static Color white_1 = Color(0xffE9E28c);
-  static Color white_2 = Color(0xfff0f0f0);
-  static Color dark_blue = Color(0xff0f3047);
+  static const Color grey = Color(0xffededef);
+  static const Color dark_grey = Color(0xffACBAC3);
+  static const Color white_1 = Color(0xffE9E28c);
+  static const Color white_2 = Color(0xfff0f0f0);
+  static const Color dark_blue = Color(0xff0f3047);
 
-  static Color text_color = Color(0xff022B3A);
-  static Color red = Color(0xffc63a32);
-  static Color green = Color(0xff058240);
+  static const Color text_color = Color(0xff022B3A);
+  static const Color red = Color(0xffc63a32);
+  static const Color green = Color(0xff058240);
+
+
+  static const Color greyCCC = Color(0xffcccccc);
+  static const Color greyF2 = Color(0xfff2f2f2);
+  static const Color greyF5 = Color(0xfff5f5f5);
+  static const Color grey95 = Color(0xff959595);
+  static const Color greyC5 = Color(0xffc5c5c5);
+  static const Color greyFE = Color(0xfffefefe);
+  static const Color grey6b = Color(0xff6B6B6B);
 
 
   static succMsg(BuildContext context , String title , String msg){
@@ -60,9 +69,9 @@ class App{
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(newPrice.toString(),style: TextStyle(fontSize: 16,color: App.primary,fontWeight: FontWeight.bold),),
-              Text(" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.primary,fontWeight: FontWeight.bold),),
             ],
           ),
+          Text(" "+App_Localization.of(context).translate("aed"),style: TextStyle(fontSize: 10,color: App.primary,fontWeight: FontWeight.bold),),
           space?Center():SizedBox(width: 20,),
           Text(old.toString(),style: TextStyle(fontSize: 12,color: Colors.grey,decoration: TextDecoration.lineThrough,decorationThickness: 2),),
         ],

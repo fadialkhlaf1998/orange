@@ -36,6 +36,7 @@ class Category {
     required this.slug,
     required this.locale,
     required this.subCategories,
+    required this.productCount,
   });
 
   int id;
@@ -44,6 +45,7 @@ class Category {
   String categorySlug;
   String slug;
   String locale;
+  int productCount;
   List<SubCategory> subCategories;
 
   factory Category.fromJson(String str) => Category.fromMap(json.decode(str));
@@ -53,6 +55,7 @@ class Category {
   factory Category.fromMap(Map<String, dynamic> json) => Category(
     id: json["id"],
     title: json["title"],
+    productCount: json["product_count"],
     image: json["image"],
     categorySlug: json["slug"],
     slug: json["_slug"],
@@ -67,6 +70,7 @@ class Category {
     "slug": categorySlug,
     "_slug": slug,
     "locale": locale,
+    "product_count":productCount
   };
 
   isCheckedFilter(List<String> categories){

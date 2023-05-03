@@ -5,6 +5,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/address_controller.dart';
 import 'package:orange/helper/app.dart';
+import 'package:orange/helper/global.dart';
 import 'package:orange/model/address.dart';
 import 'package:orange/widgets/primary_bottun.dart';
 import 'package:orange/widgets/text_field.dart';
@@ -34,6 +35,7 @@ class AddAddress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: App.primary_mid,
+      backgroundColor: Colors.white,
       appBar: App.myHeader(context, height: 60, child: Center(
           child:  Container(
             width: Get.width*0.9,
@@ -160,6 +162,8 @@ class AddAddress extends StatelessWidget {
             Container(
               width: Get.width*0.9,
               height: 50,
+              color: App.greyF5,
+              padding: EdgeInsets.only(left: Global.locale == "en"?10:0,right: Global.locale == "ar"?10:0),
               child: InternationalPhoneNumberInput(
                 onInputChanged: (PhoneNumber number) {
                   print(number.dialCode);
@@ -199,7 +203,7 @@ class AddAddress extends StatelessWidget {
                           borderSide: BorderSide(color: Colors.red)
                       )
                       :OutlineInputBorder(
-                          borderSide: BorderSide(color: App.grey)
+                          borderSide: BorderSide(color: App.greyF5)
                       ),
                 ),
                 
@@ -208,7 +212,7 @@ class AddAddress extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.red)
                   )
                     :OutlineInputBorder(
-                      borderSide: BorderSide(color: App.grey)
+                      borderSide: BorderSide(color: App.greyF5)
                   ),
                 onSaved: (PhoneNumber number) {
                   print('On Saved: $number');
@@ -243,14 +247,15 @@ class AddAddress extends StatelessWidget {
               ),
             ),
             SizedBox(height: 15,),
-            PrimaryBottun(width: Get.width*0.8, height: 50,
+            PrimaryBottun(width: Get.width*0.95, height: 50,
+
               onPressed: (){
               if(address == null){
                 addressController.AddEditAddress(false);
               }else{
                 addressController.AddEditAddress(true , id:address!.id);
               }
-            }, color: App.dark_grey, text: "submit",radiuce: 25,)
+            }, color: App.primary, text: "submit",radiuce: 25,)
           ],
         ),)
       ),

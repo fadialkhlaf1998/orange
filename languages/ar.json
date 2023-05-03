@@ -143,5 +143,14 @@
   "old_password_is_required": "كلمة المرور القديمة مطلوبة",
   "new_password_is_required": "كلمة المرور الجديدة مطلوبة",
   "confirm_password_is_required": "تأكيد كلمة المرور مطلوب",
-  "no_address_please_add_yours": "لا يوجد عنوان من فضلك أضف عنوانك"
+  "no_address_please_add_yours": "لا يوجد عنوان من فضلك أضف عنوانك",
+  "what_are_you_looking_for": "ما الذي تبحث عنه؟",
+  "products": "المنتجات",
+  "product": "المنتج",
+  "save_off": "احفظ بحدود",
+  "write_you_comment": "اكتب تعليقك",
+  "price": "السعر",
+  "sign_in_to_shop_now": "سجّل الدخول للتسوق الآن",
+  "or_continue_with": "أو المتابعة مع",
+  "create_your_account": "إنشاء حسابك"
 }

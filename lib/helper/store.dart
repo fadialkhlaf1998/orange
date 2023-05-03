@@ -16,6 +16,19 @@ class Store {
     Global.locale = language;
   }
 
+  static Future<bool> loadFirstTime() async {
+    bool val = false;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    val = prefs.getBool("first_time")??true;
+    saveFirstTime(false);
+    return val;
+  }
+
+  static Future saveFirstTime(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("first_time",value);
+  }
+
   static Future<LoginInfo?> loadLoginInfo()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String str = prefs.getString("login_info")??"none";
