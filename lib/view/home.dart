@@ -230,10 +230,11 @@ class _HomeState extends State<Home> {
                         ),
                         // color: Colors.red,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: Get.height*0.08,
-                              width:Get.height*0.1,
+                              height: 50,
+                              width:50,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
@@ -242,8 +243,8 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             Container(
-                              height: Get.height*0.08,
-                              width:Get.height*0.1,
+                              height: 70,
+                              width:100,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
