@@ -15,9 +15,6 @@ import 'package:orange/helper/app.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:orange/helper/global.dart';
 import 'package:orange/widgets/primary_bottun.dart';
-import 'package:orange/widgets/searchDelgate.dart';
-import 'package:readmore/readmore.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProductDetails extends StatelessWidget {
 

@@ -14,6 +14,9 @@ class Welcome extends StatelessWidget {
         child:Container(
           width: Get.width,
           height: Get.height,
+          decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage("assets/images/welcome_background.png"),fit: BoxFit.cover)
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -40,13 +43,19 @@ enableInfiniteScroll: true,
                       ),
                       items: [
                         Container(
-                          color: Colors.redAccent,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage("assets/images/welcome_1.png"))
+                          ),
                         ),
                         Container(
-                          color: Colors.green,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage("assets/images/welcome_2.png"))
+                          ),
                         ),
                         Container(
-                          color: Colors.grey,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(image: AssetImage("assets/images/welcome_3.png"))
+                          ),
                         ),
                       ],
                     ),

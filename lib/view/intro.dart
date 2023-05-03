@@ -15,14 +15,17 @@ class Intro extends StatelessWidget {
       body: Container(
         height: Get.height,
         width: Get.width,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Logo(150,false),
-            ],
-          ),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage("assets/images/intro.png"),fit: BoxFit.cover)
         ),
+        // child: Center(
+        //   child: Column(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       Logo(150,false),
+        //     ],
+        //   ),
+        // ),
       ),
     );
   }

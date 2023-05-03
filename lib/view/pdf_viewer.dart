@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
-// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
 
 class MyPDFViewer extends StatelessWidget {
   String url;
@@ -29,10 +30,9 @@ class MyPDFViewer extends StatelessWidget {
                       child: Container(
                         width: 35,
                         height: 35,
-                        child: Icon(Icons.arrow_back_ios,color: App.primary),
+                        child: Icon(Icons.arrow_back_ios,color: App.primary,size: 23),
                       )
                   ),
-                  SizedBox(width: 20,),
                   Expanded(
                     child: GestureDetector(
                       onTap: (){
@@ -45,9 +45,9 @@ class MyPDFViewer extends StatelessWidget {
                             borderRadius: BorderRadius.circular(25)
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),)
+                            Text(App_Localization.of(context).translate("invoice"),style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),)
                           ],
                         ),
                       ),
@@ -69,10 +69,17 @@ class MyPDFViewer extends StatelessWidget {
             )
         ),),
 //todo pdf
-      // body: Container(
-      //   color: Colors.white,
-      //   child: SfPdfViewer.network(Api.media_url+url,),
-      // )
+      body: Container(
+        color: Colors.white,
+        child: WebView(
+          // initialUrl: "https://docs.google.com/viewer?url="+Api.media_url+url,
+          initialUrl: 'https://docs.google.com/gview?embedded=true&url='+Api.media_url+url,
+          // initialUrl: Api.media_url+url,
+          javascriptMode: JavascriptMode.unrestricted,
+          // allowsInlineMediaPlayback: true,
+        ),
+      )
     );
+
   }
 }
