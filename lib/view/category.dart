@@ -6,7 +6,9 @@ import 'package:orange/controller/category_controller.dart';
 import 'package:orange/controller/home_controller.dart';
 import 'package:orange/helper/api.dart';
 import 'package:orange/helper/app.dart';
+import 'package:orange/helper/global.dart';
 import 'package:orange/view/product_details.dart';
+import 'package:orange/widgets/logo.dart';
 import 'package:orange/widgets/searchDelgate.dart';
 
 class Category extends StatelessWidget {
@@ -24,12 +26,24 @@ class Category extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(App_Localization.of(context).translate("category"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),),
-                  GestureDetector(
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          homeController.pageController.jumpToTab(0);
+                          homeController.selectedPage(0);
+                        },
+                        child: Logo(30, false),
+                      ),
+                      SizedBox(width: 10,),
+                      Text(App_Localization.of(context).translate("category"),style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                 GestureDetector(
                     onTap: (){
                       showSearch(context: context, delegate: SearchTextField());
                     },
-                    child: SvgPicture.asset("assets/icons/stroke/search.svg",color: App.primary),
+                    child: Icon(Icons.search),
                   )
                 ],
               )
@@ -49,9 +63,16 @@ class Category extends StatelessWidget {
                     child: Stack(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
-                            color: App.grey,
+                            border: Border(
+                              right: Global.locale=="en"?
+                              BorderSide(color: App.grey95.withOpacity(0.5)):
+                              BorderSide(color: Colors.transparent,width: 0),
+                              left: Global.locale=="ar"?
+                              BorderSide(color: App.grey95.withOpacity(0.5)):
+                              BorderSide(color: Colors.transparent,width: 0)
+                            )
                           ),
                           child:  categoryController.subCategory.isEmpty
                               ?Padding(padding: EdgeInsets.symmetric(horizontal: 10),
@@ -70,8 +91,27 @@ class Category extends StatelessWidget {
                                     child: Container(
                                       width: Get.width*0.2,
                                       height: Get.width*0.2 + 30,
-                                      margin: EdgeInsets.symmetric(horizontal: 10),
+                                      decoration: BoxDecoration(
+                                        border: Border(
 
+                                          left:  categoryController.selectedSubCategory.value == index && Global.locale == "en"?
+                                              BorderSide(
+                                                color: App.primary,
+                                                width: 2.5
+                                              ):BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0
+                                          ),
+                                          right: categoryController.selectedSubCategory.value == index && Global.locale == "ar"?
+                                          BorderSide(
+                                              color: App.primary,
+                                              width: 2.5
+                                          ):BorderSide(
+                                              color: Colors.transparent,
+                                              width: 0
+                                          )
+                                        )
+                                      ),
                                       child: Column(
                                         children: [
                                           Container(
@@ -79,7 +119,7 @@ class Category extends StatelessWidget {
                                             height: Get.width*0.2,
                                             decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                border: Border.all(color: categoryController.selectedSubCategory.value == index ?App.primary:Colors.transparent),
+                                                //border: Border.all(color: categoryController.selectedSubCategory.value == index ?App.primary:Colors.transparent),
                                                 // color: Colors.white,
                                                 image: DecorationImage(
                                                     image: NetworkImage(Api.media_url+categoryController.subCategory[index].image),
@@ -98,7 +138,7 @@ class Category extends StatelessWidget {
                                               style: TextStyle(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.bold,
-                                                color: categoryController.selectedSubCategory.value == index?App.primary:Colors.black,
+                                                color: categoryController.selectedSubCategory.value == index?Colors.black:App.grey95,
                                               ),
                                             )),
                                           )
@@ -142,7 +182,6 @@ class Category extends StatelessWidget {
                                         flex: 6,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                              color: App.grey,
                                               borderRadius: BorderRadius.circular(5)
                                           ),
                                           child: Center(
@@ -228,7 +267,7 @@ class Category extends StatelessWidget {
                 decoration: BoxDecoration(
                     border: Border.all(color: categoryController.selectedCategory==index?App.primary:App.dark_grey),
                     color: categoryController.selectedCategory==index?App.primary:Colors.transparent,
-                  borderRadius: BorderRadius.circular(10)
+                  borderRadius: BorderRadius.circular(15)
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -236,7 +275,7 @@ class Category extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(homeController.categories[index].title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: categoryController.selectedCategory==index?Colors.white:Colors.black),maxLines: 1,),
+                      Text(homeController.categories[index].title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color: categoryController.selectedCategory==index?Colors.white:Colors.black),maxLines: 1,),
                     ],
                   ),
                 ),

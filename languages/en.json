@@ -152,5 +152,7 @@
   "price": "Price",
   "sign_in_to_shop_now": "Sign In To Shop Now",
   "or_continue_with": "Or Continue With",
-  "create_your_account": "Create Your Account"
+  "create_your_account": "Create Your Account",
+  "shipping_address": "Shipping Address",
+  "mobile_number": "Mobile Number"
 }

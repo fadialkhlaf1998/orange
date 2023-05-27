@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:orange/helper/api.dart';
@@ -45,10 +47,10 @@ class ProductsController extends GetxController {
   }
 
   saveInitailFilter(Filter filter){
-    initialFilter.categories = filter.categories;
-    initialFilter.products = filter.products;
-    initialFilter.brands = filter.brands;
-    initialFilter.subCategories = filter.subCategories;
+    initialFilter.categories.addAll(filter.categories);
+    initialFilter.products.addAll(filter.products);
+    initialFilter.brands.addAll(filter.brands);
+    initialFilter.subCategories.addAll(filter.subCategories);
     initialFilter.sort = filter.sort;
     initialFilter.lazyLoad = filter.lazyLoad;
     initialFilter.locale = filter.locale;
@@ -105,6 +107,7 @@ class ProductsController extends GetxController {
         min_price: initialFilter.min_price,
         option: initialFilter.option
     );
+    log(filterResult!.filter.toJson());
     saveRange();
     loading.value = false;
   }

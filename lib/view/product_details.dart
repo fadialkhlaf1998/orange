@@ -33,40 +33,7 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-      backgroundColor: App.greyFE,
-      // appBar: App.myHeader(context, height: 60, child: Center(
-      //     child:  Container(
-      //       width: Get.width*0.9,
-      //       child: Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           GestureDetector(
-      //               onTap: (){
-      //                 Get.back();
-      //               },
-      //               child: Container(
-      //                 width: 25,
-      //                 height: 25,
-      //                 child: Icon(Icons.arrow_back_ios,color: App.primary,),
-      //               )
-      //           ),
-      //           GestureDetector(
-      //               onTap: (){
-      //                 Get.back();
-      //                 Get.back();
-      //                 homeController.pageController.jumpToTab(3);
-      //                 homeController.selectedPage.value = 3;
-      //               },
-      //               child: Container(
-      //                 width: 25,
-      //                 height: 25,
-      //                 child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",),
-      //               )
-      //           )
-      //         ],
-      //       ),
-      //     )
-      // ),),
+      backgroundColor: Color(0xfff6f6f6),
       body: SafeArea(child: Stack(
         children: [
           SingleChildScrollView(
@@ -79,7 +46,10 @@ class ProductDetails extends StatelessWidget {
             )
                 : Container(
               width: Get.width,
-              color: App.greyFE,
+              constraints: new BoxConstraints(
+                minHeight: Get.height,
+              ),
+              color: Color(0xfff6f6f6),
               child: Column(
                 children: [
                   _slider(context,
@@ -97,7 +67,7 @@ class ProductDetails extends StatelessWidget {
                         boxShadow: [
                           BoxShadow(
                               color: Color(0xff000000).withOpacity(0.1),
-                              blurRadius: 8,
+                              blurRadius: 4,
                               spreadRadius: 0,
                               offset: Offset(0,-4)
                           )
@@ -114,7 +84,10 @@ class ProductDetails extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(productDetailsController.product!.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                                  Container(
+                                    width: Get.width - 70,
+                                    child: Text(productDetailsController.product!.title,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),),
+                                  ),
                                   Container(
                                       child: Align(
                                         alignment: Global.locale=="ar"?Alignment.centerLeft:Alignment.centerRight,

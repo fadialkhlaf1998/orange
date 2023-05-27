@@ -1131,7 +1131,7 @@ class Products extends StatelessWidget {
                          padding: EdgeInsets.symmetric(horizontal: 15),
                          child: AnimatedSize(
                              duration: Duration(milliseconds: 350),
-                             child: productsController.openFilterBrand.value == 0
+                             child: productsController.openFilterPrice.value == 0
                                  ? Center()
                                  : Column(
                                children: [

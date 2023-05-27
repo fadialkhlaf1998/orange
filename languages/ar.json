@@ -152,5 +152,7 @@
   "price": "السعر",
   "sign_in_to_shop_now": "سجّل الدخول للتسوق الآن",
   "or_continue_with": "أو المتابعة مع",
-  "create_your_account": "إنشاء حسابك"
+  "create_your_account": "إنشاء حسابك",
+  "shipping_address": "عنوان الشحن",
+  "mobile_number": "رقم الموبايل"
 }

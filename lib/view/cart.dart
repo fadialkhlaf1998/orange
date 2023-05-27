@@ -348,38 +348,35 @@ class Cart extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // itemDetails(context,"",),
-
-
-                    GestureDetector(
-                      onTap: (){
-                        if(cartController.cartModel!.cart.isNotEmpty){
-                          Get.to(()=>Checkout());
-                        }
-                      },
-                      child: Container(
-                        height: 63,
-                        width: Get.width - 20,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(App_Localization.of(context).translate("total"),style: TextStyle(color: App.grey95,fontSize: 12),),
-                                      Text(App_Localization.of(context).translate("aed") +" "+ cartController.cartModel!.total.toStringAsFixed(2),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
-                                    ],
-                                  ),
+                    Container(
+                      height: 63,
+                      width: Get.width - 20,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(App_Localization.of(context).translate("total"),style: TextStyle(color: App.grey95,fontSize: 12),),
+                                    Text(App_Localization.of(context).translate("aed") +" "+ cartController.cartModel!.total.toStringAsFixed(2),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                                  ],
                                 ),
-                                
-                                Container(
+                              ),
+
+                              GestureDetector(
+                                onTap: (){
+                                  if(cartController.cartModel!.cart.isNotEmpty){
+                                    Get.to(()=>Checkout());
+                                  }
+                                },
+                                child: Container(
                                   width: 120,
                                   height: 40,
                                   decoration: BoxDecoration(
@@ -392,9 +389,9 @@ class Cart extends StatelessWidget {
                                       Text(App_Localization.of(context).translate("checkout"),style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.white),),
                                     ],
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -403,7 +400,6 @@ class Cart extends StatelessWidget {
                   ],
                 ),
               )
-
             ))
 
         ],
