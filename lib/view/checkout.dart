@@ -86,7 +86,7 @@ class Checkout extends StatelessWidget {
                             child: Row(
                               children: [
                                 //todo change icon
-                                Icon(Icons.money,color: Colors.black,),
+                                SvgPicture.asset("assets/images/cod.svg",width: 17,),
                                 SizedBox(width: 10,),
                                 Text(App_Localization.of(context).translate("cod"),style: TextStyle(fontSize: 12),),
                                 Spacer(),
@@ -131,7 +131,7 @@ class Checkout extends StatelessWidget {
                             child: Row(
                               children: [
                                 //todo change icon
-                                Icon(Icons.credit_card,color: Colors.black,),
+                                SvgPicture.asset("assets/images/credit.svg",width: 17,),
                                 SizedBox(width: 10,),
                                 Text(App_Localization.of(context).translate("credit"),style: TextStyle(fontSize: 12),),
                                 Spacer(),
@@ -259,14 +259,14 @@ class Checkout extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             //todo change icon
-                                            Icon(Icons.local_shipping,color: Colors.black,),
-                                            SizedBox(width: 5,),
+                                            SvgPicture.asset("assets/images/delivery-address.svg",width: 17,),
+                                            SizedBox(width: 8,),
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(App_Localization.of(context).translate("shipping_address"),style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),),
-                                                Text(addressController.address[index].stretName+" "+addressController.address[index].building,style: TextStyle(fontSize: 12,color: Colors.black),),
-                                                Text(App_Localization.of(context).translate("flat")+":"+addressController.address[index].flat.toString()+"   "+App_Localization.of(context).translate("floor")+":"+addressController.address[index].floor.toString(),style: TextStyle(fontSize: 12,color: Colors.black),),
+                                                Text(addressController.address[index].stretName+" "+addressController.address[index].building,style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
+                                                Text(App_Localization.of(context).translate("flat")+":"+addressController.address[index].flat.toString()+"   "+App_Localization.of(context).translate("floor")+":"+addressController.address[index].floor.toString(),style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
                                               ],
                                             ),
                                           ],
@@ -276,13 +276,13 @@ class Checkout extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             //todo change icon
-                                            Icon(Icons.phone,color: Colors.black,),
-                                            SizedBox(width: 5,),
+                                            SvgPicture.asset("assets/images/call.svg",width: 16.39,),
+                                            SizedBox(width: 8,),
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(App_Localization.of(context).translate("mobile_number"),style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),),
-                                                Text(addressController.address[index].dailCode+"-"+addressController.address[index].phone,style: TextStyle(fontSize: 12,color: Colors.black),),
+                                                Text(addressController.address[index].dailCode+"-"+addressController.address[index].phone,style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
                                               ],
                                             ),
                                           ],

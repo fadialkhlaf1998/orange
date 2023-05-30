@@ -51,7 +51,7 @@ class AddAddress extends StatelessWidget {
                       child: Icon(Icons.arrow_back_ios,color: App.primary),
                     )
                 ),
-                SizedBox(width: 20,),
+                SizedBox(width: 0,),
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
@@ -64,9 +64,9 @@ class AddAddress extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25)
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(App_Localization.of(context).translate("address"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),)
+                          Text(App_Localization.of(context).translate("address"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),)
                         ],
                       ),
                     ),
@@ -239,15 +239,18 @@ class AddAddress extends StatelessWidget {
               width: Get.width*0.9,
               child: Row(
                 children: [
-                  Checkbox(value: addressController.is_default.value, onChanged: (value){
+                  Checkbox(value: addressController.is_default.value,
+                  shape: CircleBorder(),
+                  onChanged: (value){
                     addressController.is_default.value = value!;
                   }),
                   Text(App_Localization.of(context).translate("default"))
                 ],
               ),
             ),
-            SizedBox(height: 15,),
-            PrimaryBottun(width: Get.width*0.95, height: 50,
+            SizedBox(height: 60,),
+
+            PrimaryBottun(width: Get.width*0.95, height: 40,
 
               onPressed: (){
               if(address == null){
@@ -255,7 +258,7 @@ class AddAddress extends StatelessWidget {
               }else{
                 addressController.AddEditAddress(true , id:address!.id);
               }
-            }, color: App.primary, text: "submit",radiuce: 25,)
+            }, color: App.primary, text: "submit",radiuce: 10,)
           ],
         ),)
       ),

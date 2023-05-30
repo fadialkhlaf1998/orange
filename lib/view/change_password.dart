@@ -32,7 +32,6 @@ class ChangePassword extends StatelessWidget {
                       child: Icon(Icons.arrow_back_ios,color: App.primary),
                     )
                 ),
-                SizedBox(width: 20,),
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
@@ -45,9 +44,9 @@ class ChangePassword extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25)
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(App_Localization.of(context).translate("change_password"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),)
+                          Text(App_Localization.of(context).translate("change_password"),style: TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),)
                         ],
                       ),
                     ),
@@ -121,9 +120,9 @@ class ChangePassword extends StatelessWidget {
               errText: (profileController.oldPassword.text.isEmpty && profileController.validate.value)?"confirm_password_is_required":null,
             ),
             SizedBox(height: 15,),
-            PrimaryBottun(width: Get.width*0.8, height: 50,radiuce: 25, onPressed: (){
+            PrimaryBottun(width: Get.width*0.8, height: 40,radiuce: 10, onPressed: (){
               profileController.changePassword(context);
-            }, color: App.dark_grey, text: "submit",)
+            }, color: App.primary, text: "submit",)
           ],
         )),
       ),

@@ -32,7 +32,6 @@ class Address extends StatelessWidget {
                       child: Icon(Icons.arrow_back_ios,color: App.primary),
                     )
                 ),
-                SizedBox(width: 20,),
                 Expanded(
                   child: GestureDetector(
                     onTap: (){
@@ -45,9 +44,9 @@ class Address extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25)
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(App_Localization.of(context).translate("address"),style: TextStyle(color: App.primary,fontWeight: FontWeight.bold),)
+                          Text(App_Localization.of(context).translate("address"),style: TextStyle(fontSize: 16,color: Colors.black,fontWeight: FontWeight.bold),)
                         ],
                       ),
                     ),
@@ -63,25 +62,37 @@ class Address extends StatelessWidget {
                       height: 25,
                       child: SvgPicture.asset("assets/icons/stroke/Bag_orange.svg",color: Colors.transparent,),
                     )
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>AddAddress());
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.add,color: App.grey95,),
+                      SizedBox(width: 2,),
+                      Text(App_Localization.of(context).translate("add_address"),style: TextStyle(fontSize: 12,color: App.grey95,fontWeight: FontWeight.bold),),
+                    ],
+                  ),
                 )
               ],
             ),
           )
       ),),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Get.to(()=>AddAddress());
-        },
-        child: Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            gradient: App.linearGradient,
-            shape: BoxShape.circle,
-          ),
-          child: Icon(Icons.add,color: Colors.white,size: 35,),
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: (){
+      //     Get.to(()=>AddAddress());
+      //   },
+      //   child: Container(
+      //     width: 100,
+      //     height: 100,
+      //     decoration: BoxDecoration(
+      //       gradient: App.linearGradient,
+      //       shape: BoxShape.circle,
+      //     ),
+      //     child: Icon(Icons.add,color: Colors.white,size: 35,),
+      //   ),
+      // ),
       body: Obx(() =>
       addressController.loading.value?
           App.loading(context)
@@ -105,117 +116,106 @@ class Address extends StatelessWidget {
             return Padding(padding: EdgeInsets.symmetric(vertical: 10),
               child: Center(
                 child: Container(
-                  padding: EdgeInsets.all(10),
-                  height: 216,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  height: 170,
                   width: Get.width*0.9,
-                  decoration: BoxDecoration(
-                      color: App.grey,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Stack(
+                  child: Column(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      Row(
                         children: [
-                          // item(context,"",addressController.address[index].nickName),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(addressController.address[index].nickName,style: TextStyle(color: App.dark_blue,fontWeight: FontWeight.bold,fontSize: 18),),
-                              addressController.address[index].isDefault == 1?Container(
-                                width: 70,
-                                height: 30,
-                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                decoration: BoxDecoration(
-                                  // gradient: App.linearGradient,
-                                    color: App.primary,
-                                    borderRadius: BorderRadius.circular(15)
-                                ),
-                                child: Center(
-                                  child: Text(App_Localization.of(context).translate("default"),style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 12),),
-                                ),
-                              ):Center()
-                            ],
-                          ),
-                          item(context,"phone",addressController.address[index].dailCode+addressController.address[index].phone),
-                          item(context,"stret_name",addressController.address[index].stretName),
-                          item(context,"building",addressController.address[index].building),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              item(context,"floor",addressController.address[index].floor.toString()),
-                              item(context,"flat",addressController.address[index].flat.toString()),
-                            ],
-                          ),
-                          Text(addressController.address[index].addetionalDescription,overflow: TextOverflow.ellipsis,style: TextStyle(color: App.dark_blue),),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              addressController.address[index].isDefault == 1?Center(): Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 0),
-                                child: GestureDetector(
-                                  onTap: (){
-                                    addressController.setDefault(index);
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(8),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      color: App.primary,
-                                      // gradient: App.linearGradient
-                                    ),
-                                    child: Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 10),
-                                        child: Text(App_Localization.of(context).translate("set_default"),style: TextStyle(color: Colors.white),),
-                                      )
-                                    ),
-                                  ),
-                                ),
+                          GestureDetector(
+                            onTap: (){
+                              addressController.setDefault(index);
+                            },
+                            child: Container(
+                              width: 17,
+                              height: 17,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: App.primary)
                               ),
-                              SizedBox(width: 15,),
-                              GestureDetector(
-                                onTap: (){
-                                  Get.to(()=>AddAddress(address: addressController.address[index],));
-                                },
+                              child: Center(
                                 child: Container(
+                                  width: 10,
+                                  height: 10,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: App.dark_grey)
+                                      shape: BoxShape.circle,
+                                      color:  addressController.address[index].isDefault == 1?App.primary:Colors.transparent
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(3),
-                                    child: Icon(Icons.edit_outlined,color: App.dark_grey,),
-                                  )
                                 ),
                               ),
-                              SizedBox(width: 15,),
-                              GestureDetector(
-                                onTap: (){
-                                  addressController.deleteAddress(index);
-                                },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(color: App.dark_grey)
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(3),
-                                      child: Icon(Icons.delete_outline,color: App.dark_grey,),
-                                    )
-                                ),
-                              ),
-
-
-                            ],
-                          )
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Text(addressController.address[index].nickName,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14),),
+                          Spacer(),
+                          GestureDetector(
+                              onTap: (){
+                                Get.to(()=>AddAddress(address: addressController.address[index],));
+                              },
+                              child: Icon(Icons.edit,color: App.greyC5,size: 18,),
+                          ),
+                          SizedBox(width: 8,),
+                          GestureDetector(
+                            onTap: (){
+                              addressController.deleteAddress(index);
+                            },
+                            child: Icon(Icons.delete,color: App.greyC5,size: 18,),
+                          ),
                         ],
                       ),
-
+                      SizedBox(height: 10,),
+                      Container(
+                        height: 128,
+                        width: Get.width,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: App.greyF5,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SingleChildScrollView(
+                          physics: NeverScrollableScrollPhysics(),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //todo change icon
+                                  SvgPicture.asset("assets/images/delivery-address.svg",width: 17,),
+                                  SizedBox(width: 8,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(App_Localization.of(context).translate("shipping_address"),style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),),
+                                      Text(addressController.address[index].stretName+" "+addressController.address[index].building,style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
+                                      Text(App_Localization.of(context).translate("flat")+":"+addressController.address[index].flat.toString()+"   "+App_Localization.of(context).translate("floor")+":"+addressController.address[index].floor.toString(),style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Divider(),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //todo change icon
+                                  SvgPicture.asset("assets/images/call.svg",width: 16.39,),
+                                  SizedBox(width: 8,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(App_Localization.of(context).translate("mobile_number"),style: TextStyle(fontSize: 13,color: Colors.black,fontWeight: FontWeight.bold),),
+                                      Text(addressController.address[index].dailCode+"-"+addressController.address[index].phone,style: TextStyle(fontSize: 12,color: Colors.black.withOpacity(0.5)),),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
+
                 ),
               ),
             );

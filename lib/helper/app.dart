@@ -28,7 +28,7 @@ class App{
 
   static const Color text_color = Color(0xff022B3A);
   static const Color red = Color(0xffc63a32);
-  static const Color green = Color(0xff058240);
+  static const Color green = Color(0xff43BD47);
 
 
   static const Color greyCCC = Color(0xffcccccc);

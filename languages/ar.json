@@ -154,5 +154,10 @@
   "or_continue_with": "أو المتابعة مع",
   "create_your_account": "إنشاء حسابك",
   "shipping_address": "عنوان الشحن",
-  "mobile_number": "رقم الموبايل"
+  "mobile_number": "رقم الموبايل",
+  "privacy_policy": "سياسة الخصوصية",
+  "terms_of_sale": "شروط البيع",
+  "terms_of_use": "شروط الاستخدام",
+  "return_policy": "سياسة الإرجاع" ,
+  "warranty_policy": "سياسة الضمان"
 }

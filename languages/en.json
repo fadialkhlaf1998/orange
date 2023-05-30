@@ -154,5 +154,10 @@
   "or_continue_with": "Or Continue With",
   "create_your_account": "Create Your Account",
   "shipping_address": "Shipping Address",
-  "mobile_number": "Mobile Number"
+  "mobile_number": "Mobile Number",
+  "privacy_policy": "Privacy Policy",
+  "terms_of_sale": "Terms Of Sale",
+  "terms_of_use": "Terms Of Use",
+  "return_policy": "Return Policy",
+  "warranty_policy": "Warranty Policy"
 }

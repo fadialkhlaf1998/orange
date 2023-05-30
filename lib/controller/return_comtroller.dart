@@ -12,7 +12,7 @@ class ReturnController extends GetxController{
   RxInt selectedIndex = (-1).obs;
 
   select(int index){
-    openCart.value = true;
+    // openCart.value = true;
     selectedIndex.value = index;
   }
 

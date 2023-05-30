@@ -67,20 +67,20 @@ class Cart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 SizedBox(height: 40,),
-                Icon(Icons.remove_shopping_cart_outlined,color: App.primary,size: 50,),
-                SizedBox(height: 20,),
-                Text(App_Localization.of(context).translate("your_cart_is_empty"),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                Icon(Icons.remove_shopping_cart_outlined,color: App.primary,size: 35,),
+                SizedBox(height: 15,),
+                Text(App_Localization.of(context).translate("your_cart_is_empty"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black.withOpacity(0.5),fontSize: 12),),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(App_Localization.of(context).translate("what_you_are_waiting_for"),style: TextStyle(fontWeight: FontWeight.bold,color: App.dark_grey),),
+                    Text(App_Localization.of(context).translate("what_you_are_waiting_for"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black.withOpacity(0.5),fontSize: 12),),
                     SizedBox(width: 5,),
                     GestureDetector(
                       onTap: (){
                         homeController.pageController.jumpToTab(0);
                         homeController.selectedPage(0);
                       },
-                      child: Text(App_Localization.of(context).translate("continue_shopping"),style: TextStyle(fontWeight: FontWeight.bold,color: App.primary),),
+                      child: Text(App_Localization.of(context).translate("continue_shopping"),style: TextStyle(fontWeight: FontWeight.bold,color: App.primary,fontSize: 12),),
                     )
                   ],
                 )

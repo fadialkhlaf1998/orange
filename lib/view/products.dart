@@ -75,7 +75,7 @@ class Products extends StatelessWidget {
                         Text(
                           title,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
