@@ -60,7 +60,7 @@ class CartController extends GetxController{
         bool succ = await Api.addToCart(option_id, count);
         if(succ){
           if(count>0){
-            App.succMsg(context, "cart", "product_added_to_cart_successfully");
+            //App.succMsg(context, "cart", "product_added_to_cart_successfully");
           }
           getDataAfterUpdateCart(getCartIndex(option_id));
           // loading.value = false;
@@ -126,7 +126,7 @@ class CartController extends GetxController{
       //   cartModel!.cart[index].count -- ;
       // }
     }else{
-      cartModel!.cart.removeAt(index);
+      // cartModel!.cart.removeAt(index);
       var succ = await deleteFromCart(context, index);
       // if(succ){
       //   cartModel!.cart.removeAt(index);

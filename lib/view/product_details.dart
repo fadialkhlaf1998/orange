@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:orange/app_localization.dart';
 import 'package:orange/controller/cart_controller.dart';
 import 'package:orange/controller/home_controller.dart';
@@ -205,6 +206,7 @@ class ProductDetails extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   productDetailsController.product!.rateReview.isEmpty
                       ?SizedBox(height: 70,)
                       :Container(
@@ -387,7 +389,10 @@ class ProductDetails extends StatelessWidget {
                           onPressed: ()async{
                             // print(_key.currentContext!.size!.height);
                             productDetailsController.cartLoading.value = true;
-                            await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
+                            bool succ = await cartController.addToCart(context, productDetailsController.product!.option!.id, productDetailsController.cartCounter.value);
+                            if(succ){
+                              succCart(context);
+                            }
                             productDetailsController.cartLoading.value = false;
                           },
                           color: App.primary,
@@ -707,6 +712,89 @@ class ProductDetails extends StatelessWidget {
       ],
     );
   }
+
+
+  succCart(BuildContext context) {
+
+    showMaterialModalBottomSheet(
+      useRootNavigator: true,
+      context: context,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
+          )
+      ),
+      builder: (context) => Container(
+          height: 180,
+          width: Get.width,
+          decoration: BoxDecoration(
+            // gradient: App.linearGradient,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              color: Colors.white),
+          padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.check_circle,color: App.green,size: 30,),
+                  SizedBox(width: 10,),
+                  Column(
+                    children: [
+                      Container(
+                        width: Get.width - 80,
+                        child: Text(productDetailsController.product!.title
+                            +(productDetailsController.product!.option!=null&&productDetailsController.product!.option!.color.isNotEmpty
+                                ?" "+productDetailsController.product!.option!.color
+                                :"")
+                            +(productDetailsController.product!.option!=null&&productDetailsController.product!.option!.ram.isNotEmpty
+                                ?" "+productDetailsController.product!.option!.ram
+                                :"")
+                            +(productDetailsController.product!.option!=null&&productDetailsController.product!.option!.hard.isNotEmpty
+                                ?" "+productDetailsController.product!.option!.hard
+                                :"")
+                            +(productDetailsController.product!.option!=null&&productDetailsController.product!.option!.additionatlOption.isNotEmpty
+                                ?" "+productDetailsController.product!.option!.additionatlOption
+                                :"")
+                            ,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),overflow: TextOverflow.clip),
+                      ),
+
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 40,),
+                  Expanded(child: Text(App_Localization.of(context).translate("product_added_to_cart_successfully"),
+                    style: TextStyle(color: App.green,fontSize: 12,overflow: TextOverflow.ellipsis),),)
+                ],
+              ),
+              PrimaryBottun(width: Get.width, height: 35, onPressed: (){
+                Get.back();
+              }, color: Colors.white,fontSize: 12, text: "continue_shopping",radiuce: 10,
+                border: Border.all(color: App.primary),textColor: App.primary,),
+
+              PrimaryBottun(width: Get.width, height: 35, onPressed: (){
+                Get.back();
+                Get.back();
+                Get.back();
+                homeController.pageController.jumpToTab(3);
+                homeController.selectedPage(3);
+              }, color: App.primary,fontSize: 12, text: "view_cart",radiuce: 10
+                ,textColor: Colors.white,),
+            ],
+          )
+      ),
+    );
+  }
+
+
   _rateReview(BuildContext context){
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -818,7 +906,7 @@ class ProductDetails extends StatelessWidget {
 
   _cartBtnLoading(){
     return Container(
-      width: Get.width*0.4,
+      width: Get.width*0.5,
       height: 40,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -829,4 +917,3 @@ class ProductDetails extends StatelessWidget {
     );
   }
 }
- 

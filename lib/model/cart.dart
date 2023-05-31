@@ -86,6 +86,7 @@ class CartItem {
     required this.canDiscount,
     required this.discount,
     required this.color,
+    required this.colorImage,
   });
 
   int id;
@@ -103,6 +104,7 @@ class CartItem {
   int productId;
   String title;
   String image;
+  String colorImage;
   String cartSlug;
   String color;
   String slug;
@@ -142,6 +144,7 @@ class CartItem {
     colorId: json["color_id"]==null?-1:json["color_id"],
     productId: json["product_id"],
     title: json["title"],
+    colorImage: json["color_image"] != null?json["color_image"]:"",
     image: json["image"],
     cartSlug: json["slug"],
     slug: json["_slug"],

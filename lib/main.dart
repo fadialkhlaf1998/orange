@@ -10,10 +10,52 @@ import 'package:orange/view/intro.dart';
 import 'package:orange/view/no_internet.dart';
 import 'package:orange/view/pdf_viewer.dart';
 
-void main() {
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel', // id
+  'High Importance Notifications', // title
+  description:  'This channel is used for important notifications.', // description
+  importance: Importance.max,
+);
+///final from Fadi Alkhlaf
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+Future<void> _firebaseMessagingBackhroundHadler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('backgrounf message ${message.messageId}');
+}
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackhroundHadler);
+  // FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    sound: true,
+    alert: true,
+    badge: true,
+  );
+
   runApp(MyApp());
 }
-//FROM FADI ALKHLAF 24/11/2022
+
+//FROM FADI ALKHLAF 24/11/2022  "com.maxart.orange"
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
 

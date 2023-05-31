@@ -121,7 +121,9 @@ class Cart extends StatelessWidget {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(5),
                                     image: DecorationImage(
-                                        image: NetworkImage(Api.media_url+cartController.cartModel!.cart[index].image),
+                                        image: NetworkImage(Api.media_url+(cartController.cartModel!.cart[index].colorImage.isNotEmpty
+                                            ?cartController.cartModel!.cart[index].colorImage
+                                            :cartController.cartModel!.cart[index].image)),
                                         fit: BoxFit.cover
                                     )
                                 ),
@@ -137,7 +139,7 @@ class Cart extends StatelessWidget {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(cartController.cartModel!.cart[index].title , style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                                        Expanded(child: Text(cartController.cartModel!.cart[index].title , style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),overflow: TextOverflow.ellipsis,)),
                                         GestureDetector(
                                           onTap: (){
                                             cartController.deleteFromCart(context, index);
@@ -146,16 +148,17 @@ class Cart extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(cartController.cartModel!.cart[index].hard ,style: TextStyle(color: App.grey95,fontSize: 12),),
-                                        cartController.cartModel!.cart[index].ram.isNotEmpty?Text(" | " ,style: TextStyle(color: App.grey95,fontSize: 12),):Center(),
-                                        Text(cartController.cartModel!.cart[index].ram ,style: TextStyle(color: App.grey95,fontSize: 12),),
-                                        cartController.cartModel!.cart[index].color.isNotEmpty?Text(" | " ,style: TextStyle(color: App.grey95,fontSize: 12),):Center(),
-                                        Text(cartController.cartModel!.cart[index].color ,style: TextStyle(color: App.grey95,fontSize: 12),),
-                                        cartController.cartModel!.cart[index].additionatlOption.isNotEmpty?Text(" | " ,style: TextStyle(color: App.grey95,fontSize: 12),):Center(),
-                                        Text(cartController.cartModel!.cart[index].additionatlOption ,style: TextStyle(color: App.grey95,fontSize: 12),),
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        children: [
+
+                                         Expanded(child:  Text(cartController.cartModel!.cart[index].hard+
+                                             (cartController.cartModel!.cart[index].ram.isNotEmpty?" | "+cartController.cartModel!.cart[index].ram:"")+
+                                             (cartController.cartModel!.cart[index].color.isNotEmpty?" | "+cartController.cartModel!.cart[index].color:"")+
+                                             (cartController.cartModel!.cart[index].additionatlOption.isNotEmpty?" | "+cartController.cartModel!.cart[index].additionatlOption:"")
+                                           ,style: TextStyle(color: App.grey95,fontSize: 12), overflow: TextOverflow.ellipsis,),)
+                                        ],
+                                      ),
                                     ),
                                     (cartController.cartModel!.cart[index].oldPrice!=null &&
                                         cartController.cartModel!.cart[index].oldPrice! > cartController.cartModel!.cart[index].price)?
@@ -263,7 +266,7 @@ class Cart extends StatelessWidget {
                 bottom: EdgeInsets.fromWindowPadding(WidgetsBinding.instance.window.viewInsets,WidgetsBinding.instance.window.devicePixelRatio).bottom,
                 child: Container(
               width: Get.width,
-              height: 255,
+              height: 200,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
@@ -396,7 +399,7 @@ class Cart extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 30,)
+                    SizedBox(height: 15,)
                   ],
                 ),
               )

@@ -248,7 +248,7 @@ class AddAddress extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 60,),
+            SizedBox(height: 20,),
 
             PrimaryBottun(width: Get.width*0.95, height: 40,
 
@@ -258,7 +258,9 @@ class AddAddress extends StatelessWidget {
               }else{
                 addressController.AddEditAddress(true , id:address!.id);
               }
-            }, color: App.primary, text: "submit",radiuce: 10,)
+            }, color: App.primary, text: "submit",radiuce: 10,),
+
+            SizedBox(height: 20,),
           ],
         ),)
       ),

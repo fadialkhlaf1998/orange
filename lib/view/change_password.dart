@@ -122,7 +122,8 @@ class ChangePassword extends StatelessWidget {
             SizedBox(height: 15,),
             PrimaryBottun(width: Get.width*0.8, height: 40,radiuce: 10, onPressed: (){
               profileController.changePassword(context);
-            }, color: App.primary, text: "submit",)
+            }, color: App.primary, text: "submit",),
+            SizedBox(height: 20,),
           ],
         )),
       ),

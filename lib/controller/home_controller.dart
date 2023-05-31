@@ -161,7 +161,7 @@ class HomeController extends GetxController{
     if(banner.products.length == 1 && banner.category.isEmpty && banner.subCategory.isEmpty && banner.brand.isEmpty ){
       Get.to(()=>ProductDetails((banner.products.first),-1));
     }else{
-      Get.to(()=>Products(title: "",categories: banner.category,sub_categories: banner.subCategory,brands: banner.brand,products: banner.products,option: "or",));
+      Get.to(()=>Products(title: App_Localization.of(context).translate("offers"),categories: banner.category,sub_categories: banner.subCategory,brands: banner.brand,products: banner.products,option: "or",));
     }
   }
 

@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
+
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 0),
                 child: Global.customer == null
@@ -40,7 +40,6 @@ class Profile extends StatelessWidget {
                 )
                     :
                 Container(
-                  height: Get.height,
                   child: Column(
                     children: [
                      // Spacer(),
@@ -54,150 +53,144 @@ class Profile extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 10,),
-                     Expanded(
-                         child:Container(
-
-                           child: SingleChildScrollView(
-                             child: Column(
-                       children: [
+                      Column(
+                        children: [
 
 
-                             Container(
-                               color: App.greyF5,
-                               padding: EdgeInsets.symmetric(horizontal: 10),
-                               child: Column(
-                                 children: [
-                                   ProfileBtn(onPressed: (){
-                                     Get.to(()=>Orders());
-                                   }, icon: SvgPicture.asset("assets/profile/my_order.svg",), text: "orders"),
+                          Container(
+                            color: App.greyF5,
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              children: [
+                                ProfileBtn(onPressed: (){
+                                  Get.to(()=>Orders());
+                                }, icon: SvgPicture.asset("assets/profile/my_order.svg",), text: "orders"),
 
 
-                                   ProfileBtn(onPressed: (){
-                                     Get.to(()=>Returns());
-                                   }, icon: SvgPicture.asset("assets/profile/returns.svg",), text: "returns"),
+                                ProfileBtn(onPressed: (){
+                                  Get.to(()=>Returns());
+                                }, icon: SvgPicture.asset("assets/profile/returns.svg",), text: "returns"),
 
 
-                                   ProfileBtn(onPressed: (){
-                                     Get.to(()=>Address());
-                                   }, icon:  SvgPicture.asset("assets/profile/address.svg",), text: "address"),
+                                ProfileBtn(onPressed: (){
+                                  Get.to(()=>Address());
+                                }, icon:  SvgPicture.asset("assets/profile/address.svg",), text: "address"),
 
 
-                                   GestureDetector(
-                                     onTap: (){
-                                       profileController.changeLanguage(context);
-                                     },
-                                     child: Stack(
-                                       children: [
-                                         ProfileBtn(onPressed: (){
-                                           profileController.changeLanguage(context);
-                                         }, icon: SvgPicture.asset("assets/profile/language.svg",), text: "change_language",withIcon: false),
-                                         Global.locale=="en"?Positioned(
-                                             right: 5,
-                                             child: Container(
-                                               height: 40,
-                                               child: Center(
-                                                 child: Text("العربية",style: TextStyle(fontSize: 16),),
-                                               ),
-                                             )):Center(),
-                                         Global.locale=="ar"?Positioned(
-                                             left: 5,
-                                             child: Container(
-                                               height: 40,
-                                               child: Center(
-                                                 child: Text("English",style: TextStyle(fontSize: 16),),
-                                               ),
-                                             )):Center(),
-                                       ],
-                                     ),
-                                   ),
+                                GestureDetector(
+                                  onTap: (){
+                                    profileController.changeLanguage(context);
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      ProfileBtn(onPressed: (){
+                                        profileController.changeLanguage(context);
+                                      }, icon: SvgPicture.asset("assets/profile/language.svg",), text: "change_language",withIcon: false),
+                                      Global.locale=="en"?Positioned(
+                                          right: 5,
+                                          child: Container(
+                                            height: 40,
+                                            child: Center(
+                                              child: Text("العربية",style: TextStyle(fontSize: 16),),
+                                            ),
+                                          )):Center(),
+                                      Global.locale=="ar"?Positioned(
+                                          left: 5,
+                                          child: Container(
+                                            height: 40,
+                                            child: Center(
+                                              child: Text("English",style: TextStyle(fontSize: 16),),
+                                            ),
+                                          )):Center(),
+                                    ],
+                                  ),
+                                ),
 
 
-                                   ProfileBtn(onPressed: (){
-                                     Get.to(()=>ChangePassword());
-                                   }, icon: SvgPicture.asset("assets/profile/change_password.svg",), text: "change_password"),
+                                ProfileBtn(onPressed: (){
+                                  Get.to(()=>ChangePassword());
+                                }, icon: SvgPicture.asset("assets/profile/change_password.svg",), text: "change_password"),
 
-                                   ProfileBtn(onPressed: (){
-                                     profileController.deleteAccount(context);
-                                     _confirmDialog(context,"delete_account");
-                                   }, icon: SvgPicture.asset("assets/profile/delete_account.svg",), text: "delete_account",withDivider: false,withIcon: false),
-                                 ],
-                               ),
-                             ),
-                             SizedBox(height: 10,),
-                             GestureDetector(
-                               onTap: (){
-                                 profileController.logout();
-                               },
-                               child: Container(
-                                 padding: EdgeInsets.symmetric(horizontal: 10),
-                                 child: Row(
-                                   children: [
-                                     SizedBox(width: 10,),
-                                     SvgPicture.asset("assets/profile/logout.svg",),
-                                     SizedBox(width: 10,),
-                                     Text(App_Localization.of(context).translate("logout"),style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.5)),)
-                                   ],
-                                 ),
-                               ),
-                             ),
-                             SizedBox(height: 15),
-                             Padding(
-                               padding: const EdgeInsets.all(5),
-                               child: Row(
-                                 mainAxisAlignment: MainAxisAlignment.center,
-                                 children: [
-                                   //todo icons here
-                                   SvgPicture.asset("assets/profile/youtube.svg"),
-                                   SizedBox(width: 15,),
-                                   SvgPicture.asset("assets/profile/facebook.svg"),
-                                   SizedBox(width: 15,),
-                                   SvgPicture.asset("assets/profile/inestagram.svg"),
-                                   SizedBox(width: 15,),
-                                   SvgPicture.asset("assets/profile/twitter.svg"),
-                                 ],
-                               ),
-                             ),
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.center,
-                               children: [
-                                 Text(App_Localization.of(context).translate("privacy_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
-                                 Padding(
-                                   padding: const EdgeInsets.all(5),
-                                   child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
-                                 ),
-                                 Text(App_Localization.of(context).translate("terms_of_sale"),style: TextStyle(color: App.greyC5,fontSize: 11),),
-                                 Padding(
-                                   padding: const EdgeInsets.all(5),
-                                   child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
-                                 ),
-                                 Text(App_Localization.of(context).translate("terms_of_use"),style: TextStyle(color: App.greyC5,fontSize: 11),),
-                               ],
-                             ),
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Text(App_Localization.of(context).translate("return_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
-                             Padding(
-                               padding: const EdgeInsets.all(5),
-                               child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
-                             ),
-                             Text(App_Localization.of(context).translate("warranty_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
-                           ],
-                         ),
-                         Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Padding(
-                               padding: const EdgeInsets.all(5),
-                               child: Text("@ 2023 Developed By Maxart",style: TextStyle(color: App.greyC5,fontSize: 11),),
-                             ),
-                           ],
-                         ),
-                       ],
-                     ),
-                           ),
-                         ),
-                     )
+                                ProfileBtn(onPressed: (){
+                                  profileController.deleteAccount(context);
+                                  _confirmDialog(context,"delete_account");
+                                }, icon: SvgPicture.asset("assets/profile/delete_account.svg",), text: "delete_account",withDivider: false,withIcon: false),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10,),
+                          GestureDetector(
+                            onTap: (){
+                              profileController.logout();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 10,),
+                                  SvgPicture.asset("assets/profile/logout.svg",),
+                                  SizedBox(width: 10,),
+                                  Text(App_Localization.of(context).translate("logout"),style: TextStyle(fontSize: 13,color: Colors.black.withOpacity(0.5)),)
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                //todo icons here
+                                SvgPicture.asset("assets/profile/youtube.svg"),
+                                SizedBox(width: 15,),
+                                SvgPicture.asset("assets/profile/facebook.svg"),
+                                SizedBox(width: 15,),
+                                SvgPicture.asset("assets/profile/inestagram.svg"),
+                                SizedBox(width: 15,),
+                                SvgPicture.asset("assets/profile/twitter.svg"),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(App_Localization.of(context).translate("privacy_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              ),
+                              Text(App_Localization.of(context).translate("terms_of_sale"),style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              ),
+                              Text(App_Localization.of(context).translate("terms_of_use"),style: TextStyle(color: App.greyC5,fontSize: 11),),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(App_Localization.of(context).translate("return_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text(".",style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              ),
+                              Text(App_Localization.of(context).translate("warranty_policy"),style: TextStyle(color: App.greyC5,fontSize: 11),),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Text("@ 2023 Developed By Maxart",style: TextStyle(color: App.greyC5,fontSize: 11),),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
                     ],
 
                   ),

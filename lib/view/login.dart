@@ -183,7 +183,13 @@ class Login extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    if(Platform.isIOS){
+
+                                    }else{
+                                     loginController.googleSignIn(context);
+                                    }
+                                  },
                                   child: Container(
                                       width: 30,
                                       height: 30,

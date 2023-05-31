@@ -128,7 +128,11 @@ class OrderDetails extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(orderDetailsController.order!.lineItems[index].title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14),),
+                                          Row(
+                                            children: [
+                                              Expanded(child: Text(orderDetailsController.order!.lineItems[index].title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 14),overflow: TextOverflow.ellipsis),)
+                                            ],
+                                          ),
                                           Text(
                                                 (orderDetailsController.order!.lineItems[index].hard == "" ?"":" "+orderDetailsController.order!.lineItems[index].hard)+
                                                 (orderDetailsController.order!.lineItems[index].ram == "" ?"":" "+orderDetailsController.order!.lineItems[index].ram)+

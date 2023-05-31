@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:orange/controller/home_controller.dart';
 import 'package:orange/helper/api.dart';
@@ -26,6 +29,12 @@ class ProfileController extends GetxController{
 
   logout(){
     Store.logout();
+    if(Platform.isAndroid){
+      GoogleSignIn googleSignIn = GoogleSignIn();
+      googleSignIn.signOut();
+    }else{
+      //todo logout apple
+    }
     Get.offAll(()=>Intro());
     homeController.initApp();
   }
