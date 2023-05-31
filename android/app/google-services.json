@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640920455388",
+    "project_id": "orange-shopping-36d95",
+    "storage_bucket": "orange-shopping-36d95.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640920455388:android:70c3b654c7ca2a928dcc19",
+        "android_client_info": {
+          "package_name": "com.maxart.orange"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWxczCVXhXfG_6NXTLfVf-4nClBuPTvVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

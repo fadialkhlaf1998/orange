@@ -47,7 +47,8 @@ class Api{
     var request = http.Request('POST', Uri.parse(url+'/api/customer/login'));
     request.body = json.encode({
       "email": email,
-      "password": password
+      "password": password,
+      "token":Global.token
     });
     request.headers.addAll(headers);
 

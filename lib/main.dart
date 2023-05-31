@@ -1,14 +1,17 @@
 import 'dart:math';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:orange/app_localization.dart';
+import 'package:orange/firebase_options.dart';
 import 'package:orange/helper/app.dart';
+import 'package:orange/helper/global.dart';
 import 'package:orange/helper/store.dart';
 import 'package:orange/view/intro.dart';
-import 'package:orange/view/no_internet.dart';
-import 'package:orange/view/pdf_viewer.dart';
 
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
@@ -23,7 +26,7 @@ FlutterLocalNotificationsPlugin();
 
 Future<void> _firebaseMessagingBackhroundHadler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print('backgrounf message ${message.messageId}');
+  print('background message ${message.messageId}');
 }
 
 Future<void> main() async {
@@ -84,6 +87,39 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _locale= Locale(language);
         Get.updateLocale(Locale(language));
+      });
+      FirebaseMessaging.instance.getToken().then((value) {
+        print('Token Here');
+        print(value);
+        setState(() {
+          if(value!=null){
+            Global.token = value;
+          }
+        });
+      });
+      // FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
+      FirebaseMessaging.onMessage.listen((RemoteMessage message){
+
+        RemoteNotification notification = message.notification!;
+        AndroidNotification androd = message.notification!.android!;
+
+
+        if(notification != null && androd !=null){
+          flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(
+                    channel.id,
+                    channel.name,
+                    channelDescription: channel.description,
+                    playSound: true,
+                    icon: "@mipmap/ic_launcher"
+                )
+            ),
+          );
+        }
       });
     });
   }
