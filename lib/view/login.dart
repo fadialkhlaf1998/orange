@@ -185,7 +185,7 @@ class Login extends StatelessWidget {
                                 GestureDetector(
                                   onTap: () {
                                     if(Platform.isIOS){
-
+                                     loginController.appleSignIn(context);
                                     }else{
                                      loginController.googleSignIn(context);
                                     }
