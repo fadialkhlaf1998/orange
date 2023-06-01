@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAS_w7gKq1P1KqudzwzykLSMvGN5eFo8KI',
-    appId: '1:640920455388:ios:3373030a77c652678dcc19',
+    appId: '1:640920455388:ios:7234f57b107d2e898dcc19',
     messagingSenderId: '640920455388',
     projectId: 'orange-shopping-36d95',
     storageBucket: 'orange-shopping-36d95.appspot.com',
+    iosClientId: '640920455388-g8557q5akearl02smrhskfpruogth2vg.apps.googleusercontent.com',
     iosBundleId: 'com.Maxart.Orange',
   );
 }
