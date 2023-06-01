@@ -21,7 +21,8 @@ import 'package:orange/view/no_internet.dart';
 
 class Api{
 
-  static String url = "https://phpstack-548447-2989628.cloudwaysapps.com";
+  // static String url = "https://phpstack-548447-2989628.cloudwaysapps.com";
+  static String url = "https://orangeapp.ae";
   static String media_url = url+"/uploads/";
   static String token = "";
 
