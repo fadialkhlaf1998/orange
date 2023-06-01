@@ -88,16 +88,20 @@ class LoginController extends GetxController{
         AppleIDAuthorizationScopes.fullName,
       ],
     );
+    print('----------------------');
     if(credential.email != null){
       // AppStyle.successMsg(context, credential.email!);
       String email = credential.email!;
       String pass =  generatePassword(credential.email!.split("@")[0]);
       String name = "";
+
       if(credential.givenName !=null && credential.familyName !=null){
         name = credential.givenName! +" "+credential.familyName!;
       }else{
         name = credential.email!.split("@")[0];
       }
+      print(email);
+      print(name);
       loginWithVerify(context,name, email, pass);
     }else if(credential.email == null){
       App.errMsg(context, "login","oops_we_cannot_complete_login_we_need_to_show_your_email");
