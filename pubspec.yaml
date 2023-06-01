@@ -55,11 +55,11 @@ dependencies:
   lottie: ^2.0.0
   google_sign_in: ^6.1.3
   sign_in_with_apple: ^4.3.0
-  flutter_local_notifications: ^9.7.0
 #  syncfusion_flutter_pdfviewer: ^20.4.48
   webview_flutter:
   firebase_core: ^2.13.1
   firebase_messaging: ^14.6.2
+  flutter_local_notifications: ^9.7.0
 #  pdf: ^3.7.3
 
 dependency_overrides:

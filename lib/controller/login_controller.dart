@@ -8,6 +8,7 @@ import 'package:orange/helper/global.dart';
 import 'package:orange/model/result.dart';
 import 'package:orange/view/main.dart';
 import 'package:orange/view/verification_code.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginController extends GetxController{
 
@@ -74,41 +75,36 @@ class LoginController extends GetxController{
     if(googleData != null){
       String email = googleData.email;
       String pass = generatePassword(googleData.email.split("@")[0]);
-      loginWithVerify(context,googleData.displayName??"", email, pass);
+      loginWithVerify(context,googleData.displayName??googleData.email.split("@")[0], email, pass);
     }else{
       App.errMsg(context, "login","wrong");
     }
   }
 
-  // appleSignIn(BuildContext context)async{
-  //   final credential = await SignInWithApple.getAppleIDCredential(
-  //     scopes: [
-  //       AppleIDAuthorizationScopes.email,
-  //       AppleIDAuthorizationScopes.fullName,
-  //     ],
-  //   );
-  //   if(credential.email != null){
-  //     // AppStyle.successMsg(context, credential.email!);
-  //     String email = credential.email!;
-  //     String pass =  generatePassword(credential.email!.split("@")[0]);
-  //     String name = "";
-  //     if(credential.givenName !=null && credential.familyName !=null){
-  //       name = credential.givenName! +" "+credential.familyName!;
-  //     }
-  //     signUpVerifyThenLogIn(context,name, email, pass,"");
-  //   }else if(credential.identityToken != null){
-  //     // AppStyle.successMsg(context, credential.identityToken!.substring(0,15));
-  //     String email = credential.identityToken!.substring(0,15);
-  //     String pass =  generatePassword(credential.identityToken!.substring(0,15));
-  //     String name = "";
-  //     if(credential.givenName !=null && credential.familyName !=null){
-  //       name = credential.givenName! +" "+credential.familyName!;
-  //     }
-  //     signUpVerifyThenLogIn(context,name, email, pass,"");
-  //   }else{
-  //     AppStyle.errorMsg(context, "oops SomeThing Went Wrong");
-  //   }
-  // }
+  appleSignIn(BuildContext context)async{
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    if(credential.email != null){
+      // AppStyle.successMsg(context, credential.email!);
+      String email = credential.email!;
+      String pass =  generatePassword(credential.email!.split("@")[0]);
+      String name = "";
+      if(credential.givenName !=null && credential.familyName !=null){
+        name = credential.givenName! +" "+credential.familyName!;
+      }else{
+        name = credential.email!.split("@")[0];
+      }
+      loginWithVerify(context,name, email, pass);
+    }else if(credential.email == null){
+      App.errMsg(context, "login","oops_we_cannot_complete_login_we_need_to_show_your_email");
+    }else{
+      App.errMsg(context, "login","wrong");
+    }
+  }
 
   generatePassword(String email) {
     String output = "";

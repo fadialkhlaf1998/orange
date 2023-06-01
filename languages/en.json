@@ -160,5 +160,6 @@
   "terms_of_use": "Terms Of Use",
   "return_policy": "Return Policy",
   "warranty_policy": "Warranty Policy",
-  "view_cart": "View Cart"
+  "view_cart": "View Cart",
+  "oops_we_cannot_complete_login_we_need_to_show_your_email": "Oops We Cannot Complete login We Need To Show Your Email"
 }

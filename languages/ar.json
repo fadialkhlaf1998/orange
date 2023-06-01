@@ -160,5 +160,6 @@
   "terms_of_use": "شروط الاستخدام",
   "return_policy": "سياسة الإرجاع" ,
   "warranty_policy": "سياسة الضمان",
-  "view_cart": "عرض السلة"
+  "view_cart": "عرض السلة",
+  "oops_we_cannot_complete_login_we_need_to_show_your_email": "عفوًا ، لا يمكننا إكمال تسجيل الدخول ، نحتاج إلى إظهار بريدك الإلكتروني"
 }
