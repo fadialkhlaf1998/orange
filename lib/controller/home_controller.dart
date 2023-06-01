@@ -120,6 +120,7 @@ class HomeController extends GetxController{
     else if(loginResult == null){
       Get.off(()=>Login());
     }else if(loginResult.code == 1){
+      await Future.delayed(Duration(milliseconds: 500));
       Get.off(()=>Main());
     }else if(loginResult.code == -10){
       Get.off(()=>VerificationCode());
