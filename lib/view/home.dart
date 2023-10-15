@@ -311,7 +311,7 @@ class _HomeState extends State<Home> {
 
                         decoration: BoxDecoration(
                             // shape: BoxShape.circle,
-                          borderRadius: BorderRadius.circular(15),
+                            // borderRadius: BorderRadius.circular(0),
                             // color: App.grey,
                             // border: Border.all(color: Colors.grey.withOpacity(0.5)),
                             image: DecorationImage(

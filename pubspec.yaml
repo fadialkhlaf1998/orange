@@ -34,9 +34,9 @@ dependencies:
   flutter_localizations: # Add this line
     sdk: flutter
   http: ^0.13.5
-  flutter_html: ^2.2.1
+  flutter_html: ^3.0.0-beta.2
   get: ^4.6.5
-  flutter_svg: ^0.22.0
+  flutter_svg: ^1.0.1
   shared_preferences: ^2.0.15
   carousel_slider: ^4.1.1
   persistent_bottom_nav_bar: ^5.0.2
@@ -57,9 +57,9 @@ dependencies:
   sign_in_with_apple: ^4.3.0
 #  syncfusion_flutter_pdfviewer: ^20.4.48
   webview_flutter:
-  firebase_core: ^2.13.1
-  firebase_messaging: ^14.6.2
-  flutter_local_notifications: ^9.7.0
+  firebase_core: ^2.15.0
+  firebase_messaging: ^14.6.5
+  flutter_local_notifications: ^15.1.0+1
 #  pdf: ^3.7.3
 
 dependency_overrides:
